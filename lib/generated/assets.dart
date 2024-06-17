@@ -5,7 +5,7 @@ class Assets {
   static const String assetsImagesLogo = 'assets/images/logo.png';
   static const String assetsImagesSplashBorderImage = 'assets/images/splash_border_image.png';
   static const String assetsImagesSplashBorderImageBottom = 'assets/images/splash_border_image_bottom.png';
-  static const String imagesAhmed = 'assets/images/ahmed.png';
+  static const String imagesBackgroundImage = 'assets/images/background_image.png';
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesSplashBorderImage = 'assets/images/splash_border_image.png';
   static const String imagesSplashBorderImageBottom = 'assets/images/splash_border_image_bottom.png';

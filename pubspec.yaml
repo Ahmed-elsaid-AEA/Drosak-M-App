@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_native_splash: ^2.3.11
   device_info_plus: ^9.1.2
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,11 @@ flutter:
     - assets/images/splash_border_image.png
     - assets/images/splash_border_image_bottom.png
     - assets/images/logo.png
+    - assets/images/on_boarding_image_1.svg
+    - assets/images/on_boarding_image_2.svg
+    - assets/images/on_boarding_image_3.svg
+    - assets/images/on_boarding_image_4.svg
+    - assets/images/on_boarding_image_5.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -79,10 +85,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: AA-GALAXY
+      fonts:
+        - asset: assets/fonts/aa_galaxy/AA-GALAXY.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

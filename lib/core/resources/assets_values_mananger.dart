@@ -6,13 +6,13 @@ class AssetsValuesManager {
   static const String kSplashBorderImageBottom =
       '$_baseURlImage/splash_border_image_bottom.png';
   static const String kOnBoardingImage1 =
-      '$_baseURlImage/on_boarding_image_1.png';
+      '$_baseURlImage/on_boarding_image_1.svg';
   static const String kOnBoardingImage2 =
-      '$_baseURlImage/on_boarding_image_2.png';
+      '$_baseURlImage/on_boarding_image_2.svg';
   static const String kOnBoardingImage3 =
-      '$_baseURlImage/on_boarding_image_3.png';
+      '$_baseURlImage/on_boarding_image_3.svg';
   static const String kOnBoardingImage4 =
-      '$_baseURlImage/on_boarding_image_4.png';
+      '$_baseURlImage/on_boarding_image_4.svg';
   static const String kOnBoardingImage5 =
-      '$_baseURlImage/on_boarding_image_5.png';
+      '$_baseURlImage/on_boarding_image_5.svg';
 }

@@ -7,7 +7,6 @@ import 'dart:io';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   String routeName=await checkWhichScreen();
-  print(routeName);
   runApp(  MyApp(
     routesName: routeName,
   ));

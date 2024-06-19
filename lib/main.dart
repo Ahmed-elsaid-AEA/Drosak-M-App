@@ -1,6 +1,34 @@
 import 'package:drosak_m_app/app/my_app.dart';
+import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:flutter/material.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'dart:io';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  String routeName=await checkWhichScreen();
+  print(routeName);
+  runApp(  MyApp(
+    routesName: routeName,
+  ));
+}
+
+Future<String> checkWhichScreen() async {
+  String? androidVersion = await getAndroidVersion();
+  if (androidVersion != null) {
+    if (int.parse(androidVersion) >= 12) {
+      // go to custom splash screen
+      return RoutesName.kSplashScreen;
+    }
+  }
+  return RoutesName.kOnBoardingScreen;
+}
+
+Future<String?> getAndroidVersion() async {
+  if (Platform.isAndroid) {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    return androidInfo.version.release;
+  }
+  return null;
 }

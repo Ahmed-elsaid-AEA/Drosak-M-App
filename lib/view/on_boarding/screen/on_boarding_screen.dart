@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/body/custom_page_view_on_boarding_screen.dart';
+import '../widgets/bottom_nav_bar/custom_nav_bar_on_borading_screen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -17,34 +19,11 @@ class OnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: PaddingManager.pw12, vertical: PaddingManager.ph10),
-        color: ColorManager.kPrimaryColor,
-        height: HeightManager.h39,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              ConstValue.kSkip,
-              style: TextStyle(
-                  fontFamily: 'ge_diner_one',
-                  color: ColorManager.kWhiteColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: FontsName.f15),
-            ),
-            Text(
-              ConstValue.kNext,
-              style: TextStyle(
-                  fontFamily: 'ge_diner_one',
-                  color: ColorManager.kWhiteColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: FontsName.f15),
-            ),
-          ],
-        ),
+      bottomNavigationBar: CustomBottomNavBarOnBoardingScreen(
+        currentDot: 1,
+        dotCount: ConstListValues.listOnBoardingImage.length,
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: CustomPageViewOnBoardingScreen(),
       ),
     );

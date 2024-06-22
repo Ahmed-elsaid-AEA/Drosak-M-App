@@ -1,6 +1,6 @@
+import 'package:drosak_m_app/controller/splash_screen/splash_screen_controller.dart';
 import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
-import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,38 +12,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<Offset> _animationBottom;
-  late Animation<Offset> _animationTop;
+ late SplashScreenController _controller;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          Navigator.pushReplacementNamed(context, RoutesName.kOnBoardingScreen);
-        }
-      });
-    _animationBottom = Tween<Offset>(
-      begin: const Offset(0, 1),
-      end: Offset.zero,
-    ).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
-    _animationTop = Tween<Offset>(
-      begin: const Offset(0, -1),
-      end: Offset.zero,
-    ).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
-    _animationController.forward();
+   _controller=SplashScreenController(context, this);
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+   _controller.disposeController();
     super.dispose();
   }
 
@@ -58,14 +38,14 @@ class _SplashScreenState extends State<SplashScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SlideTransition(
-              position: _animationTop,
+              position: _controller.animationTop,
               child: Image.asset(AssetsValuesManager.kSplashBorderImage),
             ),
             Align(child: Image.asset(AssetsValuesManager.kLogoImage)),
             Align(
                 alignment: AlignmentDirectional.bottomEnd,
                 child: SlideTransition(
-                    position: _animationBottom,
+                    position: _controller.animationBottom,
                     child: Image.asset(
                         AssetsValuesManager.kSplashBorderImageBottom))),
           ],

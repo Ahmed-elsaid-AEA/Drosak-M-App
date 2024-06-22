@@ -90,6 +90,11 @@ flutter:
     - family: AA-GALAXY
       fonts:
         - asset: assets/fonts/aa_galaxy/AA-GALAXY.otf
+    - family: ge_diner_one
+      fonts:
+        - asset: assets/fonts/ge_diner_one/ArbFONTS-GE-Dinar-One-Light.otf
+        - asset: assets/fonts/ge_diner_one/ArbFONTS-GE-Dinar-One-Light.otf
+          weight: 500
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

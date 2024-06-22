@@ -5,8 +5,17 @@ class Assets {
   static const String aaGalaxyAAGALAXY = 'assets/fonts/aa_galaxy/AA-GALAXY.otf';
   static const String assetsImagesLogo = 'assets/images/logo.png';
   static const String assetsImagesOnBoardingImage1 = 'assets/images/on_boarding_image_1.svg';
+  static const String assetsImagesOnBoardingImage2 = 'assets/images/on_boarding_image_2.svg';
+  static const String assetsImagesOnBoardingImage3 = 'assets/images/on_boarding_image_3.svg';
+  static const String assetsImagesOnBoardingImage4 = 'assets/images/on_boarding_image_4.svg';
+  static const String assetsImagesOnBoardingImage5 = 'assets/images/on_boarding_image_5.svg';
   static const String assetsImagesSplashBorderImage = 'assets/images/splash_border_image.png';
   static const String assetsImagesSplashBorderImageBottom = 'assets/images/splash_border_image_bottom.png';
+  static const String fontsGeDinerOneArbFONTSGEDinarOneLight = 'assets/fonts/ge_diner_one/ArbFONTS-GE_Dinar_One_Light.otf';
+  static const String geDinerOneArbFONTSGEDinarOneLight = 'assets/fonts/ge_diner_one/ArbFONTS-GE-Dinar-One-Light.otf';
+  static const String geDinerOneArbFONTSGEDinarOneLightItalic = 'assets/fonts/ge_diner_one/ArbFONTS-GE-Dinar-One-Light-Italic.otf';
+  static const String geDinerOneArbFONTSGEDinarOneMedium = 'assets/fonts/ge_diner_one/ArbFONTS-GE_Dinar_One_Medium.otf';
+  static const String geDinerOneArbFONTSGEDinarOneMediumItalic = 'assets/fonts/ge_diner_one/ArbFONTS-GE-Dinar-One-Medium-Italic.otf';
   static const String imagesAndroidAbove12 = 'assets/images/android_above_12.png';
   static const String imagesBackgroundImage = 'assets/images/background_image.png';
   static const String imagesLogo = 'assets/images/logo.png';

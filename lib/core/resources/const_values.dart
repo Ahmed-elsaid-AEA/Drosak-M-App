@@ -2,8 +2,10 @@ import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/model/on_boarding/on_boarding_model.dart';
 
 class ConstValue {
-  static const double widthDesignScreen=375;
-  static const double heightDesignScreen=812;
+  static const double widthDesignScreen = 375;
+  static const String kNext = 'التالي';
+  static const String kSkip = 'تخطي';
+  static const double heightDesignScreen = 812;
   static const String kOnBoardingText1 = 'يمكنك إضافة  بعض المراحل التعليمية';
   static const String kOnBoardingText2 =
       'يمكنك إضافة  بعض المجموعات لكل مرحلة من المراحل التعليمية';

@@ -1,5 +1,7 @@
+import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.routesName});
@@ -8,10 +10,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: RoutesManager.routes,
-      initialRoute:routesName,
-      debugShowCheckedModeBanner: false,
+    return ScreenUtilInit(
+      designSize: const Size(
+          ConstValue.widthDesignScreen, ConstValue.heightDesignScreen),
+      child: MaterialApp(
+        routes: RoutesManager.routes,
+        initialRoute: routesName,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

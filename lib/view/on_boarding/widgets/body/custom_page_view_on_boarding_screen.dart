@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 
 class CustomPageViewOnBoardingScreen extends StatelessWidget {
   const CustomPageViewOnBoardingScreen({
-    super.key,
+    super.key, required this.controller,
   });
-
+final PageController controller;
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
+      controller: controller,
       itemCount: ConstListValues.listOnBoardingImage.length,
       itemBuilder: (context, index) => CustomItemOnBoardingScreen(
         onBoardingModel: ConstListValues.listOnBoardingImage[index],

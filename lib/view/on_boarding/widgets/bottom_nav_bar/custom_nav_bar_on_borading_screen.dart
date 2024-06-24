@@ -68,10 +68,10 @@ class CustomText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          fontFamily: FontsSize.geDinerOneFont,
+          fontFamily: FontsName.geDinerOneFont,
           color: ColorManager.kWhiteColor,
           fontWeight: FontWeight.w500,
-          fontSize: FontsName.f15),
+          fontSize: FontsSize.f15),
     );
   }
 }

@@ -1,5 +1,7 @@
-import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
-import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/resources/fonts_manager.dart';
+import 'package:drosak_m_app/core/resources/height_manager.dart';
+import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
+import 'package:drosak_m_app/generated/assets.dart';
 import 'package:drosak_m_app/model/on_boarding/on_boarding_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,20 +24,15 @@ class CustomItemOnBoardingScreen extends StatelessWidget {
         children: [
           SvgPicture.asset(
             onBoardingModel.image,
-            height: 200,
+            height: HeightManager.h200,
           ),
-          SizedBox(
-            height: 50,
-          ),
-          Text(
-          onBoardingModel.text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-
-                fontFamily: 'AA-GALAXY',
-                fontWeight: FontWeight.bold,
-                fontSize: 20),
-          )
+          VerticalSpace(HeightManager.h50),
+          Text(onBoardingModel.text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: Assets.aaGalaxyAAGALAXY,
+                  fontWeight: FontWeight.bold,
+                  fontSize: FontsSize.f20))
         ],
       ),
     );

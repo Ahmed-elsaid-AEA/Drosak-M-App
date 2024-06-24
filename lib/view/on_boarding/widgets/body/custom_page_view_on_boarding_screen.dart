@@ -9,11 +9,14 @@ class CustomPageViewOnBoardingScreen extends StatelessWidget {
 final PageController controller;
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: controller,
-      itemCount: ConstListValues.listOnBoardingImage.length,
-      itemBuilder: (context, index) => CustomItemOnBoardingScreen(
-        onBoardingModel: ConstListValues.listOnBoardingImage[index],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: PageView.builder(
+        controller: controller,
+        itemCount: ConstListValues.listOnBoardingImage.length,
+        itemBuilder: (context, index) => CustomItemOnBoardingScreen(
+          onBoardingModel: ConstListValues.listOnBoardingImage[index],
+        ),
       ),
     );
   }

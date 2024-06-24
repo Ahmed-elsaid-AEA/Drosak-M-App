@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/resources/duration_values_manager.dart';
+import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:flutter/cupertino.dart';
 
 class OnBoardingController {
@@ -21,7 +23,8 @@ class OnBoardingController {
     outPutDotIndicator = streamControllerDotIndicator.stream;
     inputDotIndicator.add(currentIndex);
   }
-  void disposeController(){
+
+  void disposeController() {
     streamControllerDotIndicator.close();
     inputDotIndicator.close();
   }
@@ -32,8 +35,12 @@ class OnBoardingController {
     } else {
       currentIndex++;
     }
+    pageControllerOnBoardingScreen.animateToPage(currentIndex,
+        duration: const Duration(seconds: DurationValuesManager.s1), curve: Curves.easeInOut);
     inputDotIndicator.add(currentIndex);
   }
 
-  void skip() {}
+  void skip(BuildContext context) {
+    Navigator.of(context).pushNamedAndRemoveUntil(RoutesName.kExploreAppScreen, (route) => false);
+  }
 }

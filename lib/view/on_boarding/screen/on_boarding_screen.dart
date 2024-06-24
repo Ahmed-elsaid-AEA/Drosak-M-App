@@ -22,24 +22,32 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
- late  OnBoardingController _controller ;
+  late OnBoardingController _controller;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller=OnBoardingController();
+    _controller = OnBoardingController();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CustomBottomNavBarOnBoardingScreen(
-        onPressed: () {
+        onPressedSkip: () {
+          _controller.skip(context);
+        },
+        onPressedNext: () {
           _controller.goNext();
         },
-        dotCount: ConstListValues.listOnBoardingImage.length, outPutDotIndicator: _controller.outPutDotIndicator,
+        dotCount: ConstListValues.listOnBoardingImage.length,
+        outPutDotIndicator: _controller.outPutDotIndicator,
       ),
       body: SafeArea(
-        child: CustomPageViewOnBoardingScreen(controller: _controller.pageControllerOnBoardingScreen,),
+        child: CustomPageViewOnBoardingScreen(
+          controller: _controller.pageControllerOnBoardingScreen,
+        ),
       ),
     );
   }

@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
           ConstValue.widthDesignScreen, ConstValue.heightDesignScreen),
       child: MaterialApp(
         routes: RoutesManager.routes,
-        initialRoute: routesName,
+        initialRoute: RoutesName.kExploreAppScreenRoute,
         debugShowCheckedModeBanner: false,
       ),
     );

@@ -7,12 +7,12 @@ class RoutesManager {
   static Map<String, WidgetBuilder> routes = {
     RoutesName.kSplashScreen: (context) => const SplashScreen(),
     RoutesName.kOnBoardingScreen: (context) => const OnBoardingScreen(),
-    RoutesName.kExploreAppScreen: (context) => const ExploreAppScreen(),
+    RoutesName.kExploreAppScreenRoute: (context) => const ExploreAppScreen(),
   };
 }
 
 class RoutesName {
   static const String kSplashScreen = '/kSplashScreen';
   static const String kOnBoardingScreen = '/kOnBoardingScreen';
-  static const String kExploreAppScreen = '/kExploreAppScreen';
+  static const String kExploreAppScreenRoute = '/kExploreAppScreen';
 }

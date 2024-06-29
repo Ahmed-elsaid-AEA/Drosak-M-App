@@ -1,6 +1,9 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MarginManager {
+  static double mh5= 5.h;
+  static double mw5 = 5.w; static double mh6= 6.h;
+  static double mw6 = 6.w;
   static double mh8 = 8.h;
   static double mw8 = 8.w;
   static double mh12 = 12.h;

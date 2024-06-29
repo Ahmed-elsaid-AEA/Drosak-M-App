@@ -17,10 +17,10 @@ Future<String> checkWhichScreen() async {
   if (androidVersion != null) {
     if (int.parse(androidVersion) >= 12) {
       // go to custom splash screen
-      return RoutesName.kSplashScreen;
+      return RoutesName.kSplashScreenRoute;
     }
   }
-  return RoutesName.kOnBoardingScreen;
+  return RoutesName.kOnBoardingScreenRoute;
 }
 
 Future<String?> getAndroidVersion() async {

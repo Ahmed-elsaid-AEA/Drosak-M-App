@@ -41,6 +41,6 @@ final BuildContext context;
   }
 
   void goToOnBoardingScreen() {
-    Navigator.pushReplacementNamed(context, RoutesName.kOnBoardingScreen);
+    Navigator.pushReplacementNamed(context, RoutesName.kOnBoardingScreenRoute);
   }
 }

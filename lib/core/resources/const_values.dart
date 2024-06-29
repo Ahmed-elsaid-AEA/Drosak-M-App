@@ -21,6 +21,7 @@ class ConstValue {
   static const String kStudents = 'الطلاب';
   static const String kTheAudience = 'الحضور';
   static const String kPaying = 'الدفع';
+  static const String kScreenIndex = 'currentIndex';
 }
 
 class ConstListValues {

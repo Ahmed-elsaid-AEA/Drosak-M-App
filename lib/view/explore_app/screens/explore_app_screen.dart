@@ -6,6 +6,7 @@ import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/resources/margin_manager.dart';
 import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
+import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _ExploreAppScreenState extends State<ExploreAppScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller =  ExploreAppController();
+    controller = ExploreAppController();
   }
 
   @override
@@ -37,15 +38,14 @@ class _ExploreAppScreenState extends State<ExploreAppScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        body: BodyExploreScreen(onTap: () {
-          controller.goToMainScreen(nameSections: "nameSections", context: context);
-        },),
+        body: BodyExploreScreen(
+          onTap: (index) {
+            controller.goToMainScreen(value: index, context: context);
+          },
+        ),
         backgroundColor: ColorManager.kBlackColor,
         appBar: CustomAppBarExploreScreen(),
       ),
     );
   }
 }
-
-
-

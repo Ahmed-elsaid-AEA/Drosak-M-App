@@ -8,6 +8,7 @@ import 'package:drosak_m_app/view/education_stages/screens/education_stages_scre
 import 'package:drosak_m_app/view/groups/screens/groups_screen.dart';
 import 'package:drosak_m_app/view/paying/screens/paying_screen.dart';
 import 'package:drosak_m_app/view/students/screens/students_screen.dart';
+import 'package:flutter/cupertino.dart';
 
 class MainScreenController {
   int currentIndexScreen = 0;
@@ -51,11 +52,17 @@ class MainScreenController {
     controllerBottomNavBar.close();
   }
 
+  void getArguments(BuildContext context) {
+    Map arg = ModalRoute.of(context)!.settings.arguments as Map;
+    currentIndexScreen = int.parse(arg[ConstValue.kScreenIndex].toString());
+    inputDataBottomNavBar.add(currentIndexScreen);
+  }
+
   List<TabsDetailsModel> listBottomNavBarTabModel = [
     const TabsDetailsModel(
-        screen: PayingScreen(),
-        text: ConstValue.kPaying,
-        imageIconSvg: AssetsValuesManager.kPaymentImageSvg),
+        screen: EducationStagesScreen(),
+        text: ConstValue.kEducationalStages,
+        imageIconSvg: AssetsValuesManager.kEducationalStagesImageSvg),
     const TabsDetailsModel(
         screen: GroupsScreen(),
         text: ConstValue.kGroups,
@@ -65,13 +72,13 @@ class MainScreenController {
         text: ConstValue.kStudents,
         imageIconSvg: AssetsValuesManager.kStudentsImageSvg),
     const TabsDetailsModel(
-        screen: EducationStagesScreen(),
-        text: ConstValue.kEducationalStages,
-        imageIconSvg: AssetsValuesManager.kEducationalStagesImageSvg),
-    const TabsDetailsModel(
         screen: AudienceScreen(),
         text: ConstValue.kTheAudience,
         imageIconSvg: AssetsValuesManager.kTheAudienceImageSvg),
+    const TabsDetailsModel(
+        screen: PayingScreen(),
+        text: ConstValue.kPaying,
+        imageIconSvg: AssetsValuesManager.kPaymentImageSvg),
   ];
 
   void onTapAtTabItemBottomNavBar(int index) {

@@ -1,6 +1,7 @@
 import 'package:drosak_m_app/controller/main_screen/main_screen_controller.dart';
 import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
+import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/model/main_screen/tabs_details_model.dart';
 import 'package:drosak_m_app/view/main_screen/widgets/custom_bottom_nav_bar_main_screen.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.getArguments(context);
     return Scaffold(
       body: StreamBuilder<int>(
         stream: _controller.outputDataBody,

@@ -1,23 +1,63 @@
+import 'dart:async';
+
 import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
-import 'package:drosak_m_app/model/main_screen/bottom_nav_bar_tab_model.dart';
+import 'package:drosak_m_app/model/main_screen/tabs_details_model.dart';
+import 'package:drosak_m_app/view/audience/screens/audience_screen.dart';
+import 'package:drosak_m_app/view/education_stages/screens/education_stages_screen.dart';
+import 'package:drosak_m_app/view/groups/screens/groups_screen.dart';
+import 'package:drosak_m_app/view/paying/screens/paying_screen.dart';
+import 'package:drosak_m_app/view/students/screens/students_screen.dart';
 
 class MainScreenController {
-  List<BottomNavBarTabModel> listBottomNavBarTabModel = [
-    const BottomNavBarTabModel(
+  int currentIndexScreen = 0;
+  late StreamController<int> controllerBody;
+  late Sink<int> inputDataBody;
+  late Stream<int> outputDataBody;
+
+  MainScreenController() {
+    initControllers();
+  }
+
+  void initControllers() {
+    controllerBody = StreamController();
+    inputDataBody = controllerBody.sink;
+    outputDataBody = controllerBody.stream;
+    //send current index
+    inputDataBody.add(currentIndexScreen);
+  }
+
+  void disposeControllers() {
+    inputDataBody.close();
+    controllerBody.close();
+  }
+
+  List<TabsDetailsModel> listBottomNavBarTabModel = [
+    const TabsDetailsModel(
+        screen: PayingScreen(),
         text: ConstValue.kPaying,
         imageIconSvg: AssetsValuesManager.kPaymentImageSvg),
-    const BottomNavBarTabModel(
+    const TabsDetailsModel(
+        screen: GroupsScreen(),
         text: ConstValue.kGroups,
         imageIconSvg: AssetsValuesManager.kGroupsImageSvg),
-    const BottomNavBarTabModel(
+    const TabsDetailsModel(
+        screen: StudentsScreen(),
         text: ConstValue.kStudents,
         imageIconSvg: AssetsValuesManager.kStudentsImageSvg),
-    const BottomNavBarTabModel(
+    const TabsDetailsModel(
+        screen: EducationStagesScreen(),
         text: ConstValue.kEducationalStages,
         imageIconSvg: AssetsValuesManager.kEducationalStagesImageSvg),
-    const BottomNavBarTabModel(
+    const TabsDetailsModel(
+        screen: AudienceScreen(),
         text: ConstValue.kTheAudience,
         imageIconSvg: AssetsValuesManager.kTheAudienceImageSvg),
   ];
+
+  void onTapAtTabItemBottomNavBar(int index) {
+    currentIndexScreen = index;
+    //send current index
+    inputDataBody.add(currentIndexScreen);
+  }
 }

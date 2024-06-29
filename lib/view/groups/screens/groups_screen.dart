@@ -5,6 +5,11 @@ class GroupsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.green,
+      body: Center(
+        child: Text('GroupsScreen'),
+      ),
+    );
   }
 }

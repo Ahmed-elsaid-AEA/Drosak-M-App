@@ -1,22 +1,25 @@
-import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
-import 'package:drosak_m_app/core/resources/colors_manager.dart';
-import 'package:drosak_m_app/core/resources/const_values.dart';
-import 'package:drosak_m_app/core/resources/fonts_manager.dart';
-import 'package:drosak_m_app/core/resources/height_manager.dart';
-import 'package:drosak_m_app/core/resources/margin_manager.dart';
-import 'package:drosak_m_app/core/resources/padding_manager.dart';
-import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
-import 'package:drosak_m_app/core/resources/width_manager.dart';
-import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
-import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
+import 'package:drosak_m_app/controller/education_stages/education_stages_controller.dart';
+import 'package:drosak_m_app/view/education_stages/widgets/body/custom_list_view_items_stages.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/app_Bar/custom_app_bar_education_stages.dart';
-import '../widgets/body/custom_item_stage.dart';
 
-class EducationStagesScreen extends StatelessWidget {
+class EducationStagesScreen extends StatefulWidget {
   const EducationStagesScreen({super.key});
+
+  @override
+  State<EducationStagesScreen> createState() => _EducationStagesScreenState();
+}
+
+class _EducationStagesScreenState extends State<EducationStagesScreen> {
+  late EducationStagesController _controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = EducationStagesController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +29,9 @@ class EducationStagesScreen extends StatelessWidget {
         body: Column(
           children: [
             const CustomAppBarEductionStages(),
-            VerticalSpace(HeightManager.h39),
-            CustomItemStage(),
+            CustomListViewItemsStages(
+              listItemStageModel: _controller.listItemStageModel,
+            )
           ],
         ),
       ),

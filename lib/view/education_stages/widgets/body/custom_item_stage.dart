@@ -1,4 +1,3 @@
-import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
@@ -8,12 +7,16 @@ import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
+import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:flutter/material.dart';
 
 class CustomItemStage extends StatelessWidget {
   const CustomItemStage({
     super.key,
+    required this.itemStageModel,
   });
+
+  final ItemStageModel itemStageModel;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class CustomItemStage extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: ColorManager.kPrimaryColor,
               child: Text(
-                '1',
+                itemStageModel.id.toString(),
                 style: TextStyle(
                   color: ColorManager.kWhiteColor,
                   fontWeight: FontWeight.bold,
@@ -70,7 +73,7 @@ class CustomItemStage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "الصف الأول الإعدادي",
+                        itemStageModel.stageName,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: FontsSize.f16,
@@ -83,7 +86,7 @@ class CustomItemStage extends StatelessWidget {
                           HorizontalSpace(WidthManager.w3),
                           Expanded(
                             child: Text(
-                              "تلك الصف هو الصف الاعدادي وفي ثلاث طلاب مثلاتلك الصف هو الصف الاعدادي وفي ثلاث طلاب مثلاتلك الصف هو الصف الاعدادي وفي ثلاث طلاب مثلا",
+                              itemStageModel.desc,
                               style: TextStyle(
                                   color:
                                       ColorManager.kWhiteColor.withOpacity(.6),
@@ -99,7 +102,7 @@ class CustomItemStage extends StatelessWidget {
                 HorizontalSpace(WidthManager.w7),
                 ClipRRect(
                   child: Image.asset(
-                    AssetsValuesManager.kTestImage,
+                    itemStageModel.image,
                     height: HeightManager.h64,
                     width: WidthManager.w64,
                   ),

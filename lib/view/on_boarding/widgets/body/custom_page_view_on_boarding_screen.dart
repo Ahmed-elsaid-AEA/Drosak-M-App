@@ -13,9 +13,9 @@ final PageController controller;
       textDirection: TextDirection.rtl,
       child: PageView.builder(
         controller: controller,
-        itemCount: ConstListValues.listOnBoardingImage.length,
+        itemCount: ConstListValues.listOnBoardingModel.length,
         itemBuilder: (context, index) => CustomItemOnBoardingScreen(
-          onBoardingModel: ConstListValues.listOnBoardingImage[index],
+          onBoardingModel: ConstListValues.listOnBoardingModel[index],
         ),
       ),
     );

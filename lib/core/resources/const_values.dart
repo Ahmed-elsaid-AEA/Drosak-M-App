@@ -1,4 +1,5 @@
 import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
+import 'package:drosak_m_app/model/explore_screen/explore_screen_model.dart';
 import 'package:drosak_m_app/model/on_boarding/on_boarding_model.dart';
 
 class ConstValue {
@@ -15,10 +16,15 @@ class ConstValue {
   static const String kOnBoardingText4 = 'يمكنك إضافة حضور وغياب لكل طالب';
   static const String kOnBoardingText5 =
       'يمكنك إضافة  ما إذا كان الطالب دفع هذا الشهر أم لا وإضافة تاريخ الدفع';
+  static const String kEducationalStages = 'المراحل التعليمية';
+  static const String kGroups = 'المجموعات';
+  static const String kStudents = 'الطلاب';
+  static const String kTheAudience = 'الحضور';
+  static const String kPaying = 'الدفع';
 }
 
 class ConstListValues {
-  static const List<OnBoardingModel> listOnBoardingImage = [
+  static const List<OnBoardingModel> listOnBoardingModel = [
     OnBoardingModel(
         text: ConstValue.kOnBoardingText1,
         image: AssetsValuesManager.kOnBoardingImage1),
@@ -34,5 +40,20 @@ class ConstListValues {
     OnBoardingModel(
         text: ConstValue.kOnBoardingText5,
         image: AssetsValuesManager.kOnBoardingImage5),
+  ];
+  static const List<ExploreScreenModel> listExploreScreenModel = [
+    ExploreScreenModel(
+        text: ConstValue.kEducationalStages,
+        image: AssetsValuesManager.kOnBoardingImage1),
+    ExploreScreenModel(
+        text: ConstValue.kGroups, image: AssetsValuesManager.kOnBoardingImage2),
+    ExploreScreenModel(
+        text: ConstValue.kStudents,
+        image: AssetsValuesManager.kOnBoardingImage3),
+    ExploreScreenModel(
+        text: ConstValue.kTheAudience,
+        image: AssetsValuesManager.kOnBoardingImage4),
+    ExploreScreenModel(
+        text: ConstValue.kPaying, image: AssetsValuesManager.kOnBoardingImage5),
   ];
 }

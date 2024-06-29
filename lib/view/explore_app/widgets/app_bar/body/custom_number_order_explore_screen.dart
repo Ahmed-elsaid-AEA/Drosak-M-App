@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 class CustomNumberOrderExploreScreen extends StatelessWidget {
   const CustomNumberOrderExploreScreen({
     super.key,
+    required this.number,
   });
+
+  final int number;
 
   @override
   Widget build(BuildContext context) {
-    return const Positioned(
+    return Positioned(
       bottom: -10,
       left: -10,
       child: Center(
@@ -17,8 +20,8 @@ class CustomNumberOrderExploreScreen extends StatelessWidget {
           backgroundColor: ColorManager.kPrimaryColor,
           radius: 10,
           child: Text(
-            "1",
-            style: TextStyle(
+            number.toString(),
+            style: const TextStyle(
                 color: ColorManager.kWhiteColor,
                 fontWeight: FontWeight.w500,
                 fontFamily: FontsName.geDinerOneFont),

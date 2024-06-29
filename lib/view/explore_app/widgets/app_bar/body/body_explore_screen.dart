@@ -8,14 +8,17 @@ import 'custom_grid_view_of_item_explore_creen.dart';
 class BodyExploreScreen extends StatelessWidget {
   const BodyExploreScreen({
     super.key,
+    required this.onTap,
   });
+
+  final GestureTapCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         VerticalSpace(HeightManager.h24),
-        const CustomGridViewOfItemExploreScreen(),
+        CustomGridViewOfItemExploreScreen(onTap: onTap),
       ],
     );
   }

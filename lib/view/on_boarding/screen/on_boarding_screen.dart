@@ -32,7 +32,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         onPressedNext: () {
           _controller.goNext();
         },
-        dotCount: ConstListValues.listOnBoardingImage.length,
+        dotCount: ConstListValues.listOnBoardingModel.length,
         outPutDotIndicator: _controller.outPutDotIndicator,
       ),
       body: SafeArea(

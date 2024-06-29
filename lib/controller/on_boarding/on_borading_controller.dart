@@ -30,7 +30,7 @@ class OnBoardingController {
   }
 
   void goNext() {
-    if (currentIndex + 1 >= ConstListValues.listOnBoardingImage.length) {
+    if (currentIndex + 1 >= ConstListValues.listOnBoardingModel.length) {
       currentIndex = 0;
     } else {
       currentIndex++;

@@ -1,4 +1,3 @@
-import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
@@ -8,16 +7,21 @@ import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../model/explore_screen/explore_screen_model.dart';
+
 class CustomContainerOfNameAndImageExploreScreen extends StatelessWidget {
   const CustomContainerOfNameAndImageExploreScreen({
     super.key,
+    required this.exploreScreenModel,
   });
+
+  final ExploreScreenModel exploreScreenModel;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: ColorManager.kBlackColor,
           borderRadius: BorderRadius.all(Radius.circular(18)),
           boxShadow: [
@@ -43,7 +47,7 @@ class CustomContainerOfNameAndImageExploreScreen extends StatelessWidget {
             ),
             margin: EdgeInsets.symmetric(
                 vertical: MarginManager.mh5, horizontal: MarginManager.mw5),
-            child: Text("المراحل التعليمية",
+            child: Text(exploreScreenModel.text,
                 style: TextStyle(
                     color: ColorManager.kWhiteColor,
                     fontFamily: FontsName.geDinerOneFont,
@@ -51,7 +55,7 @@ class CustomContainerOfNameAndImageExploreScreen extends StatelessWidget {
                     fontSize: FontsSize.f15)),
           ),
           SvgPicture.asset(
-            AssetsValuesManager.kOnBoardingImage1,
+            exploreScreenModel.image,
             height: HeightManager.h63,
           ),
         ],

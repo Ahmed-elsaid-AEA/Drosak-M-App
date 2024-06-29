@@ -1,3 +1,4 @@
+import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
       designSize: const Size(
           ConstValue.widthDesignScreen, ConstValue.heightDesignScreen),
       child: MaterialApp(
+        theme: ThemeData(
+          scaffoldBackgroundColor: ColorManager.kBlackColor
+        ),
         routes: RoutesManager.routes,
         initialRoute:routesName,
         debugShowCheckedModeBanner: false,

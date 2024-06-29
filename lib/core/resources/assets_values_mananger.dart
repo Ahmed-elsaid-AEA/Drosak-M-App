@@ -15,4 +15,6 @@ class AssetsValuesManager {
       '$_baseURlImage/on_boarding_image_4.svg';
   static const String kOnBoardingImage5 =
       '$_baseURlImage/on_boarding_image_5.svg';
+  static const String kPaymentImageSvg =
+      '$_baseURlImage/payment_icon.svg';
 }

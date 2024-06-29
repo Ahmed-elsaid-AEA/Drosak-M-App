@@ -1,4 +1,5 @@
 import 'package:drosak_m_app/controller/on_boarding/on_borading_controller.dart';
+import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorManager.kWhiteColor,
       bottomNavigationBar: CustomBottomNavBarOnBoardingScreen(
         onPressedSkip: () {
           _controller.skip(context);

@@ -41,6 +41,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       backgroundColor: Colors.red,
       bottomNavigationBar: CustomBottomNavBarMainScreen(
+        outPutBottomNavBar: _controller.outPutBottomNavBar,
         onTap: (value) {
           _controller.onTapAtTabItemBottomNavBar(value);
         },

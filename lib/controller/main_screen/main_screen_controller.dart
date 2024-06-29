@@ -15,21 +15,40 @@ class MainScreenController {
   late Sink<int> inputDataBody;
   late Stream<int> outputDataBody;
 
+  /// bottom nav bar controllers
+  late StreamController<int> controllerBottomNavBar;
+  late Sink<int> inputDataBottomNavBar;
+  late Stream<int> outPutBottomNavBar;
+
+  ///
   MainScreenController() {
     initControllers();
   }
 
   void initControllers() {
+    /// initialize body controller
     controllerBody = StreamController();
     inputDataBody = controllerBody.sink;
     outputDataBody = controllerBody.stream;
     //send current index
     inputDataBody.add(currentIndexScreen);
+
+    /// initialize bottom nav bar controller
+    controllerBottomNavBar = StreamController();
+    inputDataBottomNavBar = controllerBottomNavBar.sink;
+    outPutBottomNavBar = controllerBottomNavBar.stream;
+    //send current index
+    inputDataBottomNavBar.add(currentIndexScreen);
   }
 
   void disposeControllers() {
+    ///dispose body controllers
     inputDataBody.close();
     controllerBody.close();
+
+    ///dispose bottom nav var controllers
+    inputDataBottomNavBar.close();
+    controllerBottomNavBar.close();
   }
 
   List<TabsDetailsModel> listBottomNavBarTabModel = [
@@ -59,5 +78,6 @@ class MainScreenController {
     currentIndexScreen = index;
     //send current index
     inputDataBody.add(currentIndexScreen);
+    inputDataBottomNavBar.add(currentIndexScreen);
   }
 }

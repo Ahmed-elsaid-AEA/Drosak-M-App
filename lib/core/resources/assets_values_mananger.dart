@@ -20,4 +20,5 @@ class AssetsValuesManager {
   static const String kStudentsImageSvg = '$_baseURlImage/students.svg';
   static const String kEducationalStagesImageSvg = '$_baseURlImage/educational_stages.svg';
   static const String kTheAudienceImageSvg = '$_baseURlImage/audience.svg';
+  static const String kTestImage = '$_baseURlImage/test.png';
 }

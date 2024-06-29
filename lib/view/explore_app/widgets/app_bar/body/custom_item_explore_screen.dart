@@ -26,7 +26,7 @@ class CustomItemExploreScreen extends StatelessWidget {
         exploreScreenModel:
         exploreScreenModel
         ),
-        Positioned(
+        const Positioned(
           bottom: -16,
           left: -16,
           child: Center(

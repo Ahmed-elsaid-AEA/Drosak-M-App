@@ -5,12 +5,17 @@ import 'package:path/path.dart';
 
 class MySqFLiteDatabase extends CRUD {
   Database? _db;
+  static const String _educationalStageTableName = 'educationalStageTableName';
+  static const String educationalStageID = 'id';
+  static const String educationalStageName = 'name';
+  static const String educationalStageDesc = 'desc';
+  static const String educationalStageImage = 'image';
 
   Future<Database> _initDatabase() async {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
-    String managementDatabaseName = "management.db";
-    String realDatabasePath = join(databasesPath, managementDatabaseName);
-    int versionDataBase = 41;
+    String drosakDatabaseName = "drosak.db";
+    String realDatabasePath = join(databasesPath, drosakDatabaseName);
+    int versionDataBase = 1;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
@@ -28,10 +33,13 @@ class MySqFLiteDatabase extends CRUD {
   }
 
   _onCreate(Database db, int version) async {
-    /* await db.execute("CREATE TABLE IF NOT EXISTS $_userTable "
-        "( $_userColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
-        "  $_userColumnUsername TEXT  );");
-    await db.execute(
+    await db.execute("CREATE TABLE IF NOT EXISTS $_educationalStageTableName"
+        " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+        "  $educationalStageName TEXT , "
+        "  $educationalStageDesc TEXT , "
+        "  $educationalStageImage  TEXT )");
+
+    /* await db.execute(
       "CREATE TABLE IF NOT EXISTS $_productTable"
       " ( $_productColumnId INTEGER PRIMARY KEY AUTOINCREMENT,"
       " $_productColumnName TEXT ,"

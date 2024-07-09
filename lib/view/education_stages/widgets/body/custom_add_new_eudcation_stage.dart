@@ -17,54 +17,65 @@ class CustomAddNewEducationStage extends StatelessWidget {
     super.key,
     required this.controllerNameEducationStage,
     required this.controllerDescEducationStage,
+    required this.onPressed,
   });
+
+  final VoidCallback onPressed;
 
   final TextEditingController controllerNameEducationStage;
   final TextEditingController controllerDescEducationStage;
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: PaddingManager.pw12, vertical: PaddingManager.ph22),
-        decoration: BoxDecoration(
-            color: ColorManager.kBlackLight,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(RadiusValuesManager.br12),
-              topRight: Radius.circular(RadiusValuesManager.br12),
-            )),
-        width: double.infinity,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
+    print(MediaQuery.of(context).viewInsets.bottom);
+    return Padding(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: SingleChildScrollView(
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: PaddingManager.pw12, vertical: PaddingManager.ph22),
+            decoration: BoxDecoration(
+                color: ColorManager.kBlackLight,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(RadiusValuesManager.br12),
+                  topRight: Radius.circular(RadiusValuesManager.br12),
+                )),
+            width: double.infinity,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: CustomTextFormField(
-                    controller: controllerNameEducationStage,
-                    hintText: ConstValue.kNameEducationalStages,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextFormField(
+                        controller: controllerNameEducationStage,
+                        hintText: ConstValue.kNameEducationalStages,
+                      ),
+                    ),
+                    HorizontalSpace(WidthManager.w6),
+                    IconButton.filled(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: ColorManager.kPrimaryColor),
+                        icon: SvgPicture.asset(
+                            AssetsValuesManager.kPlaceholderSvg)),
+                  ],
                 ),
-                HorizontalSpace(WidthManager.w6),
-                IconButton.filled(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorManager.kPrimaryColor),
-                    icon:
-                        SvgPicture.asset(AssetsValuesManager.kPlaceholderSvg)),
+                VerticalSpace(HeightManager.h12),
+                CustomTextFormField(
+                  maxLines: 3,
+                  controller: controllerDescEducationStage,
+                  hintText: ConstValue.kDescEducationalStage,
+                ),
+                VerticalSpace(HeightManager.h40),
+                CustomMaterialButton(
+                    onPressed: onPressed, text: ConstValue.kAdd)
               ],
             ),
-            VerticalSpace(HeightManager.h12),
-            CustomTextFormField(
-              maxLines: 3,
-              controller: controllerDescEducationStage,
-              hintText: ConstValue.kDescEducationalStage,
-            ),
-            VerticalSpace(HeightManager.h40),
-            CustomMaterialButton(onPressed: () {}, text: ConstValue.kAdd)
-          ],
+          ),
         ),
       ),
     );

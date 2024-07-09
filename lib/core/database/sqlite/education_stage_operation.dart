@@ -12,7 +12,13 @@ class EducationStageOperation extends MySqFLiteDatabase {
         });
   }
 
-  Future<List<Map<String, Object?>>> getAllEducationData() {
-    return select(tableName: MySqFLiteDatabase.educationalStageTableName);
+  Future<List<ItemStageModel>> getAllEducationData() async {
+    List<ItemStageModel> listItemStageModel = [];
+    List<Map<String, Object?>> data =
+        await select(tableName: MySqFLiteDatabase.educationalStageTableName);
+    for (var item in data) {
+      listItemStageModel.add(ItemStageModel.fromJson(item));
+    }
+    return listItemStageModel;
   }
 }

@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 
 class EducationStagesController {
   List<ItemStageModel> listItemStageModel = [];
-  TextEditingController controllerAddNewEducationalStage =
-      TextEditingController();
+  TextEditingController controllerNameEducationStage = TextEditingController();
+  TextEditingController controllerDescEducationStage = TextEditingController();
 
   void openBottomSheet({required BuildContext context}) {
     showModalBottomSheet(
       context: context,
       builder: (context) => CustomAddNewEducationStage(
-          controllerAddNewEducationalStage: controllerAddNewEducationalStage),
+        controllerNameEducationStage: controllerNameEducationStage,
+        controllerDescEducationStage: controllerDescEducationStage,
+      ),
     );
   }
-  void addToNewEducationalStageToDatabase(){
 
-  }
+  void addToNewEducationalStageToDatabase() {}
 }

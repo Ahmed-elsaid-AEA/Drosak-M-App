@@ -1,11 +1,12 @@
 import 'package:drosak_m_app/core/database/sqlite/crud.dart';
+import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqflite.dart' as sqFLiteDatabase;
 import 'package:path/path.dart';
 
 class MySqFLiteDatabase extends CRUD {
   Database? _db;
-  static const String _educationalStageTableName = 'educationalStageTableName';
+  static const String educationalStageTableName = 'educationalStageTableName';
   static const String educationalStageID = 'id';
   static const String educationalStageName = 'name';
   static const String educationalStageDesc = 'desc';
@@ -33,7 +34,7 @@ class MySqFLiteDatabase extends CRUD {
   }
 
   _onCreate(Database db, int version) async {
-    await db.execute("CREATE TABLE IF NOT EXISTS $_educationalStageTableName"
+    await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
         " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $educationalStageName TEXT , "
         "  $educationalStageDesc TEXT , "
@@ -100,4 +101,6 @@ class MySqFLiteDatabase extends CRUD {
     return deleted > 0 ? true : false;
   }
 }
+
+
 // users // products // sales

@@ -18,6 +18,7 @@ class ConstValue {
       'يمكنك إضافة  ما إذا كان الطالب دفع هذا الشهر أم لا وإضافة تاريخ الدفع';
   static const String kEducationalStages = 'المراحل التعليمية';
   static const String kNameEducationalStages = 'اسم المرحله التعليميه';
+  static const String kDescEducationalStage = 'وصف المرحله التعليميه';
   static const String kGroups = 'المجموعات';
   static const String kStudents = 'الطلاب';
   static const String kTheAudience = 'الحضور';

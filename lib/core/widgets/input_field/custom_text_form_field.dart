@@ -6,11 +6,16 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
-      {super.key, this.hintText, required this.controller, this.onSubmitted});
+      {super.key,
+      this.hintText,
+      required this.controller,
+      this.onSubmitted,
+      this.maxLines = 1});
 
   final String? hintText;
   final TextEditingController controller;
   final ValueChanged<String>? onSubmitted;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
       textAlign: TextAlign.right,
       controller: controller,
       onFieldSubmitted: onSubmitted,
+      maxLines: maxLines,
       decoration: InputDecoration(
           hintStyle: TextStyle(
               fontWeight: FontWeight.bold,
@@ -30,7 +36,7 @@ class CustomTextFormField extends StatelessWidget {
           filled: true,
           border: OutlineInputBorder(
               borderRadius:
-              BorderRadius.all(Radius.circular(RadiusValuesManager.br12)))),
+                  BorderRadius.all(Radius.circular(RadiusValuesManager.br12)))),
     );
   }
 }

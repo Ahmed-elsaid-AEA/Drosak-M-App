@@ -15,10 +15,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CustomAddNewEducationStage extends StatelessWidget {
   const CustomAddNewEducationStage({
     super.key,
-    required this.controllerAddNewEducationalStage,
+    required this.controllerNameEducationStage,
+    required this.controllerDescEducationStage,
   });
 
-  final TextEditingController controllerAddNewEducationalStage;
+  final TextEditingController controllerNameEducationStage;
+  final TextEditingController controllerDescEducationStage;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomTextFormField(
-                    controller: controllerAddNewEducationalStage,
+                    controller: controllerNameEducationStage,
                     hintText: ConstValue.kNameEducationalStages,
                   ),
                 ),
@@ -53,6 +55,12 @@ class CustomAddNewEducationStage extends StatelessWidget {
                     icon:
                         SvgPicture.asset(AssetsValuesManager.kPlaceholderSvg)),
               ],
+            ),
+            VerticalSpace(HeightManager.h12),
+            CustomTextFormField(
+              maxLines: 3,
+              controller: controllerDescEducationStage,
+              hintText: ConstValue.kDescEducationalStage,
             ),
             VerticalSpace(HeightManager.h40),
             CustomMaterialButton(onPressed: () {}, text: ConstValue.kAdd)

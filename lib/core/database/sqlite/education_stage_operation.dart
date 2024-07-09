@@ -2,7 +2,7 @@ import 'package:drosak_m_app/core/database/sqlite/my_sq_f_lite_databse.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 
 class EducationStageOperation extends MySqFLiteDatabase {
-    Future<bool> insertEducationDetails(ItemStageModel itemStageModel) {
+  Future<bool> insertEducationDetails(ItemStageModel itemStageModel) {
     return insert(
         tableName: MySqFLiteDatabase.educationalStageTableName,
         values: {
@@ -10,5 +10,9 @@ class EducationStageOperation extends MySqFLiteDatabase {
           MySqFLiteDatabase.educationalStageImage: itemStageModel.image,
           MySqFLiteDatabase.educationalStageDesc: itemStageModel.desc,
         });
+  }
+
+  Future<List<Map<String, Object?>>> getAllEducationData() {
+    return select(tableName: MySqFLiteDatabase.educationalStageTableName);
   }
 }

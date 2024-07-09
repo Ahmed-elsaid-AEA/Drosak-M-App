@@ -8,6 +8,16 @@ class EducationStagesController {
   List<ItemStageModel> listItemStageModel = [];
   TextEditingController controllerNameEducationStage = TextEditingController();
   TextEditingController controllerDescEducationStage = TextEditingController();
+  final EducationStageOperation educationStageOperation;
+
+  EducationStagesController(this.educationStageOperation) {
+    init();
+  }
+
+  init() async {
+    var a = await educationStageOperation.getAllEducationData();
+    print(a);
+  }
 
   void openBottomSheet({required BuildContext context}) {
     showModalBottomSheet(
@@ -24,7 +34,6 @@ class EducationStagesController {
   }
 
   void addNewEducation() async {
-    EducationStageOperation educationStageOperation = EducationStageOperation();
     bool inserted = await educationStageOperation.insertEducationDetails(
         ItemStageModel(
             id: 0,

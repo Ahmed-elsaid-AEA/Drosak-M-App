@@ -1,4 +1,5 @@
 import 'package:drosak_m_app/controller/education_stages/education_stages_controller.dart';
+import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/body/custom_list_view_items_stages.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = EducationStagesController();
+    _controller = EducationStagesController(EducationStageOperation());
   }
 
   @override

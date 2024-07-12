@@ -1,5 +1,7 @@
 import 'package:drosak_m_app/controller/education_stages/education_stages_controller.dart';
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
+import 'package:drosak_m_app/core/resources/height_manager.dart';
+import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/body/custom_list_view_items_stages.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +25,12 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.disposeControllers();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -37,7 +45,7 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
             CustomListViewItemsStages(
               outPutDataListItemStageModel:
                   _controller.outPutDataListItemStageModel,
-            )
+            ),
           ],
         ),
       ),

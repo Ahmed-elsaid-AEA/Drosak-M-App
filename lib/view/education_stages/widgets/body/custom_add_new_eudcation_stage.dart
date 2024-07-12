@@ -11,6 +11,7 @@ import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
 import 'package:drosak_m_app/core/widgets/input_field/custom_text_form_field.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -21,17 +22,16 @@ class CustomAddNewEducationStage extends StatelessWidget {
     required this.controllerDescEducationStage,
     required this.onPressedAdd,
     required this.onPressedPickImage,
-    this.pathImage,
     required this.onPressedDeleteImage,
+    required this.outPathImage,
   });
 
   final VoidCallback onPressedAdd;
   final VoidCallback onPressedPickImage;
   final VoidCallback onPressedDeleteImage;
-
-  final String? pathImage;
   final TextEditingController controllerNameEducationStage;
   final TextEditingController controllerDescEducationStage;
+  final Stream<String?> outPathImage;
 
   @override
   Widget build(BuildContext context) {
@@ -79,31 +79,48 @@ class CustomAddNewEducationStage extends StatelessWidget {
                   hintText: ConstValue.kDescEducationalStage,
                 ),
                 VerticalSpace(HeightManager.h24),
-                if (pathImage != null)
-                  Stack(
-                    children: [
-                      Image.file(
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Text(
-                            "not found",
-                            style: TextStyle(color: Colors.white),
-                          );
-                        },
-                        File(pathImage!),
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                      IconButton.filled(
-                        onPressed: onPressedDeleteImage,
-                        icon: const Icon(Icons.delete),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red),
-                      ),
-                    ],
-                  ),
-                if (pathImage != null) VerticalSpace(HeightManager.h24),
-                CustomMaterialButton(
-                    onPressed: onPressedAdd, text: ConstValue.kAdd)
+                StreamBuilder(
+                    stream: outPathImage,
+                    builder: (context, snapshot) {
+                      print(snapshot.connectionState);
+                      print(snapshot.data);
+                      return snapshot.connectionState == ConnectionState.waiting
+                          ? const Center(
+                              child: CupertinoActivityIndicator(),
+                            )
+                          : snapshot.data != null
+                              ? Column(
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Image.file(
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Text(
+                                              "not found",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            );
+                                          },
+                                          File(snapshot.data!),
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        IconButton.filled(
+                                          onPressed: onPressedDeleteImage,
+                                          icon: const Icon(Icons.delete),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                    VerticalSpace(HeightManager.h24),
+                                  ],
+                                )
+                              : const SizedBox();
+                    }),
+                  CustomMaterialButton(
+                      onPressed: onPressedAdd, text: ConstValue.kAdd)
               ],
             ),
           ),

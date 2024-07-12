@@ -9,6 +9,7 @@ class EducationStagesController {
   List<ItemStageModel> listItemStageModel = [];
   TextEditingController controllerNameEducationStage = TextEditingController();
   TextEditingController controllerDescEducationStage = TextEditingController();
+  String pathImage = '';
 
   EducationStagesController() {
     init();
@@ -20,13 +21,16 @@ class EducationStagesController {
     print(a);
   }
 
-  void pickImage() async {
+  void pickImageFromGallery() async {
     final ImagePicker picker = ImagePicker();
-// Pick an image.
-    var image = await picker.pickImage(source: ImageSource.camera);
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) pathImage = image.path;
+  }
+
+  void pickImageFromCamera() async {
+    final ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) print(image.path);
-// Capture a photo.
-//   final XFile? photo = await picker.pickImage(source: ImageSource.camera);
   }
 
   void openBottomSheet({required BuildContext context}) {
@@ -35,7 +39,7 @@ class EducationStagesController {
       context: context,
       builder: (context) => CustomAddNewEducationStage(
         onPressedPickImage: () {
-          pickImage();
+          pickImageFromGallery();
         },
         controllerNameEducationStage: controllerNameEducationStage,
         controllerDescEducationStage: controllerDescEducationStage,
@@ -48,12 +52,13 @@ class EducationStagesController {
 
   void addNewEducation() async {
     EducationStageOperation educationStageOperation = EducationStageOperation();
+    print(pathImage);
     bool inserted = await educationStageOperation.insertEducationDetails(
         ItemStageModel(
             id: 0,
             stageName: controllerNameEducationStage.text,
             desc: controllerDescEducationStage.text,
-            image: AssetsValuesManager.kOnBoardingImage1));
+            image: pathImage));
     print(inserted);
   }
 }

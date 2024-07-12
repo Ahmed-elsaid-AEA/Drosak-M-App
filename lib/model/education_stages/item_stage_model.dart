@@ -32,6 +32,6 @@ class ItemStageModel {
         id: int.parse(json['id'].toString()),
         stageName: json['name'].toString(),
         desc: json['desc'].toString(),
-        image: json['desc'].toString());
+        image: json['image'].toString());
   }
 }

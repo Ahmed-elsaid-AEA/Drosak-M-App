@@ -11,6 +11,7 @@ class ItemStageModel {
     return 'ItemStageModel{id: $id, stageName: $stageName, desc: $desc, image: $image}';
   }
 
+
   Map<String, dynamic> toJson() {
     return {
       MySqFLiteDatabase.educationalStageName: stageName,

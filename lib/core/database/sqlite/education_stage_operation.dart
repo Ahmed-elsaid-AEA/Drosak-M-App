@@ -5,20 +5,15 @@ class EducationStageOperation extends MySqFLiteDatabase {
   Future<bool> insertEducationDetails(ItemStageModel itemStageModel) {
     return insert(
         tableName: MySqFLiteDatabase.educationalStageTableName,
-        values: {
-          MySqFLiteDatabase.educationalStageName: itemStageModel.stageName,
-          MySqFLiteDatabase.educationalStageImage: itemStageModel.image,
-          MySqFLiteDatabase.educationalStageDesc: itemStageModel.desc,
-        });
+        values: itemStageModel.toJson());
   }
 
   Future<List<ItemStageModel>> getAllEducationData() async {
     List<ItemStageModel> listItemStageModel = [];
     List<Map<String, Object?>> data =
         await select(tableName: MySqFLiteDatabase.educationalStageTableName);
-    for (var item in data) {
-      listItemStageModel.add(ItemStageModel.fromJson(item));
-    }
+    listItemStageModel +=
+        data.map((item) => ItemStageModel.fromJson(item)).toList();
     return listItemStageModel;
   }
 }

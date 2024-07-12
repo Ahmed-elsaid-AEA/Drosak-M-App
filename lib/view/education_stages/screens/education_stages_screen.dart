@@ -19,7 +19,7 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = EducationStagesController(EducationStageOperation());
+    _controller = EducationStagesController();
   }
 
   @override

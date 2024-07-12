@@ -17,10 +17,11 @@ class CustomAddNewEducationStage extends StatelessWidget {
     super.key,
     required this.controllerNameEducationStage,
     required this.controllerDescEducationStage,
-    required this.onPressed,
+    required this.onPressedAdd, this.onPressedPickImage,
   });
 
-  final VoidCallback onPressed;
+  final VoidCallback onPressedAdd;
+  final VoidCallback? onPressedPickImage;
 
   final TextEditingController controllerNameEducationStage;
   final TextEditingController controllerDescEducationStage;
@@ -57,7 +58,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
                     ),
                     HorizontalSpace(WidthManager.w6),
                     IconButton.filled(
-                        onPressed: () {},
+                        onPressed: onPressedPickImage,
                         style: ElevatedButton.styleFrom(
                             backgroundColor: ColorManager.kPrimaryColor),
                         icon: SvgPicture.asset(
@@ -72,7 +73,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
                 ),
                 VerticalSpace(HeightManager.h40),
                 CustomMaterialButton(
-                    onPressed: onPressed, text: ConstValue.kAdd)
+                    onPressed: onPressedAdd, text: ConstValue.kAdd)
               ],
             ),
           ),

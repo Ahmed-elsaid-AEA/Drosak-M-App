@@ -12,6 +12,7 @@ import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/generated/assets.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomItemStage extends StatelessWidget {
   const CustomItemStage({
@@ -104,13 +105,17 @@ class CustomItemStage extends StatelessWidget {
                 ),
                 HorizontalSpace(WidthManager.w7),
                 ClipRRect(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(RadiusValuesManager.br50)),
                   child: Image.file(
-                    errorBuilder: (context, error, stackTrace) => true
-                        ? Text("not found",style: TextStyle(color: ColorManager.kWhiteColor),)
-                        : Image.asset(Assets.imagesTest),
+                    errorBuilder: (context, error, stackTrace) =>
+                        SvgPicture.asset(
+                      Assets.assetsImagesPlaceholderSvg,
+                      width: WidthManager.w50,
+                    ),
                     File(itemStageModel.image),
-                    height: HeightManager.h64,
-                    width: WidthManager.w64,
+                    height: HeightManager.h50,
+                    width: WidthManager.w50,
                   ),
                 )
               ],

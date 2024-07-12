@@ -9,7 +9,7 @@ class EducationStagesController {
   List<ItemStageModel> listItemStageModel = [];
   TextEditingController controllerNameEducationStage = TextEditingController();
   TextEditingController controllerDescEducationStage = TextEditingController();
-  String pathImage = '';
+  String? pathImage;
 
   EducationStagesController() {
     init();
@@ -37,6 +37,7 @@ class EducationStagesController {
       isScrollControlled: true,
       context: context,
       builder: (context) => CustomAddNewEducationStage(
+        pathImage: pathImage,
         onPressedPickImage: () {
           pickImageFromGallery();
         },
@@ -45,6 +46,12 @@ class EducationStagesController {
         onPressedAdd: () {
           addNewEducation();
         },
+        onPressedDeleteImage: () {
+          pathImage = null;
+          print(pathImage);
+
+        },
+
       ),
     );
   }
@@ -57,7 +64,7 @@ class EducationStagesController {
             id: 0,
             stageName: controllerNameEducationStage.text,
             desc: controllerDescEducationStage.text,
-            image: pathImage));
+            image: pathImage == null ? "" : pathImage!));
     print(inserted);
   }
 }

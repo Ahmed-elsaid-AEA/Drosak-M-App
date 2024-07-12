@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
@@ -17,12 +19,17 @@ class CustomAddNewEducationStage extends StatelessWidget {
     super.key,
     required this.controllerNameEducationStage,
     required this.controllerDescEducationStage,
-    required this.onPressedAdd, this.onPressedPickImage,
+    required this.onPressedAdd,
+    required this.onPressedPickImage,
+    this.pathImage,
+    required this.onPressedDeleteImage,
   });
 
   final VoidCallback onPressedAdd;
-  final VoidCallback? onPressedPickImage;
+  final VoidCallback onPressedPickImage;
+  final VoidCallback onPressedDeleteImage;
 
+  final String? pathImage;
   final TextEditingController controllerNameEducationStage;
   final TextEditingController controllerDescEducationStage;
 
@@ -71,7 +78,30 @@ class CustomAddNewEducationStage extends StatelessWidget {
                   controller: controllerDescEducationStage,
                   hintText: ConstValue.kDescEducationalStage,
                 ),
-                VerticalSpace(HeightManager.h40),
+                VerticalSpace(HeightManager.h24),
+                if (pathImage != null)
+                  Stack(
+                    children: [
+                      Image.file(
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Text(
+                            "not found",
+                            style: TextStyle(color: Colors.white),
+                          );
+                        },
+                        File(pathImage!),
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                      IconButton.filled(
+                        onPressed: onPressedDeleteImage,
+                        icon: const Icon(Icons.delete),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                      ),
+                    ],
+                  ),
+                VerticalSpace(HeightManager.h24),
                 CustomMaterialButton(
                     onPressed: onPressedAdd, text: ConstValue.kAdd)
               ],

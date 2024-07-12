@@ -60,17 +60,11 @@ class EducationStagesController {
     inputDataListItemStageModel.add(listItemStageModel);
   }
 
-  void pickImageFromGallery() async {
+  void pickImage(ImageSource imageSource) async {
     final ImagePicker picker = ImagePicker();
-    var image = await picker.pickImage(source: ImageSource.gallery);
+    var image = await picker.pickImage(source: imageSource);
     if (image != null) pathImage = image.path;
     inputPathImage.add(pathImage);
-  }
-
-  void pickImageFromCamera() async {
-    final ImagePicker picker = ImagePicker();
-    var image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) print(image.path);
   }
 
   void openBottomSheet({required BuildContext context}) {
@@ -136,7 +130,7 @@ class EducationStagesController {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorManager.kPrimaryColor),
                 onPressed: () {
-                  pickImageFromGallery();
+                  pickImage(ImageSource.gallery);
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.image)),
@@ -146,7 +140,9 @@ class EducationStagesController {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorManager.kPrimaryColor),
                 onPressed: () {
-                  pickImageFromCamera();
+                  pickImage(ImageSource.camera);
+                  Navigator.pop(context);
+
                 },
                 icon: const Icon(Icons.camera_alt)),
           ],

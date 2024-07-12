@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
@@ -10,14 +12,31 @@ class EducationStagesController {
   TextEditingController controllerNameEducationStage = TextEditingController();
   TextEditingController controllerDescEducationStage = TextEditingController();
   String? pathImage;
+  late StreamController<List<ItemStageModel>> controllerListItemStageModel;
+  late Sink<List<ItemStageModel>> inputDataListItemStageModel;
+  late Stream<List<ItemStageModel>> outPutDataListItemStageModel;
 
   EducationStagesController() {
     init();
   }
 
+  void initControllers() {
+    controllerListItemStageModel = StreamController();
+    inputDataListItemStageModel = controllerListItemStageModel.sink;
+    outPutDataListItemStageModel = controllerListItemStageModel.stream;
+    inputDataListItemStageModel.add(listItemStageModel);
+  }
+
+  void disposeControllers() {
+    inputDataListItemStageModel.close();
+    controllerListItemStageModel.close();
+  }
+
   init() async {
+    initControllers();
     EducationStageOperation educationStageOperation = EducationStageOperation();
     listItemStageModel = await educationStageOperation.getAllEducationData();
+    inputDataListItemStageModel.add(listItemStageModel);
   }
 
   void pickImageFromGallery() async {
@@ -49,9 +68,7 @@ class EducationStagesController {
         onPressedDeleteImage: () {
           pathImage = null;
           print(pathImage);
-
         },
-
       ),
     );
   }

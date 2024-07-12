@@ -35,7 +35,8 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
               },
             ),
             CustomListViewItemsStages(
-              listItemStageModel: _controller.listItemStageModel,
+              outPutDataListItemStageModel:
+                  _controller.outPutDataListItemStageModel,
             )
           ],
         ),

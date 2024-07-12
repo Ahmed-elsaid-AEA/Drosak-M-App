@@ -101,7 +101,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
                       ),
                     ],
                   ),
-                VerticalSpace(HeightManager.h24),
+                if (pathImage != null) VerticalSpace(HeightManager.h24),
                 CustomMaterialButton(
                     onPressed: onPressedAdd, text: ConstValue.kAdd)
               ],

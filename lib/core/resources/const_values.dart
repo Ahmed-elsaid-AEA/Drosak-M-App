@@ -25,6 +25,7 @@ class ConstValue {
   static const String kPaying = 'الدفع';
   static const String kScreenIndex = 'currentIndex';
   static const String kAdd = 'إضافه';
+  static const String kCantEmpty = 'لا يمكن ان يكون الحقل فارغ';
 }
 
 class ConstListValues {

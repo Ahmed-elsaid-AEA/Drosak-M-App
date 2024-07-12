@@ -24,6 +24,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
     required this.onPressedPickImage,
     required this.onPressedDeleteImage,
     required this.outPathImage,
+    required this.formKey,
   });
 
   final VoidCallback onPressedAdd;
@@ -32,10 +33,10 @@ class CustomAddNewEducationStage extends StatelessWidget {
   final TextEditingController controllerNameEducationStage;
   final TextEditingController controllerDescEducationStage;
   final Stream<String?> outPathImage;
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).viewInsets.bottom);
     return Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -58,9 +59,19 @@ class CustomAddNewEducationStage extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: CustomTextFormField(
-                        controller: controllerNameEducationStage,
-                        hintText: ConstValue.kNameEducationalStages,
+                      child: Form(
+                        key: formKey,
+                        child: CustomTextFormField(
+                          validator: (value) {
+                            if (value == null || value == '') {
+                              return ConstValue.kCantEmpty;
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: controllerNameEducationStage,
+                          hintText: ConstValue.kNameEducationalStages,
+                        ),
                       ),
                     ),
                     HorizontalSpace(WidthManager.w6),
@@ -82,8 +93,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
                 StreamBuilder(
                     stream: outPathImage,
                     builder: (context, snapshot) {
-                      print(snapshot.connectionState);
-                      print(snapshot.data);
+
                       return snapshot.connectionState == ConnectionState.waiting
                           ? const Center(
                               child: CupertinoActivityIndicator(),
@@ -119,8 +129,8 @@ class CustomAddNewEducationStage extends StatelessWidget {
                                 )
                               : const SizedBox();
                     }),
-                  CustomMaterialButton(
-                      onPressed: onPressedAdd, text: ConstValue.kAdd)
+                CustomMaterialButton(
+                    onPressed: onPressedAdd, text: ConstValue.kAdd)
               ],
             ),
           ),

@@ -18,6 +18,7 @@ class EducationStagesController {
   late StreamController<String?> controllerPathImage;
   late Sink<String?> inputPathImage;
   late Stream<String?> outPutPathImage;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   EducationStagesController() {
     init();
@@ -78,19 +79,21 @@ class EducationStagesController {
         controllerNameEducationStage: controllerNameEducationStage,
         controllerDescEducationStage: controllerDescEducationStage,
         onPressedAdd: () async {
-          bool inserted = await addNewEducation();
-          if (inserted == true) {
-            Navigator.pop(context);
+          if (formKey.currentState!.validate() == true) {
+            bool inserted = await addNewEducation();
+            if (inserted == true) {
+              Navigator.pop(context);
 
-            pathImage = null;
-            listItemStageModel.add(ItemStageModel(
-                id: listItemStageModel.length + 1,
-                stageName: controllerNameEducationStage.text,
-                desc: controllerDescEducationStage.text,
-                image: pathImage == null ? "" : pathImage!));
-            inputDataListItemStageModel.add(listItemStageModel);
-            controllerNameEducationStage.clear();
-            controllerDescEducationStage.clear();
+              listItemStageModel.add(ItemStageModel(
+                  id: listItemStageModel.length + 1,
+                  stageName: controllerNameEducationStage.text,
+                  desc: controllerDescEducationStage.text,
+                  image: pathImage == null ? "" : pathImage!));
+              inputDataListItemStageModel.add(listItemStageModel);
+              controllerNameEducationStage.clear();
+              controllerDescEducationStage.clear();
+              pathImage = null;
+            }
           }
         },
         onPressedDeleteImage: () {
@@ -98,6 +101,7 @@ class EducationStagesController {
           inputPathImage.add(pathImage);
         },
         outPathImage: outPutPathImage,
+        formKey: formKey,
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
@@ -7,6 +9,7 @@ import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
+import 'package:drosak_m_app/generated/assets.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:flutter/material.dart';
 
@@ -101,8 +104,11 @@ class CustomItemStage extends StatelessWidget {
                 ),
                 HorizontalSpace(WidthManager.w7),
                 ClipRRect(
-                  child: Image.asset(
-                    itemStageModel.image,
+                  child: Image.file(
+                    errorBuilder: (context, error, stackTrace) => true
+                        ? Text("not found",style: TextStyle(color: ColorManager.kWhiteColor),)
+                        : Image.asset(Assets.imagesTest),
+                    File(itemStageModel.image),
                     height: HeightManager.h64,
                     width: WidthManager.w64,
                   ),

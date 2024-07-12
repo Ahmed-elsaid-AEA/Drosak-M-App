@@ -17,8 +17,7 @@ class EducationStagesController {
 
   init() async {
     EducationStageOperation educationStageOperation = EducationStageOperation();
-    var a = await educationStageOperation.getAllEducationData();
-    print(a);
+    listItemStageModel = await educationStageOperation.getAllEducationData();
   }
 
   void pickImageFromGallery() async {

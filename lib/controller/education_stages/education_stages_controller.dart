@@ -26,20 +26,29 @@ class EducationStagesController {
   void initControllers() {
     controllerListItemStageModel = StreamController();
     inputDataListItemStageModel = controllerListItemStageModel.sink;
-    outPutDataListItemStageModel = controllerListItemStageModel.stream;
+    outPutDataListItemStageModel =
+        controllerListItemStageModel.stream.asBroadcastStream();
     controllerPathImage = StreamController();
     inputPathImage = controllerPathImage.sink;
-    outPutPathImage = controllerPathImage.stream;
+    outPutPathImage = controllerPathImage.stream.asBroadcastStream();
     inputPathImage.add(pathImage);
   }
 
   void disposeControllers() {
     inputDataListItemStageModel.close();
     controllerListItemStageModel.close();
+    inputPathImage.close();
+    controllerPathImage.close();
+    controllerNameEducationStage.dispose();
+    controllerDescEducationStage.dispose();
   }
 
   init() async {
     initControllers();
+    getAllItemList();
+  }
+
+  void getAllItemList() async {
     EducationStageOperation educationStageOperation = EducationStageOperation();
     listItemStageModel = await educationStageOperation.getAllEducationData();
     inputDataListItemStageModel.add(listItemStageModel);
@@ -68,8 +77,21 @@ class EducationStagesController {
         },
         controllerNameEducationStage: controllerNameEducationStage,
         controllerDescEducationStage: controllerDescEducationStage,
-        onPressedAdd: () {
-          addNewEducation();
+        onPressedAdd: () async {
+          bool inserted = await addNewEducation();
+          if (inserted == true) {
+            Navigator.pop(context);
+
+            pathImage = null;
+            listItemStageModel.add(ItemStageModel(
+                id: listItemStageModel.length + 1,
+                stageName: controllerNameEducationStage.text,
+                desc: controllerDescEducationStage.text,
+                image: pathImage == null ? "" : pathImage!));
+            inputDataListItemStageModel.add(listItemStageModel);
+            controllerNameEducationStage.clear();
+            controllerDescEducationStage.clear();
+          }
         },
         onPressedDeleteImage: () {
           pathImage = null;
@@ -80,15 +102,15 @@ class EducationStagesController {
     );
   }
 
-  void addNewEducation() async {
+  Future<bool> addNewEducation() async {
     EducationStageOperation educationStageOperation = EducationStageOperation();
-    print(pathImage);
+
     bool inserted = await educationStageOperation.insertEducationDetails(
         ItemStageModel(
             id: 0,
             stageName: controllerNameEducationStage.text,
             desc: controllerDescEducationStage.text,
             image: pathImage == null ? "" : pathImage!));
-    print(inserted);
+    return inserted;
   }
 }

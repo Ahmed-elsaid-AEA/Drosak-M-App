@@ -10,6 +10,8 @@ import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/body/custom_add_new_eudcation_stage.dart';
+import 'package:drosak_m_app/view/education_stages/widgets/body/custom_list_view_items_stages.dart';
+import 'package:drosak_m_app/view/education_stages/widgets/search/custom_search_delegeate_education_stage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -188,50 +190,7 @@ class EducationStagesController {
   }
 
   void showCustomSearch(BuildContext context) {
-    showSearch(context: context, delegate: CustomSearchDelegated());
+    showSearch(context: context, delegate: CustomSearchDelegetedEducationStageScreen());
   }
 }
 
-class CustomSearchDelegated extends SearchDelegate<String> {
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-          onPressed: () {
-            query = '';
-          },
-          icon: const Icon(Icons.close))
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          close(context, '');
-        },
-        icon: const Icon(Icons.arrow_back));
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    EducationStageOperation educationStageOperation = EducationStageOperation();
-    educationStageOperation.getSearchWord(searchWord: query);
-    return const Center(
-      child: Text(
-        "buildResults",
-        style: TextStyle(color: ColorManager.kWhiteColor),
-      ),
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return Center(
-      child: Text(
-        "buildSuggestions",
-        style: TextStyle(color: ColorManager.kWhiteColor),
-      ),
-    );
-  }
-}

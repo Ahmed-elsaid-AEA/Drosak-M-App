@@ -12,8 +12,10 @@ class EducationStageOperation extends MySqFLiteDatabase {
 
   Future<List<ItemStageModel>> getAllEducationData() async {
     List<ItemStageModel> listItemStageModel = [];
-    List<Map<String, Object?>> data =
-        await select(tableName: MySqFLiteDatabase.educationalStageTableName);
+    List<Map<String, Object?>> data = await select(
+        tableName: MySqFLiteDatabase.educationalStageTableName,
+        where: '${MySqFLiteDatabase.educationalStageStatus}==?',
+        whereArgs: ['1']);
     listItemStageModel +=
         data.map((item) => ItemStageModel.fromJson(item)).toList();
     log(listItemStageModel.toString());
@@ -27,7 +29,7 @@ class EducationStageOperation extends MySqFLiteDatabase {
           MySqFLiteDatabase.educationalStageStatus: 0,
         },
         where:
-            ' ${MySqFLiteDatabase.educationalStageStatus}==${itemStageModel.id}');
+            ' ${MySqFLiteDatabase.educationalStageID}==${itemStageModel.id}');
   }
 
   Future<List<ItemStageModel>> getSearchWord(

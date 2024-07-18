@@ -18,7 +18,7 @@ class MySqFLiteDatabase extends CRUD {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 6;
+    int versionDataBase = 7;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
@@ -95,9 +95,12 @@ class MySqFLiteDatabase extends CRUD {
   @override
   Future<List<Map<String, Object?>>> select({
     required String tableName,
+    String? where,
+    List<Object?>? whereArgs,
   }) async {
     await _initDatabase();
-    List<Map<String, Object?>> data = await _db!.query(tableName);
+    List<Map<String, Object?>> data =
+        await _db!.query(tableName, where: where, whereArgs: whereArgs);
     await _db!.close();
     return data;
   }

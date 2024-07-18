@@ -38,6 +38,9 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
         body: Column(
           children: [
             CustomAppBarEductionStages(
+              onPressedSearch: () {
+                _controller.showCustomSearch(context);
+              },
               onPressedAdd: () {
                 _controller.openBottomSheet(context: context);
               },

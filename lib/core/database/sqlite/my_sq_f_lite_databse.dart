@@ -17,15 +17,15 @@ class MySqFLiteDatabase extends CRUD {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase =3;
+    int versionDataBase = 3;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
       onCreate: _onCreate,
-      onUpgrade: (db, oldVersion, newVersion)async {
-        await(db.execute('DROP TABLE IF EXISTS $educationalStageTableName'));
+      onUpgrade: (db, oldVersion, newVersion) async {
+        await (db.execute('DROP TABLE IF EXISTS $educationalStageTableName'));
         await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
             " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
             "  $educationalStageName TEXT , "
@@ -95,6 +95,19 @@ class MySqFLiteDatabase extends CRUD {
   }) async {
     await _initDatabase();
     List<Map<String, Object?>> data = await _db!.query(tableName);
+    await _db!.close();
+    return data;
+  }
+
+  @override
+  Future<List<Map<String, Object?>>> search(
+      {required String tableName, required String searchWord}) async {
+    await _initDatabase();
+    List<Map<String, Object?>> data = await _db!.query(
+      tableName,
+      where: '$educationalStageName LIKE ?',
+      whereArgs: ['%$searchWord%'],
+    );
     await _db!.close();
     return data;
   }

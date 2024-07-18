@@ -17,4 +17,15 @@ class EducationStageOperation extends MySqFLiteDatabase {
     print(listItemStageModel);
     return listItemStageModel;
   }
+
+  Future<List<ItemStageModel>> getSearchWord({required String searchWord}) async {
+    List<ItemStageModel> listItemStageModel = [];
+    List<Map<String, Object?>> data = await search(
+        tableName: MySqFLiteDatabase.educationalStageTableName,
+        searchWord: searchWord);
+    listItemStageModel +=
+        data.map((item) => ItemStageModel.fromJson(item)).toList();
+    print(listItemStageModel);
+    return listItemStageModel;
+  }
 }

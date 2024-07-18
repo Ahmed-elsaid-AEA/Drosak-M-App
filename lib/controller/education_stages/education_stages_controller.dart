@@ -82,7 +82,6 @@ class EducationStagesController {
 
   void openBottomSheet({required BuildContext context}) {
     showModalBottomSheet(
-
       isScrollControlled: true,
       context: context,
       builder: (context) => CustomAddNewEducationStage(
@@ -184,6 +183,54 @@ class EducationStagesController {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  void showCustomSearch(BuildContext context) {
+    showSearch(context: context, delegate: CustomSearchDelegated());
+  }
+}
+
+class CustomSearchDelegated extends SearchDelegate<String> {
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+          onPressed: () {
+            query = '';
+          },
+          icon: const Icon(Icons.close))
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          close(context, '');
+        },
+        icon: const Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    EducationStageOperation educationStageOperation = EducationStageOperation();
+    educationStageOperation.getSearchWord(searchWord: query);
+    return const Center(
+      child: Text(
+        "buildResults",
+        style: TextStyle(color: ColorManager.kWhiteColor),
+      ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Center(
+      child: Text(
+        "buildSuggestions",
+        style: TextStyle(color: ColorManager.kWhiteColor),
       ),
     );
   }

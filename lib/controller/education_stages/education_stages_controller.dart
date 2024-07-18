@@ -69,10 +69,55 @@ class EducationStagesController {
     bool update = await educationStageOperation.softDelete(itemStageModel);
     listItemStageModel
         .removeWhere((element) => element.id == itemStageModel.id);
-
   }
 
-  void editItemStage(ItemStageModel itemStageModel) {}
+  void editItemStage(ItemStageModel itemStageModel, BuildContext context) {
+    controllerNameEducationStage.text = itemStageModel.stageName;
+    controllerDescEducationStage.text = itemStageModel.desc;
+    pathImage = itemStageModel.image;
+    inputPathImage.add(pathImage);
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => CustomAddNewEducationStage(
+        edit: true,
+        onPressedPickImage: () {
+          showCustomDialogChooseImage(context);
+        },
+        controllerNameEducationStage: controllerNameEducationStage,
+        controllerDescEducationStage: controllerDescEducationStage,
+        onPressedAdd: () async {
+          if (formKey.currentState!.validate() == true) {
+            bool edit = await editEducation(ItemStageModel(
+                id: itemStageModel.id,
+                stageName: controllerNameEducationStage.text,
+                desc: controllerDescEducationStage.text,
+                image: pathImage == null ? "" : pathImage!));
+            print(edit);
+            if (edit == true) {
+              Navigator.pop(context);
+
+              // listItemStageModel.add(ItemStageModel(
+              //     id: listItemStageModel.length + 1,
+              //     stageName: controllerNameEducationStage.text,
+              //     desc: controllerDescEducationStage.text,
+              //     image: pathImage == null ? "" : pathImage!));
+              inputDataListItemStageModel.add(listItemStageModel);
+              controllerNameEducationStage.clear();
+              controllerDescEducationStage.clear();
+              pathImage = null;
+            }
+          }
+        },
+        onPressedDeleteImage: () {
+          pathImage = null;
+          inputPathImage.add(pathImage);
+        },
+        outPathImage: outPutPathImage,
+        formKey: formKey,
+      ),
+    );
+  }
 
   void pickImage(ImageSource imageSource) async {
     final ImagePicker picker = ImagePicker();
@@ -93,6 +138,10 @@ class EducationStagesController {
   }
 
   void openBottomSheet({required BuildContext context}) {
+    controllerDescEducationStage.clear();
+    controllerNameEducationStage.clear();
+    pathImage = null;
+    inputPathImage.add(pathImage);
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -140,6 +189,14 @@ class EducationStagesController {
             desc: controllerDescEducationStage.text,
             image: pathImage == null ? "" : pathImage!));
     return inserted;
+  }
+
+  Future<bool> editEducation(ItemStageModel itemStageModel) async {
+    EducationStageOperation educationStageOperation = EducationStageOperation();
+
+    bool updated =
+        await educationStageOperation.editEducationStage(itemStageModel);
+    return updated;
   }
 
   void showCustomDialogChooseImage(BuildContext context) {

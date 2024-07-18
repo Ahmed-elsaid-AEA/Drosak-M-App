@@ -122,9 +122,11 @@ class MySqFLiteDatabase extends CRUD {
   Future<bool> update(
       {required String tableName,
       required Map<String, Object?> values,
+      List<Object?>? whereArgs,
       required String where}) async {
     await _initDatabase();
-    int deleted = await _db!.update(tableName, values, where: where);
+    int deleted = await _db!
+        .update(tableName, values, where: where, whereArgs: whereArgs);
     await _db!.close();
     return deleted > 0 ? true : false;
   }

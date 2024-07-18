@@ -32,6 +32,17 @@ class EducationStageOperation extends MySqFLiteDatabase {
             ' ${MySqFLiteDatabase.educationalStageID}==${itemStageModel.id}');
   }
 
+  Future<bool> editEducationStage(ItemStageModel itemStageModel) async {
+    print(itemStageModel.id);
+    return await update(
+        tableName: MySqFLiteDatabase.educationalStageTableName,
+        values: {
+          MySqFLiteDatabase.educationalStageName:itemStageModel.stageName
+        },
+        where:
+            ' ${MySqFLiteDatabase.educationalStageID}=?',whereArgs: ['${itemStageModel.id}']);
+  }
+
   Future<List<ItemStageModel>> getSearchWord(
       {required String searchWord}) async {
     List<ItemStageModel> listItemStageModel = [];

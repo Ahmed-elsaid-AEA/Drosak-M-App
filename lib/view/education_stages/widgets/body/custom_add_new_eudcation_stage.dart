@@ -25,6 +25,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
     required this.onPressedDeleteImage,
     required this.outPathImage,
     required this.formKey,
+    this.edit = false,
   });
 
   final VoidCallback onPressedAdd;
@@ -34,6 +35,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
   final TextEditingController controllerDescEducationStage;
   final Stream<String?> outPathImage;
   final GlobalKey<FormState> formKey;
+  final bool edit;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +95,6 @@ class CustomAddNewEducationStage extends StatelessWidget {
                 StreamBuilder(
                     stream: outPathImage,
                     builder: (context, snapshot) {
-
                       return snapshot.connectionState == ConnectionState.waiting
                           ? const Center(
                               child: CupertinoActivityIndicator(),
@@ -130,7 +131,8 @@ class CustomAddNewEducationStage extends StatelessWidget {
                               : const SizedBox();
                     }),
                 CustomMaterialButton(
-                    onPressed: onPressedAdd, text: ConstValue.kAdd)
+                    onPressed: onPressedAdd,
+                    text: edit == true ? ConstValue.kEdit : ConstValue.kAdd)
               ],
             ),
           ),

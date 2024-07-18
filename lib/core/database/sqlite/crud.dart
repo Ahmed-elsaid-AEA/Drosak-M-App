@@ -6,7 +6,9 @@ abstract class CRUD {
 
   Future<bool> update(
       {required String tableName,
-      required Map<String, Object?> values,
+        List<Object?>? whereArgs,
+
+        required Map<String, Object?> values,
       required String where});
 
   Future<bool> delete({required String tableName, required String where});

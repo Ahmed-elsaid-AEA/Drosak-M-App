@@ -29,6 +29,10 @@ class ConstValue {
   static const String kEdit = 'تعديل';
   static const String kContentSearch = 'محتوي البحث';
   static const String kChooseFrom = 'اختر من ...';
+  static const String kAreYouSureToDeleteItem = 'هل أنت متاكد من حذف العنصر..؟';
+  static const String kSure = 'متاكد';
+  static const String kNo = 'لا';
+  static const String kYes = 'نعم';
   static const String kCantEmpty = 'لا يمكن ان يكون الحقل فارغ';
 }
 

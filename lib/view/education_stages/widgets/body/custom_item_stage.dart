@@ -30,13 +30,41 @@ class CustomItemStage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      onDismissed: (direction) {
+      confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          deleteFun(itemStageModel);
+          bool? confirmDelete = await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text(ConstValue.kAreYouSureToDeleteItem),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      deleteFun(itemStageModel);
+                      Navigator.of(context).pop(true);
+                    },
+                    child: const Text(ConstValue.kSure)),
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    child: const Text(ConstValue.kNo)),
+              ],
+            ),
+          );
+          return confirmDelete;
         } else if (direction == DismissDirection.endToStart) {
           editFun(itemStageModel);
+          return false;
         }
+        return false;
       },
+      // onDismissed: (direction) {
+      //   if (direction == DismissDirection.startToEnd) {
+      //     deleteFun(itemStageModel);
+      //   } else if (direction == DismissDirection.endToStart) {
+      //     editFun(itemStageModel);
+      //   }
+      // },
       direction: DismissDirection.horizontal,
       background: Container(
         color: Colors.red,

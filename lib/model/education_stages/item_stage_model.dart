@@ -5,12 +5,12 @@ class ItemStageModel {
   final String stageName;
   final String desc;
   final String image;
+  String? createdAt;
 
   @override
   String toString() {
-    return 'ItemStageModel{id: $id, stageName: $stageName, desc: $desc, image: $image}';
+    return 'ItemStageModel{id: $id, stageName: $stageName, desc: $desc, image: $image, createdAt: $createdAt}';
   }
-
 
   Map<String, dynamic> toJson() {
     return {
@@ -20,11 +20,12 @@ class ItemStageModel {
     };
   }
 
-  const ItemStageModel({
+  ItemStageModel({
     required this.id,
     required this.stageName,
     required this.desc,
     required this.image,
+    this.createdAt,
   });
 
   factory ItemStageModel.fromJson(Map json) {
@@ -32,6 +33,7 @@ class ItemStageModel {
         id: int.parse(json['id'].toString()),
         stageName: json['name'].toString(),
         desc: json['desc'].toString(),
+        createdAt: json['created_at'].toString(),
         image: json['image'].toString());
   }
 }

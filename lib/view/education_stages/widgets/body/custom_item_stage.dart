@@ -99,7 +99,15 @@ class CustomItemStage extends StatelessWidget {
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      if (itemStageModel.createdAt != null)
+                        Text(
+                          itemStageModel.createdAt!,
+                          style: TextStyle(
+                              color: ColorManager.kWhiteColor.withOpacity(.6),
+                              fontFamily: FontsName.geDinerOneFont,
+                              fontSize: FontsSize.f9),
+                        )
                     ],
                   ),
                 ),

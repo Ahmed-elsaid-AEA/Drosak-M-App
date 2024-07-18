@@ -82,6 +82,7 @@ class EducationStagesController {
 
   void openBottomSheet({required BuildContext context}) {
     showModalBottomSheet(
+
       isScrollControlled: true,
       context: context,
       builder: (context) => CustomAddNewEducationStage(

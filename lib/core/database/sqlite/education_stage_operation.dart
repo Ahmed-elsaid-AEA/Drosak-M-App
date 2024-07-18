@@ -14,6 +14,7 @@ class EducationStageOperation extends MySqFLiteDatabase {
         await select(tableName: MySqFLiteDatabase.educationalStageTableName);
     listItemStageModel +=
         data.map((item) => ItemStageModel.fromJson(item)).toList();
+    print(listItemStageModel);
     return listItemStageModel;
   }
 }

@@ -11,19 +11,27 @@ class MySqFLiteDatabase extends CRUD {
   static const String educationalStageName = 'name';
   static const String educationalStageDesc = 'desc';
   static const String educationalStageImage = 'image';
+  static const String educationalStageCreatedAt = 'created_at';
 
   Future<Database> _initDatabase() async {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 1;
+    int versionDataBase =3;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
       onCreate: _onCreate,
-      onUpgrade: (db, oldVersion, newVersion) {
+      onUpgrade: (db, oldVersion, newVersion)async {
+        await(db.execute('DROP TABLE IF EXISTS $educationalStageTableName'));
+        await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
+            " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            "  $educationalStageName TEXT , "
+            "  $educationalStageDesc TEXT , "
+            "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
+            "  $educationalStageImage  TEXT )");
         print(db);
         print(oldVersion);
         print(newVersion);
@@ -38,6 +46,7 @@ class MySqFLiteDatabase extends CRUD {
         " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $educationalStageName TEXT , "
         "  $educationalStageDesc TEXT , "
+        "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
         "  $educationalStageImage  TEXT )");
 
     /* await db.execute(
@@ -101,6 +110,5 @@ class MySqFLiteDatabase extends CRUD {
     return deleted > 0 ? true : false;
   }
 }
-
 
 // users // products // sales

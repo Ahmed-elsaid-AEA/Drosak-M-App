@@ -6,10 +6,11 @@ class ItemStageModel {
   final String desc;
   final String image;
   String? createdAt;
+  int status;
 
   @override
   String toString() {
-    return 'ItemStageModel{id: $id, stageName: $stageName, desc: $desc, image: $image, createdAt: $createdAt}';
+    return 'ItemStageModel{id: $id, stageName: $stageName, desc: $desc, image: $image, createdAt: $createdAt, status: $status}';
   }
 
   Map<String, dynamic> toJson() {
@@ -25,6 +26,7 @@ class ItemStageModel {
     required this.stageName,
     required this.desc,
     required this.image,
+    this.status = 1,
     this.createdAt,
   });
 
@@ -34,6 +36,7 @@ class ItemStageModel {
         stageName: json['name'].toString(),
         desc: json['desc'].toString(),
         createdAt: json['created_at'].toString(),
-        image: json['image'].toString());
+        image: json['image'].toString(),
+        status: json['status']);
   }
 }

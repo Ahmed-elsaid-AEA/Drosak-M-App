@@ -2,6 +2,7 @@ import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
+import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/search/custom_list_search_education_stage_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +53,10 @@ class CustomSearchDelegatedEducationStageScreen extends SearchDelegate<String> {
         ? const SizedBox()
         : CustomListSearchEducationStageScreen(
             getSearchItemStage:
-                educationStageOperation.getSearchWord(searchWord: query));
+                educationStageOperation.getSearchWord(searchWord: query),
+            editFun: (ItemStageModel itemStageModel) {},
+            deleteFun: (ItemStageModel itemStageModel) {},
+          );
   }
 
   @override

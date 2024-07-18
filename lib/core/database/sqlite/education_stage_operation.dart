@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:drosak_m_app/core/database/sqlite/my_sq_f_lite_databse.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 
@@ -14,8 +16,18 @@ class EducationStageOperation extends MySqFLiteDatabase {
         await select(tableName: MySqFLiteDatabase.educationalStageTableName);
     listItemStageModel +=
         data.map((item) => ItemStageModel.fromJson(item)).toList();
-    print(listItemStageModel);
+    log(listItemStageModel.toString());
     return listItemStageModel;
+  }
+
+  Future<bool> softDelete(ItemStageModel itemStageModel) async {
+    return await update(
+        tableName: MySqFLiteDatabase.educationalStageTableName,
+        values: {
+          MySqFLiteDatabase.educationalStageStatus: 0,
+        },
+        where:
+            ' ${MySqFLiteDatabase.educationalStageStatus}==${itemStageModel.id}');
   }
 
   Future<List<ItemStageModel>> getSearchWord(
@@ -26,7 +38,7 @@ class EducationStageOperation extends MySqFLiteDatabase {
         searchWord: searchWord);
     listItemStageModel +=
         data.map((item) => ItemStageModel.fromJson(item)).toList();
- 
+
     return listItemStageModel;
   }
 }

@@ -8,9 +8,15 @@ import 'custom_item_stage.dart';
 
 class CustomListViewItemsStages extends StatelessWidget {
   const CustomListViewItemsStages(
-      {super.key, required this.outPutDataListItemStageModel});
+      {super.key,
+      required this.outPutDataListItemStageModel,
+      required this.deleteFun,
+      required this.editFun});
 
   final Stream<List<ItemStageModel>> outPutDataListItemStageModel;
+
+  final void Function(ItemStageModel itemStageModel) deleteFun;
+  final void Function(ItemStageModel itemStageModel) editFun;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +34,8 @@ class CustomListViewItemsStages extends StatelessWidget {
                         index == snapshot.data!.length
                             ? VerticalSpace(HeightManager.h24)
                             : CustomItemStage(
+                                deleteFun: deleteFun,
+                                editFun: editFun,
                                 itemStageModel: snapshot.data![index],
                               ),
                     separatorBuilder: (context, index) =>

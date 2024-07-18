@@ -12,12 +12,13 @@ class MySqFLiteDatabase extends CRUD {
   static const String educationalStageDesc = 'desc';
   static const String educationalStageImage = 'image';
   static const String educationalStageCreatedAt = 'created_at';
+  static const String educationalStageStatus = 'status';
 
   Future<Database> _initDatabase() async {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 3;
+    int versionDataBase = 6;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
@@ -30,6 +31,7 @@ class MySqFLiteDatabase extends CRUD {
             " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
             "  $educationalStageName TEXT , "
             "  $educationalStageDesc TEXT , "
+            "  $educationalStageStatus INTEGER DEFAULT 1 , "
             "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
             "  $educationalStageImage  TEXT )");
         print(db);
@@ -46,6 +48,7 @@ class MySqFLiteDatabase extends CRUD {
         " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $educationalStageName TEXT , "
         "  $educationalStageDesc TEXT , "
+        "  $educationalStageStatus INTEGER DEFAULT 1 , "
         "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
         "  $educationalStageImage  TEXT )");
 

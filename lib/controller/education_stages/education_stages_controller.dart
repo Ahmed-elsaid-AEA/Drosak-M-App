@@ -64,6 +64,14 @@ class EducationStagesController {
     inputDataListItemStageModel.add(listItemStageModel);
   }
 
+  void deleteItemStage(ItemStageModel itemStageModel) async {
+    EducationStageOperation educationStageOperation = EducationStageOperation();
+    bool update = await educationStageOperation.softDelete(itemStageModel);
+    print(update);
+  }
+
+  void editItemStage(ItemStageModel itemStageModel) {}
+
   void pickImage(ImageSource imageSource) async {
     final ImagePicker picker = ImagePicker();
     var image = await picker.pickImage(source: imageSource);
@@ -86,37 +94,38 @@ class EducationStagesController {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (context) => CustomAddNewEducationStage(
-        onPressedPickImage: () {
-          showCustomDialogChooseImage(context);
-        },
-        controllerNameEducationStage: controllerNameEducationStage,
-        controllerDescEducationStage: controllerDescEducationStage,
-        onPressedAdd: () async {
-          if (formKey.currentState!.validate() == true) {
-            bool inserted = await addNewEducation();
-            if (inserted == true) {
-              Navigator.pop(context);
+      builder: (context) =>
+          CustomAddNewEducationStage(
+            onPressedPickImage: () {
+              showCustomDialogChooseImage(context);
+            },
+            controllerNameEducationStage: controllerNameEducationStage,
+            controllerDescEducationStage: controllerDescEducationStage,
+            onPressedAdd: () async {
+              if (formKey.currentState!.validate() == true) {
+                bool inserted = await addNewEducation();
+                if (inserted == true) {
+                  Navigator.pop(context);
 
-              listItemStageModel.add(ItemStageModel(
-                  id: listItemStageModel.length + 1,
-                  stageName: controllerNameEducationStage.text,
-                  desc: controllerDescEducationStage.text,
-                  image: pathImage == null ? "" : pathImage!));
-              inputDataListItemStageModel.add(listItemStageModel);
-              controllerNameEducationStage.clear();
-              controllerDescEducationStage.clear();
+                  listItemStageModel.add(ItemStageModel(
+                      id: listItemStageModel.length + 1,
+                      stageName: controllerNameEducationStage.text,
+                      desc: controllerDescEducationStage.text,
+                      image: pathImage == null ? "" : pathImage!));
+                  inputDataListItemStageModel.add(listItemStageModel);
+                  controllerNameEducationStage.clear();
+                  controllerDescEducationStage.clear();
+                  pathImage = null;
+                }
+              }
+            },
+            onPressedDeleteImage: () {
               pathImage = null;
-            }
-          }
-        },
-        onPressedDeleteImage: () {
-          pathImage = null;
-          inputPathImage.add(pathImage);
-        },
-        outPathImage: outPutPathImage,
-        formKey: formKey,
-      ),
+              inputPathImage.add(pathImage);
+            },
+            outPathImage: outPutPathImage,
+            formKey: formKey,
+          ),
     );
   }
 
@@ -136,61 +145,63 @@ class EducationStagesController {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton.filled(
-                iconSize: 50,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorManager.kPrimaryColor),
-                onPressed: () {
-                  pickImage(ImageSource.gallery);
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.image)),
-            HorizontalSpace(WidthManager.w30),
-            IconButton.filled(
-                iconSize: 50,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorManager.kPrimaryColor),
-                onPressed: () {
-                  pickImage(ImageSource.camera);
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.camera_alt)),
-          ],
-        ),
-        icon: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton.filled(
-              iconSize: 10,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                size: 20,
-                Icons.close,
-                color: ColorManager.kWhiteColor,
-              ),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+      builder: (context) =>
+          AlertDialog(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton.filled(
+                    iconSize: 50,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorManager.kPrimaryColor),
+                    onPressed: () {
+                      pickImage(ImageSource.gallery);
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.image)),
+                HorizontalSpace(WidthManager.w30),
+                IconButton.filled(
+                    iconSize: 50,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorManager.kPrimaryColor),
+                    onPressed: () {
+                      pickImage(ImageSource.camera);
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.camera_alt)),
+              ],
             ),
-            Text(
-              ConstValue.kChooseFrom,
-              style: TextStyle(
-                  fontFamily: FontsName.geDinerOneFont,
-                  fontWeight: FontWeight.w900,
-                  fontSize: FontsSize.f15),
-            )
-          ],
-        ),
-      ),
+            icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton.filled(
+                  iconSize: 10,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    size: 20,
+                    Icons.close,
+                    color: ColorManager.kWhiteColor,
+                  ),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                ),
+                Text(
+                  ConstValue.kChooseFrom,
+                  style: TextStyle(
+                      fontFamily: FontsName.geDinerOneFont,
+                      fontWeight: FontWeight.w900,
+                      fontSize: FontsSize.f15),
+                )
+              ],
+            ),
+          ),
     );
   }
 
   void showCustomSearch(BuildContext context) {
-    showSearch(context: context, delegate: CustomSearchDelegatedEducationStageScreen());
+    showSearch(
+        context: context,
+        delegate: CustomSearchDelegatedEducationStageScreen());
   }
 }
-

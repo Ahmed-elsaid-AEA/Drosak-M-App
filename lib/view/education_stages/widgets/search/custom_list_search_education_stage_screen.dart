@@ -7,9 +7,14 @@ import 'package:flutter/cupertino.dart';
 
 class CustomListSearchEducationStageScreen extends StatelessWidget {
   const CustomListSearchEducationStageScreen(
-      {super.key, required this.getSearchItemStage});
+      {super.key,
+      required this.getSearchItemStage,
+      required this.deleteFun,
+      required this.editFun});
 
   final Future<List<ItemStageModel>> getSearchItemStage;
+  final void Function(ItemStageModel itemStageModel) deleteFun;
+  final void Function(ItemStageModel itemStageModel) editFun;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +37,8 @@ class CustomListSearchEducationStageScreen extends StatelessWidget {
                                   ? VerticalSpace(HeightManager.h24)
                                   : CustomItemStage(
                                       itemStageModel: snapshot.data![index],
+                                      editFun: editFun,
+                                      deleteFun: deleteFun,
                                     ),
                           separatorBuilder: (context, index) =>
                               VerticalSpace(HeightManager.h24),

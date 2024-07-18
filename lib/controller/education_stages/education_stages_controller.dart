@@ -190,7 +190,7 @@ class EducationStagesController {
   }
 
   void showCustomSearch(BuildContext context) {
-    showSearch(context: context, delegate: CustomSearchDelegetedEducationStageScreen());
+    showSearch(context: context, delegate: CustomSearchDelegatedEducationStageScreen());
   }
 }
 

@@ -1,9 +1,24 @@
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
+import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/search/custom_list_search_education_stage_screen.dart';
 import 'package:flutter/material.dart';
 
-class CustomSearchDelegetedEducationStageScreen extends SearchDelegate<String> {
+class CustomSearchDelegatedEducationStageScreen extends SearchDelegate<String> {
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    // TODO: implement appBarTheme
+    return super.appBarTheme(context).copyWith(
+        textTheme: super.appBarTheme(context).textTheme.copyWith(
+            titleLarge: TextStyle(
+                color: ColorManager.kWhiteColor, fontSize: FontsSize.f20)),
+        appBarTheme: const AppBarTheme(color: ColorManager.kPrimaryColor),
+        inputDecorationTheme: const InputDecorationTheme(
+          hintStyle: TextStyle(color: ColorManager.kWhiteColor),
+        ));
+  }
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -11,7 +26,10 @@ class CustomSearchDelegetedEducationStageScreen extends SearchDelegate<String> {
           onPressed: () {
             query = '';
           },
-          icon: const Icon(Icons.close))
+          icon: const Icon(
+            Icons.close,
+            color: ColorManager.kWhiteColor,
+          ))
     ];
   }
 
@@ -21,7 +39,10 @@ class CustomSearchDelegetedEducationStageScreen extends SearchDelegate<String> {
         onPressed: () {
           close(context, '');
         },
-        icon: const Icon(Icons.arrow_back));
+        icon: const Icon(
+          Icons.arrow_back,
+          color: ColorManager.kWhiteColor,
+        ));
   }
 
   @override
@@ -38,7 +59,7 @@ class CustomSearchDelegetedEducationStageScreen extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     return const Center(
       child: Text(
-        "buildSuggestions",
+        ConstValue.kContentSearch,
         style: TextStyle(color: ColorManager.kWhiteColor),
       ),
     );

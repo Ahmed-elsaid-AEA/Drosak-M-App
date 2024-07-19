@@ -7,6 +7,12 @@ import 'package:drosak_m_app/view/education_stages/widgets/search/custom_list_se
 import 'package:flutter/material.dart';
 
 class CustomSearchDelegatedEducationStageScreen extends SearchDelegate<String> {
+  CustomSearchDelegatedEducationStageScreen(
+      {required this.deleteFun, required this.editFun});
+
+  final void Function(ItemStageModel itemStageModel) deleteFun;
+  final void Function(ItemStageModel itemStageModel) editFun;
+
   @override
   ThemeData appBarTheme(BuildContext context) {
     // TODO: implement appBarTheme
@@ -54,8 +60,8 @@ class CustomSearchDelegatedEducationStageScreen extends SearchDelegate<String> {
         : CustomListSearchEducationStageScreen(
             getSearchItemStage:
                 educationStageOperation.getSearchWord(searchWord: query),
-            editFun: (ItemStageModel itemStageModel) {},
-            deleteFun: (ItemStageModel itemStageModel) {},
+            editFun: editFun,
+            deleteFun: deleteFun,
           );
   }
 

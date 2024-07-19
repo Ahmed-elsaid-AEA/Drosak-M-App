@@ -95,11 +95,11 @@ class CustomAddNewEducationStage extends StatelessWidget {
                 StreamBuilder(
                     stream: outPathImage,
                     builder: (context, snapshot) {
-                      return snapshot.connectionState == ConnectionState.waiting
+                       return snapshot.connectionState == ConnectionState.waiting
                           ? const Center(
                               child: CupertinoActivityIndicator(),
                             )
-                          : snapshot.data != null
+                          : snapshot.data != null && snapshot.data!.trim() != ''
                               ? Column(
                                   children: [
                                     Stack(

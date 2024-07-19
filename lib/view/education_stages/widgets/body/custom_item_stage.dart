@@ -58,13 +58,6 @@ class CustomItemStage extends StatelessWidget {
         }
         return false;
       },
-      // onDismissed: (direction) {
-      //   if (direction == DismissDirection.startToEnd) {
-      //     deleteFun(itemStageModel);
-      //   } else if (direction == DismissDirection.endToStart) {
-      //     editFun(itemStageModel);
-      //   }
-      // },
       direction: DismissDirection.horizontal,
       background: Container(
         color: Colors.red,

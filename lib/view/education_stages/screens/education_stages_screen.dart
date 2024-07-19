@@ -41,6 +41,8 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
               onPressedAdd: () {
                 _controller.openBottomSheet(context: context);
               },
+              outPutDataListItemStageModel:
+                  _controller.outPutDataListItemStageModel,
             ),
             CustomListViewItemsStages(
               outPutDataListItemStageModel:

@@ -5,13 +5,17 @@ import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../model/education_stages/item_stage_model.dart';
+
 class CustomAppBarEductionStages extends StatelessWidget {
   const CustomAppBarEductionStages({
     super.key,
     this.onPressedAdd,
     this.onPressedSearch,
+    required this.outPutDataListItemStageModel,
   });
 
+  final Stream<List<ItemStageModel>> outPutDataListItemStageModel;
   final VoidCallback? onPressedAdd;
   final VoidCallback? onPressedSearch;
 
@@ -28,13 +32,16 @@ class CustomAppBarEductionStages extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(
-            ConstValue.kEducationalStages,
-            style: TextStyle(
-                fontSize: FontsSize.f15,
-                fontFamily: FontsName.geDinerOneFont,
-                fontWeight: FontWeight.bold,
-                color: ColorManager.kWhiteColor),
+          StreamBuilder<List<ItemStageModel>>(
+            stream: outPutDataListItemStageModel,
+            builder: (context, snapshot) => Text(
+              '${ConstValue.kEducationalStages} ( ${snapshot.data == null ? "0" : snapshot.data!.length.toString()} )',
+              style: TextStyle(
+                  fontSize: FontsSize.f15,
+                  fontFamily: FontsName.geDinerOneFont,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.kWhiteColor),
+            ),
           ),
           const Spacer(),
           IconButton(

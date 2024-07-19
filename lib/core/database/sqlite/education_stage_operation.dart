@@ -36,19 +36,20 @@ class EducationStageOperation extends MySqFLiteDatabase {
     print(itemStageModel.id);
     return await update(
         tableName: MySqFLiteDatabase.educationalStageTableName,
-        values: {
-          MySqFLiteDatabase.educationalStageName:itemStageModel.stageName
-        },
-        where:
-            ' ${MySqFLiteDatabase.educationalStageID}=?',whereArgs: ['${itemStageModel.id}']);
+        values: itemStageModel.toJson(),
+        where: ' ${MySqFLiteDatabase.educationalStageID}=?',
+        whereArgs: ['${itemStageModel.id}']);
   }
 
   Future<List<ItemStageModel>> getSearchWord(
       {required String searchWord}) async {
     List<ItemStageModel> listItemStageModel = [];
-    List<Map<String, Object?>> data = await search(
-        tableName: MySqFLiteDatabase.educationalStageTableName,
-        searchWord: searchWord);
+    List<Map<String, Object?>> data = await select(
+      tableName: MySqFLiteDatabase.educationalStageTableName,
+      where:
+          '${MySqFLiteDatabase.educationalStageName} LIKE ? AND  ${MySqFLiteDatabase.educationalStageStatus}==?',
+      whereArgs: ['%$searchWord%', 1],
+    );
     listItemStageModel +=
         data.map((item) => ItemStageModel.fromJson(item)).toList();
 

@@ -5,6 +5,7 @@ import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart
 import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/resources/duration_values_manager.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
@@ -31,6 +32,13 @@ class EducationStagesController {
 
   EducationStagesController() {
     init();
+  }
+
+  Future<void> onRefresh() async {
+    listItemStageModel.clear();
+    inputDataListItemStageModel.add(listItemStageModel);
+    getAllItemList();
+    await Future.delayed(const Duration(seconds: DurationValuesManager.s1));
   }
 
   void initControllers() {
@@ -96,18 +104,21 @@ class EducationStagesController {
                     stageName: controllerNameEducationStage.text,
                     desc: controllerDescEducationStage.text,
                     image: pathImage == null ? "" : pathImage!);
+
                 ///insert into database
                 bool edit = await editEducation(newItem);
                 if (edit == true) {
                   ///close alert
                   Navigator.pop(context);
+
                   ///get index of this item
                   int indexEditModel =
                       listItemStageModel.indexOf(itemStageModel);
+
                   ///edit this item in list
                   if (indexEditModel >= 0) {
                     listItemStageModel[indexEditModel] = newItem;
-                  }else{
+                  } else {
                     Navigator.of(context).pop();
                   }
                   inputDataListItemStageModel.add(listItemStageModel);

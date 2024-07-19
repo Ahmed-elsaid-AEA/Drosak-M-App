@@ -1,4 +1,5 @@
 import 'package:drosak_m_app/controller/education_stages/education_stages_controller.dart';
+import 'package:drosak_m_app/core/resources/duration_values_manager.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/body/custom_list_view_items_stages.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +46,7 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
                   _controller.outPutDataListItemStageModel,
             ),
             CustomListViewItemsStages(
+              onRefresh: _controller.onRefresh,
               outPutDataListItemStageModel:
                   _controller.outPutDataListItemStageModel,
               editFun: (itemStageModel) {

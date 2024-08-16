@@ -36,10 +36,12 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: StreamBuilder<int>(
         stream: _controller.outputDataBody,
-        builder: (context, snapshot) => _controller
-            .listBottomNavBarTabModel[
-                snapshot.data == null ? 0 : snapshot.data!]
-            .screen,
+        builder: (context, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : _controller.listBottomNavBarTabModel[snapshot.data!].screen,
       ),
       backgroundColor: Colors.red,
       bottomNavigationBar: CustomBottomNavBarMainScreen(

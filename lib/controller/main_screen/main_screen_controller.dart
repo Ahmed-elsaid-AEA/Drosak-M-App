@@ -56,6 +56,7 @@ class MainScreenController {
     Map arg = ModalRoute.of(context)!.settings.arguments as Map;
     currentIndexScreen = int.parse(arg[ConstValue.kScreenIndex].toString());
     inputDataBottomNavBar.add(currentIndexScreen);
+    inputDataBody.add(currentIndexScreen);
   }
 
   List<TabsDetailsModel> listBottomNavBarTabModel = [

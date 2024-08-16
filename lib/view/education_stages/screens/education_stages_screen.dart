@@ -1,4 +1,6 @@
 import 'package:drosak_m_app/controller/education_stages/education_stages_controller.dart';
+import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/widgets/app_bar/custom_app_bar_title_add_search.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/body/custom_list_view_items_stages.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +36,8 @@ class _EducationStagesScreenState extends State<EducationStagesScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            CustomAppBarEductionStages(
+            CustomAppBarTitleAddSearch(
+              title: ConstValue.kEducationalStages,
               onPressedSearch: () {
                 _controller.showCustomSearch(context);
               },

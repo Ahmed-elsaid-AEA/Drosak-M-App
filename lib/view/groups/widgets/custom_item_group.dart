@@ -97,7 +97,7 @@ class CustomItemGroup extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: ColorManager.kPrimaryColor,
                 child: Text(
-                '1',
+                  '1',
                   style: TextStyle(
                     color: ColorManager.kWhiteColor,
                     fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class CustomItemGroup extends StatelessWidget {
                 )
               ],
               borderRadius:
-              BorderRadius.all(Radius.circular(RadiusValuesManager.br18)),
+                  BorderRadius.all(Radius.circular(RadiusValuesManager.br18)),
               border: Border.all(color: ColorManager.kPrimaryColor),
             ),
             margin: EdgeInsets.symmetric(horizontal: MarginManager.mw16),
@@ -148,19 +148,91 @@ class CustomItemGroup extends StatelessWidget {
                               fontFamily: FontsName.geDinerOneFont),
                         ),
                         VerticalSpace(HeightManager.h5),
+                        Table(
+                          border: TableBorder.all(
+                              color: ColorManager.kWhiteColor,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(RadiusValuesManager.br14))),
+                          children: [
+                            TableRow(
+                              decoration: BoxDecoration(
+                                  color: ColorManager.kPrimaryColor,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                        RadiusValuesManager.br14),
+                                    topRight: Radius.circular(
+                                        RadiusValuesManager.br14),
+                                  )),
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: PaddingManager.pw4,
+                                      vertical: PaddingManager.ph4),
+                                  child: Center(
+                                    child: Text(
+                                      "اليوم",
+                                      style: TextStyle(
+                                          color: ColorManager.kWhiteColor),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: PaddingManager.pw4,
+                                      vertical: PaddingManager.ph4),
+                                  child: Center(
+                                    child: Text(
+                                      "الوقت",
+                                      style: TextStyle(
+                                          color: ColorManager.kWhiteColor),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: PaddingManager.pw4,
+                                      vertical: PaddingManager.ph4),
+                                  child: Center(
+                                    child: Text(
+                                      "م / ص",
+                                      style: TextStyle(
+                                          color: ColorManager.kWhiteColor),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            for (int i = 0; i < 5; i++)
+                              TableRow(
+                                  children: List.generate(
+                                      3,
+                                      (index) => Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: PaddingManager.pw4,
+                                                vertical: PaddingManager.ph4),
+                                            child: Text(
+                                              index.toString(),
+                                              style: TextStyle(
+                                                  color:
+                                                      ColorManager.kWhiteColor),
+                                            ),
+                                          )))
+                          ],
+                        ),
+                        VerticalSpace(HeightManager.h5),
                         Row(
                           children: [
                             HorizontalSpace(WidthManager.w3),
-                            // Expanded(
-                            //   child: Text(
-                            //     itemStageModel.desc,
-                            //     style: TextStyle(
-                            //         color: ColorManager.kWhiteColor
-                            //             .withOpacity(.6),
-                            //         fontFamily: FontsName.geDinerOneFont,
-                            //         fontSize: FontsSize.f10),
-                            //   ),
-                            // ),
+                            Expanded(
+                              child: Text(
+                                'itemStageModel.desc',
+                                style: TextStyle(
+                                    color: ColorManager.kWhiteColor
+                                        .withOpacity(.6),
+                                    fontFamily: FontsName.geDinerOneFont,
+                                    fontSize: FontsSize.f10),
+                              ),
+                            ),
                           ],
                         ),
                         // if (itemStageModel.createdAt != null)
@@ -181,9 +253,9 @@ class CustomItemGroup extends StatelessWidget {
                     child: Image.file(
                       errorBuilder: (context, error, stackTrace) =>
                           SvgPicture.asset(
-                            Assets.assetsImagesPlaceholderSvg,
-                            width: WidthManager.w50,
-                          ),
+                        Assets.assetsImagesPlaceholderSvg,
+                        width: WidthManager.w50,
+                      ),
                       File('itemStageModel.image'),
                       height: HeightManager.h50,
                       width: WidthManager.w50,

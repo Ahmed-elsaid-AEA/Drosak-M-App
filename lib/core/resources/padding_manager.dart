@@ -1,8 +1,11 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PaddingManager {
+  static double ph4= 4.h;
+  static double pw4 = 4.h;
   static double ph6 = 6.h;
-  static double pw6 = 6.w;  static double ph8 = 8.h;
+  static double pw6 = 6.w;
+  static double ph8 = 8.h;
   static double pw8 = 8.w;
   static double ph12 = 12.h;
   static double pw12 = 12.w;

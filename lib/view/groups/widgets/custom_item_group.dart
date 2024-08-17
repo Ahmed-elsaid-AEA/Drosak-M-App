@@ -132,7 +132,7 @@ class CustomItemGroup extends StatelessWidget {
                 bottom: PaddingManager.ph6,
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(

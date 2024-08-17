@@ -14,11 +14,27 @@ class MySqFLiteDatabase extends CRUD {
   static const String educationalStageCreatedAt = 'created_at';
   static const String educationalStageStatus = 'status';
 
+//!======================= group table =============
+  static const String groupTableName = 'groups';
+  static const String groupColumnID = 'id';
+  static const String groupColumnName = 'name';
+  static const String groupColumnImage = 'image';
+  static const String groupColumnNote = 'note';
+  static const String groupColumnIDEducation = 'educationID';
+
+//!======================= Appointments table =============
+  static const String appointmentsTableName = 'Appointments';
+  static const String appointmentsColumnID = 'id';
+  static const String appointmentsColumnDay = 'day';
+  static const String appointmentsColumnTime = 'time';
+  static const String appointmentsColumnMS = 'MS';
+  static const String appointmentsColumnIDGroups = 'idGroups';
+
   Future<Database> _initDatabase() async {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 7;
+    int versionDataBase = 2;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
@@ -34,9 +50,18 @@ class MySqFLiteDatabase extends CRUD {
             "  $educationalStageStatus INTEGER DEFAULT 1 , "
             "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
             "  $educationalStageImage  TEXT )");
-        print(db);
-        print(oldVersion);
-        print(newVersion);
+        await db.execute("CREATE TABLE IF NOT EXISTS $groupTableName"
+            " ( $groupColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            "  $groupColumnName TEXT , "
+            "  $groupColumnImage TEXT , "
+            "  $groupColumnNote TEXT , "
+            "  $groupColumnIDEducation  INTEGER )");
+        await db.execute("CREATE TABLE IF NOT EXISTS  $appointmentsTableName"
+            " ( $appointmentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            "  $appointmentsColumnDay TEXT , "
+            "  $appointmentsColumnTime TEXT , "
+            "  $appointmentsColumnMS TEXT, "
+            "  $appointmentsColumnIDGroups  INTEGER )");
       },
       version: versionDataBase,
     );
@@ -44,6 +69,8 @@ class MySqFLiteDatabase extends CRUD {
   }
 
   _onCreate(Database db, int version) async {
+    //?======================== create group education stage  table =========
+
     await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
         " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $educationalStageName TEXT , "
@@ -51,6 +78,20 @@ class MySqFLiteDatabase extends CRUD {
         "  $educationalStageStatus INTEGER DEFAULT 1 , "
         "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
         "  $educationalStageImage  TEXT )");
+    //?======================== create group table =========
+    await db.execute("CREATE TABLE IF NOT EXISTS $groupTableName"
+        " ( $groupColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+        "  $groupColumnName TEXT , "
+        "  $groupColumnImage TEXT , "
+        "  $groupColumnNote TEXT , "
+        "  $groupColumnIDEducation  INTEGER )");
+    //?======================== create appointment table =========
+    await db.execute("CREATE TABLE IF NOT EXISTS $appointmentsTableName"
+        " ( $appointmentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+        "  $appointmentsColumnDay TEXT , "
+        "  $appointmentsColumnTime TEXT , "
+        "  $appointmentsColumnMS TEXT, "
+        "  $appointmentsColumnIDGroups  INTEGER )");
 
     /* await db.execute(
       "CREATE TABLE IF NOT EXISTS $_productTable"

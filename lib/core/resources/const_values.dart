@@ -47,6 +47,8 @@ class ConstValue {
   static const String kMS = 'م / ص';
   static const String kCantEmpty = 'لا يمكن ان يكون الحقل فارغ';
   static const String kNoFoundThisEducationStageName = 'لم يتم العصور علي اسم تلك المرحله التعليميه';
+  static const String kDetailsGroup = 'تفاصيل المجموعه';
+
 
 
 }

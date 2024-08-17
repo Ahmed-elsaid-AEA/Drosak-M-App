@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
-import 'package:drosak_m_app/core/resources/colors_manager.dart';
+import 'package:drosak_m_app/controller/add_new_group_screen_controller/add_new_group_screen_controller.dart';
+ import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
@@ -10,17 +10,19 @@ import 'package:drosak_m_app/core/resources/padding_manager.dart';
 import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
-import 'package:drosak_m_app/core/widgets/input_field/custom_text_form_field.dart';
-import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
+ import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
+import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_group_details_add_new_group_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomBodyAddNewGroupScreen extends StatelessWidget {
   const CustomBodyAddNewGroupScreen({
     super.key,
+    required this.controller,
   });
+
+  final AddNewGroupScreenController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -32,41 +34,13 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
             horizontal: PaddingManager.pw12, vertical: PaddingManager.ph22),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Form(
-                    key: GlobalKey<FormState>(),
-                    child: CustomTextFormField(
-                      validator: (value) {
-                        if (value == null || value == '') {
-                          return ConstValue.kCantEmpty;
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: TextEditingController(),
-                      hintText: ConstValue.kNameGroup,
-                    ),
-                  ),
-                ),
-                HorizontalSpace(WidthManager.w6),
-                IconButton.filled(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorManager.kPrimaryColor),
-                    icon:
-                        SvgPicture.asset(AssetsValuesManager.kPlaceholderSvg)),
-              ],
+            CustomGroupDetailsAddNewGroupScreen(
+              controllerGroupDesc: controller.controllerGroupDesc,
+              controllerGroupName: controller.controllerGroupName,
+              formStateGroupDetails: controller.formStateGroupDetails,
             ),
-            VerticalSpace(HeightManager.h12),
-            CustomTextFormField(
-              maxLines: 3,
-              controller: TextEditingController(),
-              hintText: ConstValue.kDescGroup,
-            ),
-
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Divider(),
@@ -281,3 +255,4 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
     ));
   }
 }
+

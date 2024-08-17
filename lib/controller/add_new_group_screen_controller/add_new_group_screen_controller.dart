@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 class AddNewGroupScreenController {
   String status = ConstValue.kAddNewGroup;
 
+  TextEditingController controllerGroupDesc=TextEditingController();
+  TextEditingController controllerGroupName=TextEditingController();
+GlobalKey<FormState> formStateGroupDetails=GlobalKey<FormState>();
   void getArgumentFromLastScreen(BuildContext context) {
     var arg = ModalRoute.of(context);
     if (arg != null) {

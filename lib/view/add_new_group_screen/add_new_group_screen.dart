@@ -48,8 +48,9 @@ class _AddNewGroupScreenState extends State<AddNewGroupScreen> {
               : ConstValue.kEdit,
           onPressed: () {},
           title: _controller.status),
-      body: const CustomBodyAddNewGroupScreen(),
+      body: CustomBodyAddNewGroupScreen(
+        controller: _controller,
+      ),
     );
   }
 }
-

@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:drosak_m_app/controller/add_new_group_screen_controller/add_new_group_screen_controller.dart';
- import 'package:drosak_m_app/core/resources/colors_manager.dart';
+import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
@@ -10,9 +10,11 @@ import 'package:drosak_m_app/core/resources/padding_manager.dart';
 import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
- import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
+import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
+import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_group_details_add_new_group_screen.dart';
+import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_select_education_stage_name_add_new_group_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -41,32 +43,8 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
               controllerGroupName: controller.controllerGroupName,
               formStateGroupDetails: controller.formStateGroupDetails,
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Divider(),
-            ),
-            const Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                ConstValue.kChooseEducationStage,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontFamily: FontsName.geDinerOneFont,
-                  color: ColorManager.kWhiteColor,
-                ),
-              ),
-            ),
-            VerticalSpace(HeightManager.h12),
-            CustomDropdown<String>.search(
-              hintText: ConstValue.kChooseEducationStage,
-              items: [],
-              noResultFoundText: ConstValue.kNoFoundThisEducationStageName,
-              // initialItem: "a",
-              onChanged: (value) {
-                log('changing value to: $value');
-              },
-            ),
-            VerticalSpace(HeightManager.h16),
+            CustomSelectEducationStageNameAddNewGroupScreen(
+                listItemStageModel: controller.listItemStageModel, onChanged: controller.onChangedSelectEducationStageName),
             Row(
               children: [
                 const Text(
@@ -255,4 +233,3 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
     ));
   }
 }
-

@@ -20,6 +20,8 @@ class ConstValue {
   static const String kNameEducationalStages = 'اسم المرحله التعليميه';
   static const String kDescEducationalStage = 'وصف المرحله التعليميه';
   static const String kGroups = 'المجموعات';
+  static const String kAddNewGroup = 'إضافه مجموعة جديده';
+  static const String kEditThisGroup = 'تعديل تلك المجموعة';
   static const String kStudents = 'الطلاب';
   static const String kTheAudience = 'الحضور';
   static const String kPaying = 'الدفع';

@@ -32,7 +32,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
                 // _controller.showCustomSearch(context);
               },
               onPressedAdd: () {
-                // _controller.openBottomSheet(context: context);
+                _controller.addNewGroups(context: context);
               },
             ),
             CustomListViewItemsGroups(

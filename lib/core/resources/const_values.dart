@@ -17,8 +17,11 @@ class ConstValue {
   static const String kOnBoardingText5 =
       'يمكنك إضافة  ما إذا كان الطالب دفع هذا الشهر أم لا وإضافة تاريخ الدفع';
   static const String kEducationalStages = 'المراحل التعليمية';
+  static const String kChooseEducationStage = 'اختر المرحله التعليمية';
   static const String kNameEducationalStages = 'اسم المرحله التعليميه';
+  static const String kNameGroup = 'اسم المجموعه ';
   static const String kDescEducationalStage = 'وصف المرحله التعليميه';
+  static const String kDescGroup= 'وصف المجموعة ';
   static const String kGroups = 'المجموعات';
   static const String kAddNewGroup = 'إضافه مجموعة جديده';
   static const String kEditThisGroup = 'تعديل تلك المجموعة';
@@ -27,6 +30,8 @@ class ConstValue {
   static const String kPaying = 'الدفع';
   static const String kScreenIndex = 'currentIndex';
   static const String kAdd = 'إضافه';
+  static const String kSaveAll = 'حفظ الكل';
+  static const String kAddToTableAppointment = 'إضافه إلي جدول المواعيد';
   static const String kDelete = 'حذف';
   static const String kEdit = 'تعديل';
   static const String kContentSearch = 'محتوي البحث';
@@ -35,7 +40,15 @@ class ConstValue {
   static const String kSure = 'متاكد';
   static const String kNo = 'لا';
   static const String kYes = 'نعم';
+  static const String kDay = 'اليوم';
+  static const String kChooseDay = 'اختر اليوم';
+  static const String kChooseTime = 'اختر الوقت';
+  static const String kTime = 'الوقت';
+  static const String kMS = 'م / ص';
   static const String kCantEmpty = 'لا يمكن ان يكون الحقل فارغ';
+  static const String kNoFoundThisEducationStageName = 'لم يتم العصور علي اسم تلك المرحله التعليميه';
+
+
 }
 
 class ConstListValues {

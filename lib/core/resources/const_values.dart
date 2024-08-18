@@ -21,7 +21,7 @@ class ConstValue {
   static const String kNameEducationalStages = 'اسم المرحله التعليميه';
   static const String kNameGroup = 'اسم المجموعه ';
   static const String kDescEducationalStage = 'وصف المرحله التعليميه';
-  static const String kDescGroup= 'وصف المجموعة ';
+  static const String kDescGroup = 'وصف المجموعة ';
   static const String kGroups = 'المجموعات';
   static const String kAddNewGroup = 'إضافه مجموعة جديده';
   static const String kEditThisGroup = 'تعديل تلك المجموعة';
@@ -46,11 +46,16 @@ class ConstValue {
   static const String kTime = 'الوقت';
   static const String kMS = 'م / ص';
   static const String kCantEmpty = 'لا يمكن ان يكون الحقل فارغ';
-  static const String kNoFoundThisEducationStageName = 'لم يتم العصور علي اسم تلك المرحله التعليميه';
+  static const String kNoFoundThisEducationStageName =
+      'لم يتم العصور علي اسم تلك المرحله التعليميه';
   static const String kDetailsGroup = 'تفاصيل المجموعه';
-
-
-
+  static const String kSaturday = 'السبت';
+  static const String kSunday = 'الأحد';
+  static const String kMonday = 'الأثنين';
+  static const String kTuesday = 'الثلاثاء';
+  static const String kWednesday = 'الأربعاء';
+  static const String kThursday = 'الخميس';
+  static const String kFriday = 'الجمعة';
 }
 
 class ConstListValues {
@@ -85,5 +90,14 @@ class ConstListValues {
         image: AssetsValuesManager.kOnBoardingImage4),
     ExploreScreenModel(
         text: ConstValue.kPaying, image: AssetsValuesManager.kOnBoardingImage5),
+  ];
+  static const List<String> listDays = [
+    ConstValue.kSaturday,
+    ConstValue.kSunday,
+    ConstValue.kMonday,
+    ConstValue.kTuesday,
+    ConstValue.kWednesday,
+    ConstValue.kThursday,
+    ConstValue.kFriday,
   ];
 }

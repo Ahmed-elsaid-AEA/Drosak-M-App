@@ -13,6 +13,8 @@ import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
+import 'package:drosak_m_app/model/groups/time_day_group_model.dart';
+import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_add_time_and_day_of_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_group_details_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_select_education_stage_name_add_new_group_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,151 +46,14 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
               formStateGroupDetails: controller.formStateGroupDetails,
             ),
             CustomSelectEducationStageNameAddNewGroupScreen(
-                listItemStageModel: controller.listItemStageModel, onChanged: controller.onChangedSelectEducationStageName),
-            Row(
-              children: [
-                const Text(
-                  ConstValue.kDay,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: FontsName.geDinerOneFont,
-                    color: ColorManager.kWhiteColor,
-                  ),
-                ),
-                HorizontalSpace(WidthManager.w9),
-                Expanded(
-                  child: CustomDropdown<String>.search(
-                    hintText: ConstValue.kChooseDay,
-                    items: [],
-                    noResultFoundText: '',
-                    // initialItem: "a",
-                    onChanged: (value) {
-                      log('changing value to: $value');
-                    },
-                  ),
-                ),
-                HorizontalSpace(WidthManager.w15),
-                const Text(
-                  ConstValue.kTime,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: FontsName.geDinerOneFont,
-                    color: ColorManager.kWhiteColor,
-                  ),
-                ),
-                HorizontalSpace(WidthManager.w9),
-                Expanded(
-                  child: CustomDropdown<String>.search(
-                    hintText: ConstValue.kChooseTime,
-                    items: [],
-                    noResultFoundText: '',
-                    // initialItem: "a",
-                    onChanged: (value) {
-                      log('changing value to: $value');
-                    },
-                  ),
-                ),
-              ],
-            ),
-            VerticalSpace(HeightManager.h24),
-            CustomMaterialButton(
-                onPressed: () {}, text: ConstValue.kAddToTableAppointment),
-            VerticalSpace(HeightManager.h12),
-            Table(
-              border: TableBorder.all(
-                  color: ColorManager.kWhiteColor,
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(RadiusValuesManager.br14))),
-              children: [
-                TableRow(
-                  decoration: BoxDecoration(
-                      color: ColorManager.kPrimaryColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(RadiusValuesManager.br14),
-                        topRight: Radius.circular(RadiusValuesManager.br14),
-                      )),
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: PaddingManager.pw4,
-                          vertical: PaddingManager.ph4),
-                      child: const Center(
-                        child: Text(
-                          "اليوم",
-                          style: TextStyle(
-                              fontFamily: FontsName.geDinerOneFont,
-                              fontWeight: FontWeight.bold,
-                              color: ColorManager.kWhiteColor),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: PaddingManager.pw4,
-                          vertical: PaddingManager.ph4),
-                      child: const Center(
-                        child: Text(
-                          "الوقت",
-                          style: TextStyle(
-                              fontFamily: FontsName.geDinerOneFont,
-                              fontWeight: FontWeight.bold,
-                              color: ColorManager.kWhiteColor),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: PaddingManager.pw4,
-                          vertical: PaddingManager.ph4),
-                      child: const Center(
-                        child: Text(
-                          "م / ص",
-                          style: TextStyle(
-                              fontFamily: FontsName.geDinerOneFont,
-                              fontWeight: FontWeight.bold,
-                              color: ColorManager.kWhiteColor),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: PaddingManager.pw4,
-                          vertical: PaddingManager.ph4),
-                      child: const Center(
-                        child: Text(
-                          ConstValue.kDelete,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: FontsName.geDinerOneFont,
-                              color: ColorManager.kWhiteColor),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                for (int i = 0; i < 5; i++)
-                  TableRow(
-                      children: List.generate(
-                          4,
-                          (index) => Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: PaddingManager.pw4,
-                                    vertical: PaddingManager.ph4),
-                                child: index == 3
-                                    ? IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          CupertinoIcons.delete,
-                                          color: ColorManager.kPrimaryColor,
-                                        ))
-                                    : Text(
-                                        index.toString(),
-                                        style: const TextStyle(
-                                            color: ColorManager.kWhiteColor),
-                                      ),
-                              )))
-              ],
-            ),
+                listItemStageModel: controller.listItemStageModel,
+                onChanged: controller.onChangedSelectEducationStageName),
+            CustomAddTimeAndDayOfAddNewGroupScreen(
+              onPressedSelectTime: controller.onPressedSelectTime,
+              onChangedSelectDay: controller.onChangedSelectDay,
+              onPressedAddTimeAndDayToTable: controller.onPressedAddTimeAndDayToTable,
+              listTimeDayGroupModel: controller.listTimeDayGroupModel,
+                time: controller.timeGroup, listDay: ConstListValues.listDays),
             // StreamBuilder(
             //     stream: outPathImage,
             //     builder: (context, snapshot) {
@@ -233,3 +98,4 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
     ));
   }
 }
+

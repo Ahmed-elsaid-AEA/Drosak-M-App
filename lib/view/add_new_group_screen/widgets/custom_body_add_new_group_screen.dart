@@ -49,12 +49,14 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
                 listItemStageModel: controller.listItemStageModel,
                 onChanged: controller.onChangedSelectEducationStageName),
             CustomAddTimeAndDayOfAddNewGroupScreen(
+              groupValueMS: controller.groupValueMS,
+              onChangedMSValue: controller.onChangedMSValue,
               onPressedSelectTime: controller.onPressedSelectTime,
               onChangedSelectDay: controller.onChangedSelectDay,
               onPressedAddTimeAndDayToTable: controller.onPressedAddTimeAndDayToTable,
               listTimeDayGroupModel: controller.listTimeDayGroupModel,
                 time: controller.timeGroup, listDay: ConstListValues.listDays),
-            // StreamBuilder(
+             // StreamBuilder(
             //     stream: outPathImage,
             //     builder: (context, snapshot) {
             //       return snapshot.connectionState == ConnectionState.waiting

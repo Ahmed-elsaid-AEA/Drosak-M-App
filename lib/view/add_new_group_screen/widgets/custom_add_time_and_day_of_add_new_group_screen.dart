@@ -13,6 +13,8 @@ import 'package:drosak_m_app/model/groups/time_day_group_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'custom_radio_ms_add_new_group_screen.dart';
+
 class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
   const CustomAddTimeAndDayOfAddNewGroupScreen(
       {super.key,
@@ -21,10 +23,15 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
       this.onChangedSelectDay,
       required this.onPressedSelectTime,
       required this.onPressedAddTimeAndDayToTable,
-      required this.listTimeDayGroupModel});
+      required this.listTimeDayGroupModel,
+      required this.groupValueMS,
+      required this.onChangedMSValue});
+
+  final ValueChanged<String?> onChangedMSValue;
 
   final List<String> listDay;
   final String? time;
+  final String groupValueMS;
   final Function(String?)? onChangedSelectDay;
   final VoidCallback onPressedSelectTime;
   final VoidCallback onPressedAddTimeAndDayToTable;
@@ -54,20 +61,10 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                 onChanged: onChangedSelectDay,
               ),
             ),
-            HorizontalSpace(WidthManager.w15),
-            const Text(
-              ConstValue.kTime,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: FontsName.geDinerOneFont,
-                color: ColorManager.kWhiteColor,
-              ),
-            ),
-            HorizontalSpace(WidthManager.w9),
-            CustomMaterialButton(
-                onPressed: onPressedSelectTime, text: ConstValue.kChooseTime)
           ],
         ),
+        VerticalSpace(HeightManager.h12),
+        CustomRadioMSAddNewGroupScreen(onPressedSelectTime: onPressedSelectTime, groupValueMS: groupValueMS, onChangedMSValue: onChangedMSValue),
         if (time != null)
           Align(
             alignment: AlignmentDirectional.centerEnd,
@@ -93,10 +90,8 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
             TableRow(
               decoration: BoxDecoration(
                   color: ColorManager.kPrimaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(RadiusValuesManager.br14),
-                    topRight: Radius.circular(RadiusValuesManager.br14),
-                  )),
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(RadiusValuesManager.br14))),
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -161,7 +156,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph4),
+                      vertical: PaddingManager.ph10),
                   child: Center(
                     child: Text(
                       listTimeDayGroupModel[i].day,
@@ -175,7 +170,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph4),
+                      vertical: PaddingManager.ph10),
                   child: Center(
                     child: Text(
                       listTimeDayGroupModel[i].time,
@@ -189,7 +184,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph4),
+                      vertical: PaddingManager.ph10),
                   child: Center(
                     child: Text(
                       listTimeDayGroupModel[i].ms,
@@ -200,11 +195,22 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.delete))
+                IconButton(
+                    onPressed: () {}, icon: const Icon(CupertinoIcons.delete))
               ])
           ],
         ),
+        VerticalSpace(HeightManager.h12),
+        if (listTimeDayGroupModel.isEmpty)
+          const Text(
+            ConstValue.kNoTimeAndDayYetAdd,
+            style: TextStyle(
+                fontFamily: FontsName.geDinerOneFont,
+                fontWeight: FontWeight.bold,
+                color: ColorManager.kWhiteColor),
+          )
       ],
     );
   }
 }
+

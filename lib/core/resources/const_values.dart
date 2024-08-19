@@ -56,6 +56,11 @@ class ConstValue {
   static const String kWednesday = 'الأربعاء';
   static const String kThursday = 'الخميس';
   static const String kFriday = 'الجمعة';
+  static const String kNoTimeAndDayYetAdd = 'لم يتم إضافه يوم وميعاد بعد';
+
+  static const String kPM="م";
+  static const String kAM="ص";
+
 }
 
 class ConstListValues {

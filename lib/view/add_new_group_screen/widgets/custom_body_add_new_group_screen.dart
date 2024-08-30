@@ -46,7 +46,8 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
               formStateGroupDetails: controller.formStateGroupDetails,
             ),
             CustomSelectEducationStageNameAddNewGroupScreen(
-                listItemStageModel: controller.listItemStageModel,
+
+                outPutDataListItemStageModel:controller.outPutDataListItemStageModel,
                 onChanged: controller.onChangedSelectEducationStageName),
             CustomAddTimeAndDayOfAddNewGroupScreen(
               groupValueMS: controller.groupValueMS,

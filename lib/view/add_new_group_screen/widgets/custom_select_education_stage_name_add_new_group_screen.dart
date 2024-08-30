@@ -9,10 +9,12 @@ import 'package:flutter/material.dart';
 
 class CustomSelectEducationStageNameAddNewGroupScreen extends StatelessWidget {
   const CustomSelectEducationStageNameAddNewGroupScreen(
-      {super.key, required this.listItemStageModel, required this.onChanged});
+      {super.key,
+      required this.outPutDataListItemStageModel,
+      required this.onChanged});
 
-  final List<ItemStageModel> listItemStageModel;
   final Function(ItemStageModel?)? onChanged;
+  final Stream<List<ItemStageModel>> outPutDataListItemStageModel;
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +36,20 @@ class CustomSelectEducationStageNameAddNewGroupScreen extends StatelessWidget {
           ),
         ),
         VerticalSpace(HeightManager.h12),
-        CustomDropdown<ItemStageModel>.search(
-          hintText: ConstValue.kChooseEducationStage,
-          items: listItemStageModel,
-          noResultFoundText: ConstValue.kNoFoundThisEducationStageName,
-          // initialItem: "a",
-          onChanged: onChanged,
+        StreamBuilder(
+          stream: outPutDataListItemStageModel,
+          builder: (context, snapshot) => snapshot.connectionState ==
+                  ConnectionState.waiting
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : CustomDropdown<ItemStageModel>.search(
+                  hintText: ConstValue.kChooseEducationStage,
+                  items: snapshot.data,
+                  noResultFoundText: ConstValue.kNoFoundThisEducationStageName,
+                  // initialItem: "a",
+                  onChanged: onChanged,
+                ),
         ),
         VerticalSpace(HeightManager.h16),
       ],

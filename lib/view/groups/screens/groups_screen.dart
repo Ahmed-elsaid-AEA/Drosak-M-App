@@ -26,15 +26,15 @@ class _GroupsScreenState extends State<GroupsScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            // CustomAppBarTitleAddSearch(
-            //   title: ConstValue.kGroups,
-            //   onPressedSearch: () {
-            //     // _controller.showCustomSearch(context);
-            //   },
-            //   onPressedAdd: () {
-            //     _controller.addNewGroups(context: context);
-            //   }, streamCount: _controller.outPutListGroup,
-            // ),
+            CustomAppBarTitleAddSearch(
+              title: ConstValue.kGroups,
+              onPressedSearch: () {
+                // _controller.showCustomSearch(context);
+              },
+              onPressedAdd: () {
+                _controller.addNewGroups(context: context);
+              }, streamCount: _controller.outPutDataListItemGroupModel,
+            ),
             CustomListViewItemsGroups(
               // outPutDataListItemGroupsModel:
               // _controller.outPutDataListItemStageModel,

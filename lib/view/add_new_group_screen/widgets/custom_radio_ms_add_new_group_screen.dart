@@ -33,37 +33,66 @@ class CustomRadioMSAddNewGroupScreen extends StatelessWidget {
         HorizontalSpace(WidthManager.w9),
         CustomMaterialButton(
             onPressed: onPressedSelectTime, text: ConstValue.kChooseTime),
+        HorizontalSpace(WidthManager.w9),
         Expanded(
-          child: RadioListTile(
-            title: const Text(
-              ConstValue.kPM,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: FontsName.geDinerOneFont,
-                color: ColorManager.kWhiteColor,
-              ),
-            ),
-            value: ConstValue.kPM,
-            groupValue: groupValueMS,
-            onChanged: onChangedMSValue,
-          ),
-        ),
-        Expanded(
-          child: RadioListTile(
-            title: const Text(
-              ConstValue.kAM,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: FontsName.geDinerOneFont,
-                color: ColorManager.kWhiteColor,
-              ),
-            ),
-            value: ConstValue.kAM,
-            groupValue: groupValueMS,
-            onChanged: onChangedMSValue,
+          child: Wrap(
+            children: [
+              customRadio(ConstValue.kAM, groupValueMS),
+              customRadio(ConstValue.kPM, groupValueMS),
+              // RadioListTile(
+              //   title: const Text(
+              //     ConstValue.kAM,
+              //     style: TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //       fontFamily: FontsName.geDinerOneFont,
+              //       color: ColorManager.kWhiteColor,
+              //     ),
+              //   ),
+              //   value: ConstValue.kAM,
+              //   groupValue: groupValueMS,
+              //   onChanged: onChangedMSValue,
+              // ),
+              // RadioListTile(
+              //   title: const Text(
+              //     ConstValue.kPM,
+              //     style: TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //       fontFamily: FontsName.geDinerOneFont,
+              //       color: ColorManager.kWhiteColor,
+              //     ),
+              //   ),
+              //   value: ConstValue.kPM,
+              //   groupValue: groupValueMS,
+              //   onChanged: onChangedMSValue,
+              // ),
+            ],
           ),
         )
       ],
+    );
+  }
+
+  Widget customRadio(String value, String groupValue) {
+    return InkWell(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Radio(
+              activeColor: ColorManager.kPrimaryColor,
+              value: value,
+              groupValue: groupValue,
+              onChanged: onChangedMSValue),
+          Text(
+            value,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: FontsSize.f14,
+              fontFamily: FontsName.geDinerOneFont,
+              color: ColorManager.kWhiteColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

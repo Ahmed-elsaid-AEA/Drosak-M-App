@@ -1,5 +1,5 @@
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
- import 'package:drosak_m_app/core/resources/fonts_manager.dart';
+import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +10,13 @@ class CustomAppBarTitleAddSearch extends StatelessWidget {
     this.onPressedAdd,
     this.onPressedSearch,
     required this.title,
+    required this.streamCount,
   });
 
   final VoidCallback? onPressedAdd;
   final VoidCallback? onPressedSearch;
   final String title;
+  final Stream<List> streamCount;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +31,16 @@ class CustomAppBarTitleAddSearch extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: FontsSize.f15,
-                fontFamily: FontsName.geDinerOneFont,
-                fontWeight: FontWeight.bold,
-                color: ColorManager.kWhiteColor),
+          StreamBuilder<List>(
+            stream: streamCount,
+            builder: (context, snapshot) => Text(
+              "$title ( ${snapshot.data==null?"0":snapshot.data!.length} )",
+              style: TextStyle(
+                  fontSize: FontsSize.f15,
+                  fontFamily: FontsName.geDinerOneFont,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.kWhiteColor),
+            ),
           ),
           const Spacer(),
           IconButton(

@@ -12,18 +12,19 @@ import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/generated/assets.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
+import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomItemGroup extends StatelessWidget {
   const CustomItemGroup({
     super.key,
-    // required this.itemStageModel,
+    required this.groupInfoModel,
     required this.deleteFun,
     required this.editFun,
   });
 
-  // final ItemStageModel itemStageModel;
+  final GroupInfoModel groupInfoModel;
   final void Function(ItemStageModel itemStageModel) deleteFun;
   final void Function(ItemStageModel itemStageModel) editFun;
 
@@ -86,7 +87,7 @@ class CustomItemGroup extends StatelessWidget {
                 fontSize: FontsSize.f20,
                 fontFamily: FontsName.geDinerOneFont)),
       ),
-      key: ValueKey(1),
+      key: ValueKey(groupInfoModel.groupDetails.id),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -97,7 +98,7 @@ class CustomItemGroup extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: ColorManager.kPrimaryColor,
                 child: Text(
-                  '1',
+                  groupInfoModel.groupDetails.id.toString(),
                   style: TextStyle(
                     color: ColorManager.kWhiteColor,
                     fontWeight: FontWeight.bold,
@@ -139,16 +140,16 @@ class CustomItemGroup extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+
                         Text(
-                          'المجموعة الأولي بنات / الصف الأول الإعدادي',
+                          groupInfoModel.groupDetails.name,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: FontsSize.f16,
                               color: ColorManager.kWhiteColor,
                               fontFamily: FontsName.geDinerOneFont),
                         ),
-                        VerticalSpace(HeightManager.h5),
-                        Table(
+                        VerticalSpace(HeightManager.h12),                        Table(
                           border: TableBorder.all(
                               color: ColorManager.kWhiteColor,
                               borderRadius: BorderRadius.all(
@@ -168,9 +169,9 @@ class CustomItemGroup extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: PaddingManager.pw4,
                                       vertical: PaddingManager.ph4),
-                                  child: Center(
+                                  child: const Center(
                                     child: Text(
-                                      "اليوم",
+                                      ConstValue.kDay,
                                       style: TextStyle(
                                           color: ColorManager.kWhiteColor),
                                     ),
@@ -180,9 +181,9 @@ class CustomItemGroup extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: PaddingManager.pw4,
                                       vertical: PaddingManager.ph4),
-                                  child: Center(
+                                  child: const Center(
                                     child: Text(
-                                      "الوقت",
+                                      ConstValue.kTime,
                                       style: TextStyle(
                                           color: ColorManager.kWhiteColor),
                                     ),
@@ -192,9 +193,9 @@ class CustomItemGroup extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: PaddingManager.pw4,
                                       vertical: PaddingManager.ph4),
-                                  child: Center(
+                                  child: const Center(
                                     child: Text(
-                                      "م / ص",
+                                      ConstValue.kMS,
                                       style: TextStyle(
                                           color: ColorManager.kWhiteColor),
                                     ),
@@ -202,21 +203,54 @@ class CustomItemGroup extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            for (int i = 0; i < 5; i++)
-                              TableRow(
-                                  children: List.generate(
-                                      3,
-                                      (index) => Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: PaddingManager.pw4,
-                                                vertical: PaddingManager.ph4),
-                                            child: Text(
-                                              index.toString(),
-                                              style: TextStyle(
-                                                  color:
-                                                      ColorManager.kWhiteColor),
-                                            ),
-                                          )))
+                            for (int i = 0;
+                                i < groupInfoModel.listAppointment.length;
+                                i++)
+                              TableRow(children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: PaddingManager.pw4,
+                                      vertical: PaddingManager.ph10),
+                                  child: Center(
+                                    child: Text(
+                                      groupInfoModel.listAppointment[i].day,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: FontsName.geDinerOneFont,
+                                          color: ColorManager.kWhiteColor),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: PaddingManager.pw4,
+                                      vertical: PaddingManager.ph10),
+                                  child: Center(
+                                    child: Text(
+                                      groupInfoModel.listAppointment[i].time,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: FontsName.geDinerOneFont,
+                                          color: ColorManager.kWhiteColor),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: PaddingManager.pw4,
+                                      vertical: PaddingManager.ph10),
+                                  child: Center(
+                                    child: Text(
+                                      groupInfoModel.listAppointment[i].ms,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: FontsName.geDinerOneFont,
+                                          color: ColorManager.kWhiteColor),
+                                    ),
+                                  ),
+                                ),
+
+                              ])
                           ],
                         ),
                         VerticalSpace(HeightManager.h5),
@@ -225,7 +259,7 @@ class CustomItemGroup extends StatelessWidget {
                             HorizontalSpace(WidthManager.w3),
                             Expanded(
                               child: Text(
-                                'itemStageModel.desc',
+                               groupInfoModel.groupDetails.desc,
                                 style: TextStyle(
                                     color: ColorManager.kWhiteColor
                                         .withOpacity(.6),
@@ -247,20 +281,20 @@ class CustomItemGroup extends StatelessWidget {
                     ),
                   ),
                   HorizontalSpace(WidthManager.w7),
-                  ClipRRect(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(RadiusValuesManager.br50)),
-                    child: Image.file(
-                      errorBuilder: (context, error, stackTrace) =>
-                          SvgPicture.asset(
-                        Assets.assetsImagesPlaceholderSvg,
-                        width: WidthManager.w50,
-                      ),
-                      File('itemStageModel.image'),
-                      height: HeightManager.h50,
-                      width: WidthManager.w50,
-                    ),
-                  )
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.all(
+                  //       Radius.circular(RadiusValuesManager.br50)),
+                  //   child: Image.file(
+                  //     errorBuilder: (context, error, stackTrace) =>
+                  //         SvgPicture.asset(
+                  //       Assets.assetsImagesPlaceholderSvg,
+                  //       width: WidthManager.w50,
+                  //     ),
+                  //     File('itemStageModel.image'),
+                  //     height: HeightManager.h50,
+                  //     width: WidthManager.w50,
+                  //   ),
+                  // )
                 ],
               ),
             ),

@@ -40,8 +40,8 @@ class _GroupsScreenState extends State<GroupsScreen> {
               streamCount: _controller.outPutDataListItemGroupModel,
             ),
             CustomListViewItemsGroups(
-              // outPutDataListItemGroupsModel:
-              // _controller.outPutDataListItemStageModel,
+              outPutDataListItemGroupModel:
+                  _controller.outPutDataListItemGroupModel,
               editFun: (itemStageModel) {
                 // _controller.editItemStage(itemStageModel, context);
               },

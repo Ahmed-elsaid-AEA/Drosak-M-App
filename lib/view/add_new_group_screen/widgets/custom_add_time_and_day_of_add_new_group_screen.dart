@@ -9,7 +9,7 @@ import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
-import 'package:drosak_m_app/model/groups/time_day_group_model.dart';
+import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +35,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
   final Function(String?)? onChangedSelectDay;
   final VoidCallback onPressedSelectTime;
   final VoidCallback onPressedAddTimeAndDayToTable;
-  final Stream<List<TimeDayGroupModel>> outPutListTimeDayGroupModel;
+  final Stream<List<AppointmentModel>> outPutListTimeDayGroupModel;
   final Stream<String> outPutDataMsValue;
 
   @override
@@ -110,7 +110,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                       ));
   }
 
-  StreamBuilder<List<TimeDayGroupModel>> streamOfTable() {
+  StreamBuilder<List<AppointmentModel>> streamOfTable() {
     return StreamBuilder(
       stream: outPutListTimeDayGroupModel,
       builder: (context, snapshot) => Table(
@@ -176,7 +176,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
     );
   }
 
-  StreamBuilder<List<TimeDayGroupModel>> streamEmptyOrNot() {
+  StreamBuilder<List<AppointmentModel>> streamEmptyOrNot() {
     return StreamBuilder(
       stream: outPutListTimeDayGroupModel,
       builder: (context, snapshot) => snapshot.data == null
@@ -298,7 +298,7 @@ class StreamOfCountOfAppointment extends StatelessWidget {
     required this.outPutListTimeDayGroupModel,
   });
 
-  final Stream<List<TimeDayGroupModel>> outPutListTimeDayGroupModel;
+  final Stream<List<AppointmentModel>> outPutListTimeDayGroupModel;
 
   @override
   Widget build(BuildContext context) {

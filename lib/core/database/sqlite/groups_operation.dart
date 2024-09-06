@@ -3,12 +3,18 @@ import 'dart:developer';
 import 'package:drosak_m_app/core/database/sqlite/my_sq_f_lite_databse.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
+import 'package:drosak_m_app/model/groups/appointment_model.dart';
 
 class GroupsOperation extends MySqFLiteDatabase {
   Future<bool> insertGroupDetails(GroupDetails groupDetails) {
     return insert(
         tableName: MySqFLiteDatabase.groupTableName,
         values: groupDetails.toJson());
+  }
+  Future<bool> insertAppointmentDetails(AppointmentModel appointment) {
+    return insert(
+        tableName: MySqFLiteDatabase.appointmentsTableName,
+        values: appointment.toJson());
   }
 
   Future<List<ItemStageModel>> getAllEducationData() async {

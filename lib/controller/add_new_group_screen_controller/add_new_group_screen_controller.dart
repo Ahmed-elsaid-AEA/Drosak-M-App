@@ -5,7 +5,7 @@ import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
-import 'package:drosak_m_app/model/groups/time_day_group_model.dart';
+import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:flutter/material.dart';
 
 class AddNewGroupScreenController {
@@ -33,15 +33,14 @@ class AddNewGroupScreenController {
   late Stream<String> outPutDataSelectedTime;
 
   ///steam of list Time Day Group Model
-  late StreamController<List<TimeDayGroupModel>>
-  controllerListTimeDayGroupModel;
-  late Sink<List<TimeDayGroupModel>> inputDataListTimeDayGroupModel;
-  late Stream<List<TimeDayGroupModel>> outPutDataListTimeDayGroupModel;
+  late StreamController<List<AppointmentModel>> controllerListTimeDayGroupModel;
+  late Sink<List<AppointmentModel>> inputDataListTimeDayGroupModel;
+  late Stream<List<AppointmentModel>> outPutDataListTimeDayGroupModel;
 
   List<ItemStageModel> listItemStageModel = [];
   String? timeGroup;
 
-  List<TimeDayGroupModel> listTimeDayGroupModel = [];
+  List<AppointmentModel> listAppointmentGroupModel = [];
 
   String groupValueMS = ConstValue.kAM;
 
@@ -109,7 +108,7 @@ class AddNewGroupScreenController {
   }
 
   void changeStatusOFStreamListTimeDay() {
-    inputDataListTimeDayGroupModel.add(listTimeDayGroupModel);
+    inputDataListTimeDayGroupModel.add(listAppointmentGroupModel);
   }
 
   void addNewValueOfSelectedTime() {
@@ -174,36 +173,38 @@ class AddNewGroupScreenController {
   }
 
   void addTimeAndDayToTable() {
-    listTimeDayGroupModel.add(TimeDayGroupModel(groupValueMS,
-        "${selectedTime!.minute} : ${selectedTime!.hour}", selectedDay!));
+    listAppointmentGroupModel.add(AppointmentModel(
+        ms: groupValueMS,
+        time: "${selectedTime!.minute} : ${selectedTime!.hour}",
+        day: selectedDay!));
     changeStatusOFStreamListTimeDay();
   }
 
   void onPressedDeleteAppointment(int index) {
-    listTimeDayGroupModel.removeAt(index);
+    listAppointmentGroupModel.removeAt(index);
     changeStatusOFStreamListTimeDay();
   }
 
   void saveAllData(BuildContext context) async {
     String requiredData = "";
-    if (controllerGroupName.text
-        .trim()
-        .isEmpty) {
+    if (controllerGroupName.text.trim().isEmpty) {
       requiredData += ConstValue.kNameGroup;
     }
     if (selectedEducationStage == null) {
       requiredData += " , ${ConstValue.kChooseEducationStage}";
     }
-    if (listTimeDayGroupModel.isEmpty) {
+    if (listAppointmentGroupModel.isEmpty) {
       requiredData += " , ${ConstValue.kAddSomeAppointment}";
     }
     if (requiredData.isEmpty) {
       //now add to database
       bool insertedGroupDetails = await addDetailsOfGroups();
       if (insertedGroupDetails == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("done")));
-        await addDetailsOfAppointment();
+        if (await addDetailsOfAppointment()) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(ConstValue.kAddedGroupDetailsSucces)));
+          backToMainScreen(context);
+        }
       }
     } else {
       ScaffoldMessenger.of(context)
@@ -211,7 +212,15 @@ class AddNewGroupScreenController {
     }
   }
 
-  Future addDetailsOfAppointment() async {}
+  Future<bool> addDetailsOfAppointment() async {
+    bool inserted = false;
+    for (var appointmentItem in listAppointmentGroupModel) {
+      GroupsOperation groupsOperation = GroupsOperation();
+      inserted =
+          await groupsOperation.insertAppointmentDetails(appointmentItem);
+    }
+    return inserted;
+  }
 
   Future<bool> addDetailsOfGroups() async {
     GroupsOperation groupsOperation = GroupsOperation();
@@ -219,5 +228,9 @@ class AddNewGroupScreenController {
         desc: controllerGroupDesc.text.trim(),
         name: controllerGroupName.text.trim(),
         educationStageID: selectedEducationStage!.id));
+  }
+
+  void backToMainScreen(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:drosak_m_app/core/database/sqlite/my_sq_f_lite_databse.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 
@@ -18,7 +16,6 @@ class EducationStageOperation extends MySqFLiteDatabase {
         whereArgs: ['1']);
     listItemStageModel +=
         data.map((item) => ItemStageModel.fromJson(item)).toList();
-    log(listItemStageModel.toString());
     return listItemStageModel;
   }
 
@@ -37,10 +34,10 @@ class EducationStageOperation extends MySqFLiteDatabase {
     return await update(
         tableName: MySqFLiteDatabase.educationalStageTableName,
         values: {
-          MySqFLiteDatabase.educationalStageName:itemStageModel.stageName
+          MySqFLiteDatabase.educationalStageName: itemStageModel.stageName
         },
-        where:
-            ' ${MySqFLiteDatabase.educationalStageID}=?',whereArgs: ['${itemStageModel.id}']);
+        where: ' ${MySqFLiteDatabase.educationalStageID}=?',
+        whereArgs: ['${itemStageModel.id}']);
   }
 
   Future<List<ItemStageModel>> getSearchWord(

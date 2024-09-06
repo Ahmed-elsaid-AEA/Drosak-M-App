@@ -1,16 +1,19 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
+import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:flutter/material.dart';
 
 class GroupsScreenController {
   late StreamController<List> controllerListItemGroupModel;
   late Sink<List> inputDataListItemGroupModel;
   late Stream<List> outPutDataListItemGroupModel;
+  List<GroupInfoModel> listGroupInfo = [];
 
   GroupsScreenController() {
     start();
@@ -18,6 +21,13 @@ class GroupsScreenController {
 
   void start() async {
     await initControllers();
+    await getAllData();
+  }
+
+  Future<void> getAllData() async {
+    GroupsOperation groupsOperation = GroupsOperation();
+    var a = groupsOperation.getAllGroupsInfo();
+    a.then((value) => log(value.toString()));
   }
 
   void initAllData() {
@@ -38,16 +48,6 @@ class GroupsScreenController {
   void addNewGroups({required BuildContext context}) {
     Navigator.of(context).pushNamed(RoutesName.kAddNewGroupScreen,
         arguments: ConstValue.kAddNewGroup);
-  }
-
-  Future<List<GroupDetails>> getGroupsDetailsFromDataBase() async {
-    GroupsOperation groupsOperation = GroupsOperation();
-    return groupsOperation.getAllGroupsData();
-  }Future getAppointmentDetailsFromDataBase() async {
-    GroupsOperation groupsOperation = GroupsOperation();
-
-     var a=await groupsOperation.getAllAppointmentData();
-     print(a);
   }
 
 // Stream<List<ItemStageModel>> outPutDataListItemStageModel;

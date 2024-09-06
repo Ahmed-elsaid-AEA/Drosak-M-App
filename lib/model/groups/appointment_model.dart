@@ -28,11 +28,11 @@ class AppointmentModel {
     return 'AppointmentModel{day: $day, time: $time, ms: $ms, groupId: $groupId, id: $id}';
   }
 
-//   factory GroupDetails.fromJson(Map json) {
-//     return GroupDetails(
-//         id: int.parse(json['id'].toString()),
-//         name: json['name'].toString(),
-//         desc: json['note'].toString(),
-//         educationStageID: int.tryParse(json['educationID'].toString()) ?? 0);
-//   }
+  factory AppointmentModel.fromJson(Map json) {
+    return AppointmentModel(ms: json['MS'],
+        id: int.parse(json['id'].toString()),
+        day: json['day'].toString(),
+        time: json['time'].toString(),
+        groupId: int.tryParse(json['idGroups'].toString()) ?? 0);
+  }
 }

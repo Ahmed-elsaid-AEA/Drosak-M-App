@@ -6,16 +6,17 @@ import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 
 class GroupsOperation extends MySqFLiteDatabase {
-  Future<bool> insertGroupDetails(GroupDetails groupDetails) {
-    return insert(
+  Future<int> insertGroupDetails(GroupDetails groupDetails) async {
+    return insertReturnedId(
         tableName: MySqFLiteDatabase.groupTableName,
         values: groupDetails.toJson());
   }
 
-  Future<bool> insertAppointmentDetails(AppointmentModel appointment) {
+  Future<bool> insertAppointmentDetails(
+      AppointmentModel appointment, int groupID) {
     return insert(
         tableName: MySqFLiteDatabase.appointmentsTableName,
-        values: appointment.toJson());
+        values: appointment.toJson(groupID));
   }
 
   Future<List<GroupDetails>> getAllGroupsData() async {
@@ -25,6 +26,16 @@ class GroupsOperation extends MySqFLiteDatabase {
     listGroupsDetails +=
         data.map((item) => GroupDetails.fromJson(item)).toList();
     return listGroupsDetails;
+  }
+
+  Future<List<AppointmentModel>> getAllAppointmentData() async {
+    List<AppointmentModel> listAppointment = [];
+    List<Map<String, Object?>> data =
+        await select(tableName: MySqFLiteDatabase.appointmentsTableName);
+    // listAppointment +=
+    //     data.map((item) => AppointmentModel.fromJson(item)).toList();
+    log(data.toString());
+    return listAppointment;
   }
 
   Future<bool> softDelete(ItemStageModel itemStageModel) async {

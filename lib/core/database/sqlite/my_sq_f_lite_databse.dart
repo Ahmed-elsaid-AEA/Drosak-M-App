@@ -131,6 +131,16 @@ class MySqFLiteDatabase extends CRUD {
   }
 
   @override
+  Future<int> insertReturnedId(
+      {required String tableName, required Map<String, Object?> values}) async {
+    // TODO: implement insert
+    await _initDatabase();
+    int inserted = await _db!.insert(tableName, values);
+    await _db!.close();
+    return inserted;
+  }
+
+  @override
   Future<List<Map<String, Object?>>> select({
     required String tableName,
     String? where,

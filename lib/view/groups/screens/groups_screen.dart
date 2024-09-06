@@ -20,7 +20,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
     // TODO: implement initState
     super.initState();
     _controller = GroupsScreenController();
-
+    _controller.getAppointmentDetailsFromDataBase();
   }
 
   @override

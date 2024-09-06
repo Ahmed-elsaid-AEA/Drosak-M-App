@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
+import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
+import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/time_day_group_model.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +34,7 @@ class AddNewGroupScreenController {
 
   ///steam of list Time Day Group Model
   late StreamController<List<TimeDayGroupModel>>
-      controllerListTimeDayGroupModel;
+  controllerListTimeDayGroupModel;
   late Sink<List<TimeDayGroupModel>> inputDataListTimeDayGroupModel;
   late Stream<List<TimeDayGroupModel>> outPutDataListTimeDayGroupModel;
 
@@ -184,7 +186,9 @@ class AddNewGroupScreenController {
 
   void saveAllData(BuildContext context) async {
     String requiredData = "";
-    if (controllerGroupName.text.trim().isEmpty) {
+    if (controllerGroupName.text
+        .trim()
+        .isEmpty) {
       requiredData += ConstValue.kNameGroup;
     }
     if (selectedEducationStage == null) {
@@ -195,8 +199,12 @@ class AddNewGroupScreenController {
     }
     if (requiredData.isEmpty) {
       //now add to database
-      await addDetailsOfGroups();
-      await addDetailsOfAppointment();
+      bool insertedGroupDetails = await addDetailsOfGroups();
+      if (insertedGroupDetails == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("done")));
+        await addDetailsOfAppointment();
+      }
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(requiredData)));
@@ -205,5 +213,11 @@ class AddNewGroupScreenController {
 
   Future addDetailsOfAppointment() async {}
 
-  Future addDetailsOfGroups() async {}
+  Future<bool> addDetailsOfGroups() async {
+    GroupsOperation groupsOperation = GroupsOperation();
+    return groupsOperation.insertGroupDetails(GroupDetails(
+        desc: controllerGroupDesc.text.trim(),
+        name: controllerGroupName.text.trim(),
+        educationStageID: selectedEducationStage!.id));
+  }
 }

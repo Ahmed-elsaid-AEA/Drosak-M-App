@@ -10,6 +10,7 @@ class AddNewGroupScreenController {
   String status = ConstValue.kAddNewGroup;
   String? selectedDay;
   TimeOfDay? selectedTime;
+  ItemStageModel? selectedEducationStage;
   TextEditingController controllerGroupDesc = TextEditingController();
   TextEditingController controllerGroupName = TextEditingController();
   GlobalKey<FormState> formStateGroupDetails = GlobalKey<FormState>();
@@ -130,7 +131,9 @@ class AddNewGroupScreenController {
     }
   }
 
-  onChangedSelectEducationStageName(ItemStageModel? p1) {}
+  onChangedSelectEducationStageName(ItemStageModel? p1) {
+    selectedEducationStage = p1;
+  }
 
   void onPressedSelectTime(BuildContext context) async {
     TimeOfDay? time = await showTimePicker(
@@ -178,4 +181,29 @@ class AddNewGroupScreenController {
     listTimeDayGroupModel.removeAt(index);
     changeStatusOFStreamListTimeDay();
   }
+
+  void saveAllData(BuildContext context) async {
+    String requiredData = "";
+    if (controllerGroupName.text.trim().isEmpty) {
+      requiredData += ConstValue.kNameGroup;
+    }
+    if (selectedEducationStage == null) {
+      requiredData += " , ${ConstValue.kChooseEducationStage}";
+    }
+    if (listTimeDayGroupModel.isEmpty) {
+      requiredData += " , ${ConstValue.kAddSomeAppointment}";
+    }
+    if (requiredData.isEmpty) {
+      //now add to database
+      await addDetailsOfGroups();
+      await addDetailsOfAppointment();
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(requiredData)));
+    }
+  }
+
+  Future addDetailsOfAppointment() async {}
+
+  Future addDetailsOfGroups() async {}
 }

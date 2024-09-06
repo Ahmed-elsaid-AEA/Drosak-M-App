@@ -18,8 +18,10 @@ class ConstValue {
       'يمكنك إضافة  ما إذا كان الطالب دفع هذا الشهر أم لا وإضافة تاريخ الدفع';
   static const String kEducationalStages = 'المراحل التعليمية';
   static const String kChooseEducationStage = 'اختر المرحله التعليمية';
+  static const String kAddSomeAppointment = 'اضف بعض المواعيد';
   static const String kNameEducationalStages = 'اسم المرحله التعليميه';
   static const String kNameGroup = 'اسم المجموعه ';
+   static const String kAddNameOfGroup = 'اضف اسم المجموعه ';
   static const String kDescEducationalStage = 'وصف المرحله التعليميه';
   static const String kDescGroup = 'وصف المجموعة ';
   static const String kGroups = 'المجموعات';

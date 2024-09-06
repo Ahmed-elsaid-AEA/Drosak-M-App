@@ -60,6 +60,9 @@ class ConstValue {
 
   static const String kPM="م";
   static const String kAM="ص";
+  static const String kChoose="اختار";
+  static const String kCancel="إلفاء";
+
 
 }
 

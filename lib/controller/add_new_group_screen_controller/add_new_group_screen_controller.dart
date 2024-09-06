@@ -5,10 +5,12 @@ import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/time_day_group_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AddNewGroupScreenController {
   String status = ConstValue.kAddNewGroup;
-
+  String? selectedDay;
+  TimeOfDay? selectedTime;
   TextEditingController controllerGroupDesc = TextEditingController();
   TextEditingController controllerGroupName = TextEditingController();
   GlobalKey<FormState> formStateGroupDetails = GlobalKey<FormState>();
@@ -60,9 +62,23 @@ class AddNewGroupScreenController {
 
   onChangedSelectEducationStageName(ItemStageModel? p1) {}
 
-  void onPressedSelectTime() {}
+  void onPressedSelectTime(BuildContext context) async {
+    TimeOfDay? time = await showTimePicker(
+        barrierDismissible: false,
+        cancelText: ConstValue.kCancel,
+        confirmText: ConstValue.kChoose,
+        helpText: ConstValue.kChooseTime,
+        context: context,
+        initialTime: const TimeOfDay(hour: 1, minute: 10));
+    if (time != null) {
+      selectedTime = time;
+      print(selectedTime);
+    }
+  }
 
-  onChangedSelectDay(String? p1) {}
+  onChangedSelectDay(String? day) {
+    selectedDay = day;
+  }
 
   void onPressedAddTimeAndDayToTable() {}
 

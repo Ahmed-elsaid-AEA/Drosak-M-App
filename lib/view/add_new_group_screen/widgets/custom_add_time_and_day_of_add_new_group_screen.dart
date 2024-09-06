@@ -19,7 +19,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
   const CustomAddTimeAndDayOfAddNewGroupScreen(
       {super.key,
       required this.listDay,
-      this.time,
+      required this.outPutTime,
       this.onChangedSelectDay,
       required this.onPressedSelectTime,
       required this.onPressedAddTimeAndDayToTable,
@@ -30,7 +30,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
   final ValueChanged<String?> onChangedMSValue;
 
   final List<String> listDay;
-  final String? time;
+  final Stream<String?> outPutTime;
   final Function(String?)? onChangedSelectDay;
   final VoidCallback onPressedSelectTime;
   final VoidCallback onPressedAddTimeAndDayToTable;
@@ -76,17 +76,23 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                       groupValueMS: snapshot.data!,
                       onChangedMSValue: onChangedMSValue),
         ),
-        if (time != null)
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: Text(
-              time!,
-              style: const TextStyle(
-                  fontFamily: FontsName.geDinerOneFont,
-                  fontWeight: FontWeight.bold,
-                  color: ColorManager.kWhiteColor),
-            ),
-          ),
+        StreamBuilder(
+            stream: outPutTime,
+            builder: (context, snapshot) =>
+                snapshot.connectionState == ConnectionState.waiting
+                    ? const SizedBox()
+                    : snapshot.data == null
+                        ? const SizedBox()
+                        : Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: Text(
+                              snapshot.data!,
+                              style: const TextStyle(
+                                  fontFamily: FontsName.geDinerOneFont,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorManager.kWhiteColor),
+                            ),
+                          )),
         VerticalSpace(HeightManager.h24),
         CustomMaterialButton(
             onPressed: onPressedAddTimeAndDayToTable,

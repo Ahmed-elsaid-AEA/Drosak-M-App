@@ -24,6 +24,11 @@ class AddNewGroupScreenController {
   late StreamController<String> controllerMsValue;
   late Sink<String> inputDataMsValue;
   late Stream<String> outPutDataMsValue;
+
+  ///steam of selected Time
+  late StreamController<String> controllerSelectedTime;
+  late Sink<String> inputDataSelectedTime;
+  late Stream<String> outPutDataSelectedTime;
   List<ItemStageModel> listItemStageModel = [];
   String? timeGroup;
 
@@ -52,16 +57,29 @@ class AddNewGroupScreenController {
     controllerMsValue = StreamController();
     inputDataMsValue = controllerMsValue.sink;
     outPutDataMsValue = controllerMsValue.stream;
+
+    ///init steam of selected Time
+    controllerSelectedTime = StreamController();
+    inputDataSelectedTime = controllerSelectedTime.sink;
+    outPutDataSelectedTime = controllerSelectedTime.stream;
   }
 
   void initAllData() {
     getAllItemStageModelList();
     addNewValueOFMs();
+    addNewValueOfSelectedTime();
   }
 
 //?
   void addNewValueOFMs() {
     inputDataMsValue.add(groupValueMS);
+  }
+
+  void addNewValueOfSelectedTime() {
+    if (selectedTime != null) {
+      inputDataSelectedTime
+          .add("${selectedTime!.hour} : ${selectedTime!.minute}");
+    }
   }
 
   void getAllItemStageModelList() async {
@@ -90,7 +108,7 @@ class AddNewGroupScreenController {
         initialTime: const TimeOfDay(hour: 1, minute: 10));
     if (time != null) {
       selectedTime = time;
-      print(selectedTime);
+      addNewValueOfSelectedTime();
     }
   }
 

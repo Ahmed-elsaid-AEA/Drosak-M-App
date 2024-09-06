@@ -1,19 +1,6 @@
-import 'dart:developer';
-
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:drosak_m_app/controller/add_new_group_screen_controller/add_new_group_screen_controller.dart';
-import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
-import 'package:drosak_m_app/core/resources/fonts_manager.dart';
-import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/resources/padding_manager.dart';
-import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
-import 'package:drosak_m_app/core/resources/width_manager.dart';
-import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
-import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
-import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
-import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
-import 'package:drosak_m_app/model/groups/time_day_group_model.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_add_time_and_day_of_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_group_details_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_select_education_stage_name_add_new_group_screen.dart';
@@ -58,7 +45,7 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
               onPressedAddTimeAndDayToTable:
                   controller.onPressedAddTimeAndDayToTable,
               listTimeDayGroupModel: controller.listTimeDayGroupModel,
-              time: controller.timeGroup,
+              outPutTime: controller.outPutDataSelectedTime,
               listDay: ConstListValues.listDays,
               outPutDataMsValue: controller.outPutDataMsValue,
             ),

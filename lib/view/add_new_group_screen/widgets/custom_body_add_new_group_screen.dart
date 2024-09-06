@@ -50,6 +50,7 @@ class CustomBodyAddNewGroupScreen extends StatelessWidget {
               outPutTime: controller.outPutDataSelectedTime,
               listDay: ConstListValues.listDays,
               outPutDataMsValue: controller.outPutDataMsValue,
+              onPressedDeleteAppointment: controller.onPressedDeleteAppointment,
             ),
             // StreamBuilder(
             //     stream: outPathImage,

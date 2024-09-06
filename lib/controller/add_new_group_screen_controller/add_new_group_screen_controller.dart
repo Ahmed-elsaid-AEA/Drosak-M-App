@@ -4,7 +4,6 @@ import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/time_day_group_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddNewGroupScreenController {
@@ -56,17 +55,18 @@ class AddNewGroupScreenController {
     ///init steam of education stage screen
     controllerListItemStageModel = StreamController();
     inputDataListItemStageModel = controllerListItemStageModel.sink;
-    outPutDataListItemStageModel = controllerListItemStageModel.stream;
+    outPutDataListItemStageModel =
+        controllerListItemStageModel.stream.asBroadcastStream();
 
     ///init steam of selected MS value
     controllerMsValue = StreamController();
     inputDataMsValue = controllerMsValue.sink;
-    outPutDataMsValue = controllerMsValue.stream;
+    outPutDataMsValue = controllerMsValue.stream.asBroadcastStream();
 
     ///init steam of selected Time
     controllerSelectedTime = StreamController();
     inputDataSelectedTime = controllerSelectedTime.sink;
-    outPutDataSelectedTime = controllerSelectedTime.stream;
+    outPutDataSelectedTime = controllerSelectedTime.stream.asBroadcastStream();
 
     ///init steam of List Time Day Group Model
     controllerListTimeDayGroupModel = StreamController();
@@ -79,7 +79,25 @@ class AddNewGroupScreenController {
     getAllItemStageModelList();
     addNewValueOFMs();
     addNewValueOfSelectedTime();
-    addNewValueOFStreamListTimeDay();
+    changeStatusOFStreamListTimeDay();
+  }
+
+  void disposeControllers() {
+    ///dispose steam of education stage screen
+    controllerListItemStageModel.close();
+    inputDataListItemStageModel.close();
+
+    ///dispose steam of selected MS value
+    controllerMsValue.close();
+    inputDataMsValue.close();
+
+    ///dispose steam of selected Time
+    controllerSelectedTime.close();
+    inputDataSelectedTime.close();
+
+    ///dispose steam of List Time Day Group Model
+    controllerListTimeDayGroupModel.close();
+    inputDataListTimeDayGroupModel.close();
   }
 
 //?
@@ -87,7 +105,7 @@ class AddNewGroupScreenController {
     inputDataMsValue.add(groupValueMS);
   }
 
-  void addNewValueOFStreamListTimeDay() {
+  void changeStatusOFStreamListTimeDay() {
     inputDataListTimeDayGroupModel.add(listTimeDayGroupModel);
   }
 
@@ -150,14 +168,14 @@ class AddNewGroupScreenController {
     addNewValueOFMs();
   }
 
-  Future<void> disposeControllers() async {
-    controllerListItemStageModel.close();
-    inputDataListItemStageModel.close();
-  }
-
   void addTimeAndDayToTable() {
     listTimeDayGroupModel.add(TimeDayGroupModel(groupValueMS,
         "${selectedTime!.minute} : ${selectedTime!.hour}", selectedDay!));
-    addNewValueOFStreamListTimeDay();
+    changeStatusOFStreamListTimeDay();
+  }
+
+  void onPressedDeleteAppointment(int index) {
+    listTimeDayGroupModel.removeAt(index);
+    changeStatusOFStreamListTimeDay();
   }
 }

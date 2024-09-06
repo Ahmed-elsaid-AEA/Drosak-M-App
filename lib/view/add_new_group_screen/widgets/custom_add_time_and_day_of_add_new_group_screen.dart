@@ -76,6 +76,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                       groupValueMS: snapshot.data!,
                       onChangedMSValue: onChangedMSValue),
         ),
+        VerticalSpace(HeightManager.h12),
         StreamBuilder(
             stream: outPutTime,
             builder: (context, snapshot) =>
@@ -84,16 +85,17 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                     : snapshot.data == null
                         ? const SizedBox()
                         : Align(
-                            alignment: AlignmentDirectional.centerEnd,
+                            alignment: AlignmentDirectional.center,
                             child: Text(
                               snapshot.data!,
-                              style: const TextStyle(
+                              style:   TextStyle(
                                   fontFamily: FontsName.geDinerOneFont,
                                   fontWeight: FontWeight.bold,
+                                  fontSize: FontsSize.f20,
                                   color: ColorManager.kWhiteColor),
                             ),
                           )),
-        VerticalSpace(HeightManager.h24),
+        VerticalSpace(HeightManager.h12),
         CustomMaterialButton(
             onPressed: onPressedAddTimeAndDayToTable,
             text: ConstValue.kAddToTableAppointment),

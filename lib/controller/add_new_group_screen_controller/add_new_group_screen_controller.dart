@@ -14,10 +14,24 @@ class AddNewGroupScreenController {
   TextEditingController controllerGroupDesc = TextEditingController();
   TextEditingController controllerGroupName = TextEditingController();
   GlobalKey<FormState> formStateGroupDetails = GlobalKey<FormState>();
+
+  ///steam of education stage screen
   late StreamController<List<ItemStageModel>> controllerListItemStageModel;
   late Sink<List<ItemStageModel>> inputDataListItemStageModel;
   late Stream<List<ItemStageModel>> outPutDataListItemStageModel;
+
+  ///steam of selected MS value
+  late StreamController<String> controllerMsValue;
+  late Sink<String> inputDataMsValue;
+  late Stream<String> outPutDataMsValue;
   List<ItemStageModel> listItemStageModel = [];
+  String? timeGroup;
+
+  List<TimeDayGroupModel> listTimeDayGroupModel = [
+    TimeDayGroupModel("jkad", "dsa", "sd")
+  ];
+
+  String groupValueMS = ConstValue.kAM;
 
   AddNewGroupScreenController() {
     start();
@@ -29,13 +43,25 @@ class AddNewGroupScreenController {
   }
 
   Future<void> initControllers() async {
+    ///init steam of education stage screen
     controllerListItemStageModel = StreamController();
     inputDataListItemStageModel = controllerListItemStageModel.sink;
     outPutDataListItemStageModel = controllerListItemStageModel.stream;
+
+    ///init steam of selected MS value
+    controllerMsValue = StreamController();
+    inputDataMsValue = controllerMsValue.sink;
+    outPutDataMsValue = controllerMsValue.stream;
   }
 
   void initAllData() {
     getAllItemStageModelList();
+    addNewValueOFMs();
+  }
+
+//?
+  void addNewValueOFMs() {
+    inputDataMsValue.add(groupValueMS);
   }
 
   void getAllItemStageModelList() async {
@@ -43,14 +69,6 @@ class AddNewGroupScreenController {
     listItemStageModel = await educationStageOperation.getAllEducationData();
     inputDataListItemStageModel.add(listItemStageModel);
   }
-
-  String? timeGroup;
-
-  List<TimeDayGroupModel> listTimeDayGroupModel = [
-    TimeDayGroupModel("jkad", "dsa", "sd")
-  ];
-
-  String groupValueMS = ConstValue.kAM;
 
   void getArgumentFromLastScreen(BuildContext context) {
     var arg = ModalRoute.of(context);
@@ -82,7 +100,10 @@ class AddNewGroupScreenController {
 
   void onPressedAddTimeAndDayToTable() {}
 
-  void onChangedMSValue(String? value) {}
+  void onChangedMSValue(String? value) {
+    if (value != null) groupValueMS = value;
+    addNewValueOFMs();
+  }
 
   Future<void> disposeControllers() async {
     controllerListItemStageModel.close();

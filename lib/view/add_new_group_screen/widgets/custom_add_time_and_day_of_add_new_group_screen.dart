@@ -24,18 +24,18 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
       required this.onPressedSelectTime,
       required this.onPressedAddTimeAndDayToTable,
       required this.listTimeDayGroupModel,
-      required this.groupValueMS,
-      required this.onChangedMSValue});
+      required this.onChangedMSValue,
+      required this.outPutDataMsValue});
 
   final ValueChanged<String?> onChangedMSValue;
 
   final List<String> listDay;
   final String? time;
-  final String groupValueMS;
   final Function(String?)? onChangedSelectDay;
   final VoidCallback onPressedSelectTime;
   final VoidCallback onPressedAddTimeAndDayToTable;
   final List<TimeDayGroupModel> listTimeDayGroupModel;
+  final Stream<String> outPutDataMsValue;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,18 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
           ],
         ),
         VerticalSpace(HeightManager.h12),
-        CustomRadioMSAddNewGroupScreen(onPressedSelectTime: onPressedSelectTime, groupValueMS: groupValueMS, onChangedMSValue: onChangedMSValue),
+        StreamBuilder<String>(
+          stream: outPutDataMsValue,
+          builder: (context, snapshot) =>
+              snapshot.connectionState == ConnectionState.waiting
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : CustomRadioMSAddNewGroupScreen(
+                      onPressedSelectTime: onPressedSelectTime,
+                      groupValueMS: snapshot.data!,
+                      onChangedMSValue: onChangedMSValue),
+        ),
         if (time != null)
           Align(
             alignment: AlignmentDirectional.centerEnd,
@@ -213,4 +224,3 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
     );
   }
 }
-

@@ -29,6 +29,13 @@ class AddNewGroupScreenController {
   late StreamController<String> controllerSelectedTime;
   late Sink<String> inputDataSelectedTime;
   late Stream<String> outPutDataSelectedTime;
+
+  ///steam of list Time Day Group Model
+  late StreamController<List<TimeDayGroupModel>>
+      controllerListTimeDayGroupModel;
+  late Sink<List<TimeDayGroupModel>> inputDataListTimeDayGroupModel;
+  late Stream<List<TimeDayGroupModel>> outPutDataListTimeDayGroupModel;
+
   List<ItemStageModel> listItemStageModel = [];
   String? timeGroup;
 
@@ -60,17 +67,28 @@ class AddNewGroupScreenController {
     controllerSelectedTime = StreamController();
     inputDataSelectedTime = controllerSelectedTime.sink;
     outPutDataSelectedTime = controllerSelectedTime.stream;
+
+    ///init steam of List Time Day Group Model
+    controllerListTimeDayGroupModel = StreamController();
+    inputDataListTimeDayGroupModel = controllerListTimeDayGroupModel.sink;
+    outPutDataListTimeDayGroupModel =
+        controllerListTimeDayGroupModel.stream.asBroadcastStream();
   }
 
   void initAllData() {
     getAllItemStageModelList();
     addNewValueOFMs();
     addNewValueOfSelectedTime();
+    addNewValueOFStreamListTimeDay();
   }
 
 //?
   void addNewValueOFMs() {
     inputDataMsValue.add(groupValueMS);
+  }
+
+  void addNewValueOFStreamListTimeDay() {
+    inputDataListTimeDayGroupModel.add(listTimeDayGroupModel);
   }
 
   void addNewValueOfSelectedTime() {
@@ -138,7 +156,8 @@ class AddNewGroupScreenController {
   }
 
   void addTimeAndDayToTable() {
-    listTimeDayGroupModel.add(TimeDayGroupModel(
-        groupValueMS, "${selectedTime!.minute} : ${selectedTime!.hour}", selectedDay!));
+    listTimeDayGroupModel.add(TimeDayGroupModel(groupValueMS,
+        "${selectedTime!.minute} : ${selectedTime!.hour}", selectedDay!));
+    addNewValueOFStreamListTimeDay();
   }
 }

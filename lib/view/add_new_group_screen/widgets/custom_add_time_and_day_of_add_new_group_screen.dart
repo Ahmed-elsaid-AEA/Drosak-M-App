@@ -23,7 +23,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
       this.onChangedSelectDay,
       required this.onPressedSelectTime,
       required this.onPressedAddTimeAndDayToTable,
-      required this.listTimeDayGroupModel,
+      required this.outPutListTimeDayGroupModel,
       required this.onChangedMSValue,
       required this.outPutDataMsValue});
 
@@ -34,7 +34,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
   final Function(String?)? onChangedSelectDay;
   final VoidCallback onPressedSelectTime;
   final VoidCallback onPressedAddTimeAndDayToTable;
-  final List<TimeDayGroupModel> listTimeDayGroupModel;
+  final Stream<List<TimeDayGroupModel>> outPutListTimeDayGroupModel;
   final Stream<String> outPutDataMsValue;
 
   @override
@@ -88,7 +88,7 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
                             alignment: AlignmentDirectional.center,
                             child: Text(
                               snapshot.data!,
-                              style:   TextStyle(
+                              style: TextStyle(
                                   fontFamily: FontsName.geDinerOneFont,
                                   fontWeight: FontWeight.bold,
                                   fontSize: FontsSize.f20,
@@ -100,134 +100,165 @@ class CustomAddTimeAndDayOfAddNewGroupScreen extends StatelessWidget {
             onPressed: onPressedAddTimeAndDayToTable,
             text: ConstValue.kAddToTableAppointment),
         VerticalSpace(HeightManager.h12),
-        Table(
-          border: TableBorder.all(
-              color: ColorManager.kWhiteColor,
-              borderRadius:
-                  BorderRadius.all(Radius.circular(RadiusValuesManager.br14))),
-          children: [
-            TableRow(
-              decoration: BoxDecoration(
-                  color: ColorManager.kPrimaryColor,
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(RadiusValuesManager.br14))),
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph4),
-                  child: const Center(
-                    child: Text(
-                      ConstValue.kDay,
+        StreamBuilder(
+          stream: outPutListTimeDayGroupModel,
+          builder: (context, snapshot) =>
+              snapshot.connectionState == ConnectionState.waiting
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Text("${ConstValue.kCountOfAppointmentAdded} (  ${snapshot.data!.length} ) ",
                       style: TextStyle(
-                          fontFamily: FontsName.geDinerOneFont,
-                          fontWeight: FontWeight.bold,
-                          color: ColorManager.kWhiteColor),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph4),
-                  child: const Center(
-                    child: Text(
-                      ConstValue.kTime,
-                      style: TextStyle(
-                          fontFamily: FontsName.geDinerOneFont,
-                          fontWeight: FontWeight.bold,
-                          color: ColorManager.kWhiteColor),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph4),
-                  child: const Center(
-                    child: Text(
-                      ConstValue.kMS,
-                      style: TextStyle(
-                          fontFamily: FontsName.geDinerOneFont,
-                          fontWeight: FontWeight.bold,
-                          color: ColorManager.kWhiteColor),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph4),
-                  child: const Center(
-                    child: Text(
-                      ConstValue.kDelete,
-                      style: TextStyle(
+                          fontSize: FontsSize.f20,
                           fontWeight: FontWeight.bold,
                           fontFamily: FontsName.geDinerOneFont,
-                          color: ColorManager.kWhiteColor),
+                          color: ColorManager.kWhiteColor)),
+        ),
+        StreamBuilder(
+          stream: outPutListTimeDayGroupModel,
+          builder: (context, snapshot) => Table(
+            border: TableBorder.all(
+                color: ColorManager.kWhiteColor,
+                borderRadius: BorderRadius.all(
+                    Radius.circular(RadiusValuesManager.br14))),
+            children: [
+              customHeaderOFTable(),
+              if (snapshot.data != null)
+                for (int i = 0; i < snapshot.data!.length; i++)
+                  TableRow(children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: PaddingManager.pw4,
+                          vertical: PaddingManager.ph10),
+                      child: Center(
+                        child: Text(
+                          snapshot.data![i].day,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: FontsName.geDinerOneFont,
+                              color: ColorManager.kWhiteColor),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-            for (int i = 0; i < listTimeDayGroupModel.length; i++)
-              TableRow(children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph10),
-                  child: Center(
-                    child: Text(
-                      listTimeDayGroupModel[i].day,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: FontsName.geDinerOneFont,
-                          color: ColorManager.kWhiteColor),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: PaddingManager.pw4,
+                          vertical: PaddingManager.ph10),
+                      child: Center(
+                        child: Text(
+                          snapshot.data![i].time,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: FontsName.geDinerOneFont,
+                              color: ColorManager.kWhiteColor),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph10),
-                  child: Center(
-                    child: Text(
-                      listTimeDayGroupModel[i].time,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: FontsName.geDinerOneFont,
-                          color: ColorManager.kWhiteColor),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: PaddingManager.pw4,
+                          vertical: PaddingManager.ph10),
+                      child: Center(
+                        child: Text(
+                          snapshot.data![i].ms,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: FontsName.geDinerOneFont,
+                              color: ColorManager.kWhiteColor),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: PaddingManager.pw4,
-                      vertical: PaddingManager.ph10),
-                  child: Center(
-                    child: Text(
-                      listTimeDayGroupModel[i].ms,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: FontsName.geDinerOneFont,
-                          color: ColorManager.kWhiteColor),
-                    ),
-                  ),
-                ),
-                IconButton(
-                    onPressed: () {}, icon: const Icon(CupertinoIcons.delete))
-              ])
-          ],
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(CupertinoIcons.delete))
+                  ])
+            ],
+          ),
         ),
         VerticalSpace(HeightManager.h12),
-        if (listTimeDayGroupModel.isEmpty)
-          const Text(
-            ConstValue.kNoTimeAndDayYetAdd,
-            style: TextStyle(
-                fontFamily: FontsName.geDinerOneFont,
-                fontWeight: FontWeight.bold,
-                color: ColorManager.kWhiteColor),
-          )
+        StreamBuilder(
+          stream: outPutListTimeDayGroupModel,
+          builder: (context, snapshot) => snapshot.data == null
+              ? const Text(
+                  ConstValue.kNoTimeAndDayYetAdd,
+                  style: TextStyle(
+                      fontFamily: FontsName.geDinerOneFont,
+                      fontWeight: FontWeight.bold,
+                      color: ColorManager.kWhiteColor),
+                )
+              : snapshot.data!.isEmpty
+                  ? const Text(
+                      ConstValue.kNoTimeAndDayYetAdd,
+                      style: TextStyle(
+                          fontFamily: FontsName.geDinerOneFont,
+                          fontWeight: FontWeight.bold,
+                          color: ColorManager.kWhiteColor),
+                    )
+                  : const SizedBox(),
+        )
+      ],
+    );
+  }
+
+  TableRow customHeaderOFTable() {
+    return TableRow(
+      decoration: BoxDecoration(
+          color: ColorManager.kPrimaryColor,
+          borderRadius:
+              BorderRadius.all(Radius.circular(RadiusValuesManager.br14))),
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: PaddingManager.pw4, vertical: PaddingManager.ph4),
+          child: const Center(
+            child: Text(
+              ConstValue.kDay,
+              style: TextStyle(
+                  fontFamily: FontsName.geDinerOneFont,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.kWhiteColor),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: PaddingManager.pw4, vertical: PaddingManager.ph4),
+          child: const Center(
+            child: Text(
+              ConstValue.kTime,
+              style: TextStyle(
+                  fontFamily: FontsName.geDinerOneFont,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.kWhiteColor),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: PaddingManager.pw4, vertical: PaddingManager.ph4),
+          child: const Center(
+            child: Text(
+              ConstValue.kMS,
+              style: TextStyle(
+                  fontFamily: FontsName.geDinerOneFont,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.kWhiteColor),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: PaddingManager.pw4, vertical: PaddingManager.ph4),
+          child: const Center(
+            child: Text(
+              ConstValue.kDelete,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontsName.geDinerOneFont,
+                  color: ColorManager.kWhiteColor),
+            ),
+          ),
+        ),
       ],
     );
   }

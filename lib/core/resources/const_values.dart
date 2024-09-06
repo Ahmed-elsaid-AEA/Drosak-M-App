@@ -62,6 +62,7 @@ class ConstValue {
   static const String kAM="ص";
   static const String kChoose="اختار";
   static const String kCancel="إلفاء";
+  static const String kCountOfAppointmentAdded="عدد المواعيد المضافه";
 
 
 }

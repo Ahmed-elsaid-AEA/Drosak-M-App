@@ -16,16 +16,21 @@ class GroupDetails {
     return {
       MySqFLiteDatabase.groupColumnName: name,
       MySqFLiteDatabase.groupColumnNote: desc,
-      MySqFLiteDatabase.groupColumnIDEducation: desc,
+      MySqFLiteDatabase.groupColumnIDEducation: educationStageID,
     };
   }
-  // factory ItemStageModel.fromJson(Map json) {
-  //   return ItemStageModel(
-  //       id: int.parse(json['id'].toString()),
-  //       stageName: json['name'].toString(),
-  //       desc: json['desc'].toString(),
-  //       createdAt: json['created_at'].toString(),
-  //       image: json['image'].toString(),
-  //       status: json['status']);
-  // }
+
+  // {id: 1, name: h BB, note: , educationID: }
+  factory GroupDetails.fromJson(Map json) {
+    return GroupDetails(
+        id: int.parse(json['id'].toString()),
+        name: json['name'].toString(),
+        desc: json['note'].toString(),
+        educationStageID: int.tryParse(json['educationID'].toString()) ?? 0);
+  }
+
+  @override
+  String toString() {
+    return 'GroupDetails{id: $id, name: $name, desc: $desc, educationStageID: $educationStageID}';
+  }
 }

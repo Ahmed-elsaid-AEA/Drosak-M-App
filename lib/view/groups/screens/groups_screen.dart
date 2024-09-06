@@ -1,4 +1,5 @@
 import 'package:drosak_m_app/controller/groups/groups_screen_controller.dart';
+import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/widgets/app_bar/custom_app_bar_title_add_search.dart';
 import 'package:drosak_m_app/view/groups/widgets/custom_list_view_item_groups.dart';
@@ -13,12 +14,15 @@ class GroupsScreen extends StatefulWidget {
 
 class _GroupsScreenState extends State<GroupsScreen> {
   late GroupsScreenController _controller;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller=GroupsScreenController();
+    _controller = GroupsScreenController();
+
   }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -33,7 +37,8 @@ class _GroupsScreenState extends State<GroupsScreen> {
               },
               onPressedAdd: () {
                 _controller.addNewGroups(context: context);
-              }, streamCount: _controller.outPutDataListItemGroupModel,
+              },
+              streamCount: _controller.outPutDataListItemGroupModel,
             ),
             CustomListViewItemsGroups(
               // outPutDataListItemGroupsModel:
@@ -41,9 +46,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
               editFun: (itemStageModel) {
                 // _controller.editItemStage(itemStageModel, context);
               },
-              deleteFun: (itemStageModel) {
-
-              },
+              deleteFun: (itemStageModel) {},
             ),
           ],
         ),

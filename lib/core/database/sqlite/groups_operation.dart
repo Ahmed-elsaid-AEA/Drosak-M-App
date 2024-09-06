@@ -11,22 +11,20 @@ class GroupsOperation extends MySqFLiteDatabase {
         tableName: MySqFLiteDatabase.groupTableName,
         values: groupDetails.toJson());
   }
+
   Future<bool> insertAppointmentDetails(AppointmentModel appointment) {
     return insert(
         tableName: MySqFLiteDatabase.appointmentsTableName,
         values: appointment.toJson());
   }
 
-  Future<List<ItemStageModel>> getAllEducationData() async {
-    List<ItemStageModel> listItemStageModel = [];
-    List<Map<String, Object?>> data = await select(
-        tableName: MySqFLiteDatabase.educationalStageTableName,
-        where: '${MySqFLiteDatabase.educationalStageStatus}==?',
-        whereArgs: ['1']);
-    listItemStageModel +=
-        data.map((item) => ItemStageModel.fromJson(item)).toList();
-    log(listItemStageModel.toString());
-    return listItemStageModel;
+  Future<List<GroupDetails>> getAllGroupsData() async {
+    List<GroupDetails> listGroupsDetails = [];
+    List<Map<String, Object?>> data =
+        await select(tableName: MySqFLiteDatabase.groupTableName);
+    listGroupsDetails +=
+        data.map((item) => GroupDetails.fromJson(item)).toList();
+    return listGroupsDetails;
   }
 
   Future<bool> softDelete(ItemStageModel itemStageModel) async {

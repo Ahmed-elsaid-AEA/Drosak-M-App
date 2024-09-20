@@ -43,8 +43,10 @@ class GroupsScreenController {
   }
 
   void addNewGroups({required BuildContext context}) {
-    Navigator.of(context).pushNamed(RoutesName.kAddNewGroupScreen,
-        arguments: ConstValue.kAddNewGroup);
+    Navigator.of(context)
+        .pushNamed(RoutesName.kAddNewGroupScreen,
+            arguments: ConstValue.kAddNewGroup)
+        .then((value) => getAllData());
   }
 
 // Stream<List<ItemStageModel>> outPutDataListItemStageModel;

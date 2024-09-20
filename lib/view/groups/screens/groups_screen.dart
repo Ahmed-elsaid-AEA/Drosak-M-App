@@ -1,6 +1,5 @@
 import 'package:drosak_m_app/controller/groups/groups_screen_controller.dart';
-import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
-import 'package:drosak_m_app/core/resources/const_values.dart';
+ import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/widgets/app_bar/custom_app_bar_title_add_search.dart';
 import 'package:drosak_m_app/view/groups/widgets/custom_list_view_item_groups.dart';
 import 'package:flutter/material.dart';

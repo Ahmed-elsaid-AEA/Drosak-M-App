@@ -44,7 +44,10 @@ class AddNewGroupScreenController {
 
   String groupValueMS = ConstValue.kAM;
 
-  AddNewGroupScreenController() {
+//! global variable  context
+  BuildContext context;
+
+  AddNewGroupScreenController(this.context) {
     start();
   }
 
@@ -136,7 +139,13 @@ class AddNewGroupScreenController {
     selectedEducationStage = p1;
   }
 
-  void onPressedSelectTime(BuildContext context) async {
+  void _closeKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
+  void onPressedSelectTime() async {
+    //?close keyboard
+    _closeKeyboard();
     TimeOfDay? time = await showTimePicker(
         barrierDismissible: false,
         cancelText: ConstValue.kCancel,
@@ -173,6 +182,7 @@ class AddNewGroupScreenController {
   }
 
   void addTimeAndDayToTable() {
+    _closeKeyboard();
     listAppointmentGroupModel.add(AppointmentModel(
         ms: groupValueMS,
         time: "${selectedTime!.minute} : ${selectedTime!.hour}",

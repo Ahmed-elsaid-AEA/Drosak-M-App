@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
-import 'package:drosak_m_app/core/resources/routes_mananger.dart';
+ import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:flutter/material.dart';
 
@@ -45,8 +45,14 @@ class GroupsScreenController {
   void addNewGroups({required BuildContext context}) {
     Navigator.of(context)
         .pushNamed(RoutesName.kAddNewGroupScreen,
-            arguments: ConstValue.kAddNewGroup)
+        arguments: ConstValue.kAddNewGroup)
         .then((value) => getAllData());
+  }
+
+  void onRefresh() {
+    listGroupInfo.clear();
+    inputDataListItemGroupModel.add(listGroupInfo);
+      getAllData();
   }
 
 // Stream<List<ItemStageModel>> outPutDataListItemStageModel;

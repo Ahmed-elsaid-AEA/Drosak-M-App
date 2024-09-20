@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
@@ -10,11 +8,8 @@ import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
-import 'package:drosak_m_app/generated/assets.dart';
-import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomItemGroup extends StatelessWidget {
   const CustomItemGroup({
@@ -25,8 +20,8 @@ class CustomItemGroup extends StatelessWidget {
   });
 
   final GroupInfoModel groupInfoModel;
-  final void Function(ItemStageModel itemStageModel) deleteFun;
-  final void Function(ItemStageModel itemStageModel) editFun;
+  final void Function(GroupInfoModel itemStageModel) deleteFun;
+  final void Function(GroupInfoModel itemStageModel) editFun;
 
   @override
   Widget build(BuildContext context) {
@@ -140,16 +135,56 @@ class CustomItemGroup extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        Text(
-                          groupInfoModel.groupDetails.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: FontsSize.f16,
-                              color: ColorManager.kWhiteColor,
-                              fontFamily: FontsName.geDinerOneFont),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                groupInfoModel.groupDetails.name,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: FontsSize.f16,
+                                    color: ColorManager.kWhiteColor,
+                                    fontFamily: FontsName.geDinerOneFont),
+                              ),
+                            ),
+                            HorizontalSpace(WidthManager.w6),
+                            PopupMenuButton(
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  child: Text(
+                                    ConstValue.kEdit,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: FontsSize.f16,
+                                        color: ColorManager.kBlackColor,
+                                        fontFamily: FontsName.geDinerOneFont),
+                                  ),
+                                  onTap: () {
+                                    editFun(groupInfoModel);
+                                  },
+                                ),
+                                PopupMenuItem(
+                                  child: Text(ConstValue.kDelete,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: FontsSize.f16,
+                                          color: ColorManager.kBlackColor,
+                                          fontFamily:
+                                              FontsName.geDinerOneFont)),
+                                  onTap: () {
+                                    deleteFun(groupInfoModel);
+                                  },
+                                ),
+                              ],
+                              child: const Icon(
+                                Icons.more_vert,
+                                color: ColorManager.kWhiteColor,
+                              ),
+                            ),
+                          ],
                         ),
-                        VerticalSpace(HeightManager.h12),                        Table(
+                        VerticalSpace(HeightManager.h12),
+                        Table(
                           border: TableBorder.all(
                               color: ColorManager.kWhiteColor,
                               borderRadius: BorderRadius.all(
@@ -249,7 +284,6 @@ class CustomItemGroup extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-
                               ])
                           ],
                         ),
@@ -259,7 +293,7 @@ class CustomItemGroup extends StatelessWidget {
                             HorizontalSpace(WidthManager.w3),
                             Expanded(
                               child: Text(
-                               groupInfoModel.groupDetails.desc,
+                                groupInfoModel.groupDetails.desc,
                                 style: TextStyle(
                                     color: ColorManager.kWhiteColor
                                         .withOpacity(.6),

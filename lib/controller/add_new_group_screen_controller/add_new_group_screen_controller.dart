@@ -6,12 +6,14 @@ import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
+import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:flutter/material.dart';
 
 class AddNewGroupScreenController {
   String status = ConstValue.kAddNewGroup;
   String? selectedDay;
   TimeOfDay? selectedTime;
+  GroupInfoModel? _groupInfoModel;
   ItemStageModel? selectedEducationStage;
   TextEditingController controllerGroupDesc = TextEditingController();
   TextEditingController controllerGroupName = TextEditingController();
@@ -85,6 +87,9 @@ class AddNewGroupScreenController {
     addNewValueOFMs();
     addNewValueOfSelectedTime();
     changeStatusOFStreamListTimeDay();
+    if (_groupInfoModel != null) {
+      fillDataInEditStatus();
+    }
   }
 
   void disposeControllers() {
@@ -133,13 +138,39 @@ class AddNewGroupScreenController {
       var arguments = arg.settings.arguments;
       if (arguments is Map) {
         //? now in status edit
-        print(arguments);
+        argumentsInEditStatus(arguments);
       } else {
         //? now in add new
         String argument = arguments.toString();
         status = argument;
       }
     }
+  }
+
+  void argumentsInEditStatus(Map arguments) {
+    //?check if has status edit
+    if (arguments.containsKey(ConstValue.kStatus)) {
+      status = arguments[ConstValue.kStatus];
+    }
+    //?check if has kGroupInfoModel key
+    if (arguments.containsKey(ConstValue.kGroupInfoModel)) {
+      //check if was in type GroupInfoModel
+      if (arguments[ConstValue.kGroupInfoModel] is GroupInfoModel) {
+        _groupInfoModel = arguments[ConstValue.kGroupInfoModel];
+      }
+    }
+  }
+
+  void fillDataInEditStatus() {
+    //?fill name
+    controllerGroupName.text = _groupInfoModel!.groupDetails.name;
+    //?fill desc
+    controllerGroupDesc.text = _groupInfoModel!.groupDetails.desc;
+    //?fill listAppointmentGroupModel
+    listAppointmentGroupModel = _groupInfoModel!.listAppointment;
+    //?send to input stream
+    inputDataListTimeDayGroupModel.add(listAppointmentGroupModel);
+
   }
 
   onChangedSelectEducationStageName(ItemStageModel? p1) {

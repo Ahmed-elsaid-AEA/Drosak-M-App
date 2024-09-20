@@ -39,6 +39,11 @@ class AddNewGroupScreenController {
   late Sink<List<AppointmentModel>> inputDataListTimeDayGroupModel;
   late Stream<List<AppointmentModel>> outPutDataListTimeDayGroupModel;
 
+  ///steam of list Time Day Group Model
+  late StreamController<ItemStageModel> controllerInitialItem;
+  late Sink<ItemStageModel> inputPutDataInitialItem;
+  late Stream<ItemStageModel> outPutDataInitialItem;
+
   List<ItemStageModel> listItemStageModel = [];
   String? timeGroup;
 
@@ -80,6 +85,11 @@ class AddNewGroupScreenController {
     inputDataListTimeDayGroupModel = controllerListTimeDayGroupModel.sink;
     outPutDataListTimeDayGroupModel =
         controllerListTimeDayGroupModel.stream.asBroadcastStream();
+    ///init steam initial data
+    controllerInitialItem = StreamController();
+    inputPutDataInitialItem = controllerInitialItem.sink;
+    outPutDataInitialItem =
+        controllerInitialItem.stream.asBroadcastStream();
   }
 
   void initAllData() async {
@@ -173,13 +183,13 @@ class AddNewGroupScreenController {
     inputDataListTimeDayGroupModel.add(listAppointmentGroupModel);
     int stageID = _groupInfoModel!.groupDetails.educationStageID;
 
-
     List<ItemStageModel> listFound =
         listItemStageModel.where((element) => element.id == stageID).toList();
 
     if (listFound.isNotEmpty) {
-      selectedEducationStage = listItemStageModel[0];
+      selectedEducationStage = listFound[0];
       print(selectedEducationStage);
+      inputPutDataInitialItem.add(selectedEducationStage!);
     }
   }
 

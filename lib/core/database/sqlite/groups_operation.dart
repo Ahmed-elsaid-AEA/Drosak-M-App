@@ -61,15 +61,33 @@ class GroupsOperation extends MySqFLiteDatabase {
             ' ${MySqFLiteDatabase.groupColumnID}==${groupInfoModel.groupDetails.id}');
   }
 
-  Future<bool> editEducationStage(ItemStageModel itemStageModel) async {
-    print(itemStageModel.id);
+  Future<bool> editEducationStage(GroupInfoModel groupInfoModel) async {
+    bool done = false;
+    //?update appointment
+    done = await _updateGroupTable(groupInfoModel.groupDetails);
+    // if(done==true)
+    //   done=_updateAppointment(appin, groupId)
+    //?update GroupTable
+    print(done);
+    return done;
+  }
+
+  Future<bool> _updateGroupTable(GroupDetails groupDetails) async {
+    print(groupDetails.id);
     return await update(
-        tableName: MySqFLiteDatabase.educationalStageTableName,
-        values: {
-          MySqFLiteDatabase.educationalStageName: itemStageModel.stageName
-        },
-        where: ' ${MySqFLiteDatabase.educationalStageID}=?',
-        whereArgs: ['${itemStageModel.id}']);
+        tableName: MySqFLiteDatabase.groupTableName,
+        values: groupDetails.toJson(),
+        where: ' ${MySqFLiteDatabase.groupColumnID}=?',
+        whereArgs: ['${groupDetails.id}']);
+  }
+
+  Future<bool> _updateAppointment(
+      AppointmentModel appointmentModel, int groupId) async {
+    return await update(
+        tableName: MySqFLiteDatabase.appointmentsTableName,
+        values: appointmentModel.toJson(groupId),
+        where: ' ${MySqFLiteDatabase.appointmentsColumnID}=?',
+        whereArgs: ['${appointmentModel.id}']);
   }
 
   Future<List<ItemStageModel>> getSearchWord(

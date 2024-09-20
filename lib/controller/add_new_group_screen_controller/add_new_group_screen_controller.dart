@@ -85,11 +85,11 @@ class AddNewGroupScreenController {
     inputDataListTimeDayGroupModel = controllerListTimeDayGroupModel.sink;
     outPutDataListTimeDayGroupModel =
         controllerListTimeDayGroupModel.stream.asBroadcastStream();
+
     ///init steam initial data
     controllerInitialItem = StreamController();
     inputPutDataInitialItem = controllerInitialItem.sink;
-    outPutDataInitialItem =
-        controllerInitialItem.stream.asBroadcastStream();
+    outPutDataInitialItem = controllerInitialItem.stream.asBroadcastStream();
   }
 
   void initAllData() async {
@@ -253,7 +253,7 @@ class AddNewGroupScreenController {
     changeStatusOFStreamListTimeDay();
   }
 
-  void saveAllData(BuildContext context) async {
+  String checkAllDataValidate() {
     String requiredData = "";
     if (controllerGroupName.text.trim().isEmpty) {
       requiredData += ConstValue.kNameGroup;
@@ -264,6 +264,11 @@ class AddNewGroupScreenController {
     if (listAppointmentGroupModel.isEmpty) {
       requiredData += " , ${ConstValue.kAddSomeAppointment}";
     }
+    return requiredData;
+  }
+
+  void saveAllData(BuildContext context) async {
+    String requiredData = checkAllDataValidate();
     if (requiredData.isEmpty) {
       //now add to database
       int groupId = await addDetailsOfGroups();
@@ -300,5 +305,39 @@ class AddNewGroupScreenController {
 
   void backToMainScreen(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  void onPressedAtEditORSave() async {
+    if (status == ConstValue.kEditThisGroup) {
+      //?
+
+      bool updated = await editIntoGroupInfo();
+      if (updated==true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(ConstValue.kAddedGroupDetailsSucces)));
+        backToMainScreen(context);
+      }
+    } else {
+      saveAllData(context);
+    }
+  }
+
+  Future<bool> editIntoGroupInfo() async {
+    String requiredData = checkAllDataValidate();
+    if (requiredData.isEmpty) {
+      //now add to database
+      GroupsOperation groupsOperation = GroupsOperation();
+      return groupsOperation.editEducationStage(GroupInfoModel(
+          groupDetails: GroupDetails(
+              desc: controllerGroupDesc.text,
+              id: _groupInfoModel!.groupDetails.id,
+              name: controllerGroupName.text,
+              educationStageID: selectedEducationStage!.id),
+          listAppointment: listAppointmentGroupModel));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(requiredData)));
+      return false;
+    }
   }
 }

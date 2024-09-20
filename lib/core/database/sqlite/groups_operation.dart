@@ -61,15 +61,46 @@ class GroupsOperation extends MySqFLiteDatabase {
             ' ${MySqFLiteDatabase.groupColumnID}==${groupInfoModel.groupDetails.id}');
   }
 
-  Future<bool> editEducationStage(GroupInfoModel groupInfoModel) async {
-    bool done = false;
+  Future<bool> _deleteAppointment(AppointmentModel appointmentModel) async {
+    return await delete(
+        tableName: MySqFLiteDatabase.appointmentsTableName,
+        where:
+            ' ${MySqFLiteDatabase.appointmentsColumnID}==${appointmentModel.id}');
+  }
+
+  Future<bool> editEducationStage(GroupInfoModel groupInfoModel,
+      List<AppointmentModel> oldAppointmentModel) async {
+    bool updateGroup = false;
+    bool deleteAppointment = false;
+    bool insertAppointment = false;
     //?update appointment
-    done = await _updateGroupTable(groupInfoModel.groupDetails);
-    // if(done==true)
-    //   done=_updateAppointment(appin, groupId)
-    //?update GroupTable
-    print(done);
-    return done;
+    updateGroup = await _updateGroupTable(groupInfoModel.groupDetails);
+    if (updateGroup == true) {
+      //?delete all Appointment
+      for (var item in oldAppointmentModel) {
+        GroupsOperation groupsOperation = GroupsOperation();
+        deleteAppointment = await groupsOperation._deleteAppointment(item);
+        if (deleteAppointment == false) {
+          break;
+        }
+      }
+      if (deleteAppointment == true) {
+        //? insert new
+        for (var item in groupInfoModel.listAppointment) {
+          GroupsOperation groupsOperation = GroupsOperation();
+          insertAppointment = await groupsOperation.insertAppointmentDetails(
+              item, groupInfoModel.groupDetails.id);
+          if (insertAppointment == false) {
+            break;
+          }
+        }
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   Future<bool> _updateGroupTable(GroupDetails groupDetails) async {

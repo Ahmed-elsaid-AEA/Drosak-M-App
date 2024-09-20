@@ -178,7 +178,7 @@ class AddNewGroupScreenController {
     //?fill desc
     controllerGroupDesc.text = _groupInfoModel!.groupDetails.desc;
     //?fill listAppointmentGroupModel
-    listAppointmentGroupModel = _groupInfoModel!.listAppointment;
+    listAppointmentGroupModel += _groupInfoModel!.listAppointment;
     //?send to input stream
     inputDataListTimeDayGroupModel.add(listAppointmentGroupModel);
     int stageID = _groupInfoModel!.groupDetails.educationStageID;
@@ -251,6 +251,7 @@ class AddNewGroupScreenController {
   void onPressedDeleteAppointment(int index) {
     listAppointmentGroupModel.removeAt(index);
     changeStatusOFStreamListTimeDay();
+    print(_groupInfoModel!.listAppointment);
   }
 
   String checkAllDataValidate() {
@@ -312,7 +313,7 @@ class AddNewGroupScreenController {
       //?
 
       bool updated = await editIntoGroupInfo();
-      if (updated==true) {
+      if (updated == true) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(ConstValue.kAddedGroupDetailsSucces)));
         backToMainScreen(context);
@@ -327,13 +328,16 @@ class AddNewGroupScreenController {
     if (requiredData.isEmpty) {
       //now add to database
       GroupsOperation groupsOperation = GroupsOperation();
-      return groupsOperation.editEducationStage(GroupInfoModel(
-          groupDetails: GroupDetails(
-              desc: controllerGroupDesc.text,
-              id: _groupInfoModel!.groupDetails.id,
-              name: controllerGroupName.text,
-              educationStageID: selectedEducationStage!.id),
-          listAppointment: listAppointmentGroupModel));
+
+      return groupsOperation.editEducationStage(
+          GroupInfoModel(
+              groupDetails: GroupDetails(
+                  desc: controllerGroupDesc.text,
+                  id: _groupInfoModel!.groupDetails.id,
+                  name: controllerGroupName.text,
+                  educationStageID: selectedEducationStage!.id),
+              listAppointment: listAppointmentGroupModel),
+          _groupInfoModel!.listAppointment);
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(requiredData)));

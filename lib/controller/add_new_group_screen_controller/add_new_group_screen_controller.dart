@@ -82,11 +82,12 @@ class AddNewGroupScreenController {
         controllerListTimeDayGroupModel.stream.asBroadcastStream();
   }
 
-  void initAllData() {
-    getAllItemStageModelList();
+  void initAllData() async {
+    await getAllItemStageModelList();
     addNewValueOFMs();
     addNewValueOfSelectedTime();
     changeStatusOFStreamListTimeDay();
+    print(_groupInfoModel == null);
     if (_groupInfoModel != null) {
       fillDataInEditStatus();
     }
@@ -126,7 +127,7 @@ class AddNewGroupScreenController {
     }
   }
 
-  void getAllItemStageModelList() async {
+  Future<void> getAllItemStageModelList() async {
     EducationStageOperation educationStageOperation = EducationStageOperation();
     listItemStageModel = await educationStageOperation.getAllEducationData();
     inputDataListItemStageModel.add(listItemStageModel);
@@ -170,7 +171,16 @@ class AddNewGroupScreenController {
     listAppointmentGroupModel = _groupInfoModel!.listAppointment;
     //?send to input stream
     inputDataListTimeDayGroupModel.add(listAppointmentGroupModel);
+    int stageID = _groupInfoModel!.groupDetails.educationStageID;
 
+
+    List<ItemStageModel> listFound =
+        listItemStageModel.where((element) => element.id == stageID).toList();
+
+    if (listFound.isNotEmpty) {
+      selectedEducationStage = listItemStageModel[0];
+      print(selectedEducationStage);
+    }
   }
 
   onChangedSelectEducationStageName(ItemStageModel? p1) {

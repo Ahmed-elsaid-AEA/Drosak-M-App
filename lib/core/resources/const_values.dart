@@ -67,6 +67,9 @@ class ConstValue {
   static const String kCancel="إلفاء";
   static const String kCountOfAppointmentAdded="عدد المواعيد المضافه";
 
+  static const String kGroupInfoModel="kGroupInfoModel";
+  static const String kStatus="kStatus";
+
 
 }
 

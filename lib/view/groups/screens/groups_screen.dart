@@ -42,9 +42,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
             CustomListViewItemsGroups(
               outPutDataListItemGroupModel:
                   _controller.outPutDataListItemGroupModel,
-              editFun: (groupInfoModel) {
-                // _controller.editItemStage(itemStageModel, context);
-              },
+              editFun:_controller.editGroupInfo,
               deleteFun:_controller. deleteGroupInfo,
               onRefresh: () {
                 _controller.onRefresh();

@@ -84,4 +84,11 @@ class GroupsScreenController {
       ),
     );
   }
+
+  void editGroupInfo(GroupInfoModel groupInfoModel) {
+    Navigator.of(context).pushNamed(RoutesName.kAddNewGroupScreen, arguments: {
+      ConstValue.kStatus: ConstValue.kEditThisGroup,
+      ConstValue.kGroupInfoModel: groupInfoModel
+    }).then((value) => getAllData());
+  }
 }

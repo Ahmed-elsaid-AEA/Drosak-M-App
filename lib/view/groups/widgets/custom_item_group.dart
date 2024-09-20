@@ -25,316 +25,257 @@ class CustomItemGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          bool? confirmDelete = await showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text(ConstValue.kAreYouSureToDeleteItem),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      // deleteFun(itemStageModel);
-                      Navigator.of(context).pop(true);
-                    },
-                    child: const Text(ConstValue.kSure)),
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: const Text(ConstValue.kNo)),
-              ],
-            ),
-          );
-          return confirmDelete;
-        } else if (direction == DismissDirection.endToStart) {
-          // editFun(itemStageModel);
-          return false;
-        }
-        return false;
-      },
-      // onDismissed: (direction) {
-      //   if (direction == DismissDirection.startToEnd) {
-      //     deleteFun(itemStageModel);
-      //   } else if (direction == DismissDirection.endToStart) {
-      //     editFun(itemStageModel);
-      //   }
-      // },
-      direction: DismissDirection.horizontal,
-      background: Container(
-        color: Colors.red,
-        alignment: Alignment.centerRight,
-        padding: EdgeInsets.all(MarginManager.mh5),
-        child: Text(ConstValue.kDelete,
-            style: TextStyle(
-                color: ColorManager.kWhiteColor,
-                fontSize: FontsSize.f20,
-                fontFamily: FontsName.geDinerOneFont)),
-      ),
-      secondaryBackground: Container(
-        color: Colors.green,
-        alignment: Alignment.centerLeft,
-        padding: EdgeInsets.all(MarginManager.mh5),
-        child: Text(ConstValue.kEdit,
-            style: TextStyle(
-                color: ColorManager.kWhiteColor,
-                fontSize: FontsSize.f20,
-                fontFamily: FontsName.geDinerOneFont)),
-      ),
-      key: ValueKey(groupInfoModel.groupDetails.id),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Positioned(
-            right: 2,
-            top: -20,
-            child: Center(
-              child: CircleAvatar(
-                backgroundColor: ColorManager.kPrimaryColor,
-                child: Text(
-                  groupInfoModel.groupDetails.id.toString(),
-                  style: TextStyle(
-                    color: ColorManager.kWhiteColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: FontsSize.f15,
-                  ),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned(
+          right: 2,
+          top: -20,
+          child: Center(
+            child: CircleAvatar(
+              backgroundColor: ColorManager.kPrimaryColor,
+              child: Text(
+                groupInfoModel.groupDetails.id.toString(),
+                style: TextStyle(
+                  color: ColorManager.kWhiteColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: FontsSize.f15,
                 ),
               ),
             ),
           ),
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  color: ColorManager.kPrimaryColor,
-                  blurRadius: 5,
-                  blurStyle: BlurStyle.outer,
-                  offset: Offset(0, 0),
-                  spreadRadius: 1,
-                )
-              ],
-              borderRadius:
-                  BorderRadius.all(Radius.circular(RadiusValuesManager.br18)),
-              border: Border.all(color: ColorManager.kPrimaryColor),
+        ),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                color: ColorManager.kPrimaryColor,
+                blurRadius: 5,
+                blurStyle: BlurStyle.outer,
+                offset: Offset(0, 0),
+                spreadRadius: 1,
+              )
+            ],
+            borderRadius:
+                BorderRadius.all(Radius.circular(RadiusValuesManager.br18)),
+            border: Border.all(color: ColorManager.kPrimaryColor),
+          ),
+          margin: EdgeInsets.symmetric(horizontal: MarginManager.mw16),
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: PaddingManager.pw22,
+              left: PaddingManager.pw10,
+              top: PaddingManager.ph6,
+              bottom: PaddingManager.ph6,
             ),
-            margin: EdgeInsets.symmetric(horizontal: MarginManager.mw16),
-            child: Padding(
-              padding: EdgeInsets.only(
-                right: PaddingManager.pw22,
-                left: PaddingManager.pw10,
-                top: PaddingManager.ph6,
-                bottom: PaddingManager.ph6,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                groupInfoModel.groupDetails.name,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: FontsSize.f16,
-                                    color: ColorManager.kWhiteColor,
-                                    fontFamily: FontsName.geDinerOneFont),
-                              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              groupInfoModel.groupDetails.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: FontsSize.f16,
+                                  color: ColorManager.kWhiteColor,
+                                  fontFamily: FontsName.geDinerOneFont),
                             ),
-                            HorizontalSpace(WidthManager.w6),
-                            PopupMenuButton(
-                              itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: Text(
-                                    ConstValue.kEdit,
+                          ),
+                          HorizontalSpace(WidthManager.w6),
+                          PopupMenuButton(
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                child: Text(
+                                  ConstValue.kEdit,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: FontsSize.f16,
+                                      color: ColorManager.kBlackColor,
+                                      fontFamily: FontsName.geDinerOneFont),
+                                ),
+                                onTap: () {
+                                  editFun(groupInfoModel);
+                                },
+                              ),
+                              PopupMenuItem(
+                                child: Text(ConstValue.kDelete,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: FontsSize.f16,
                                         color: ColorManager.kBlackColor,
-                                        fontFamily: FontsName.geDinerOneFont),
-                                  ),
-                                  onTap: () {
-                                    editFun(groupInfoModel);
-                                  },
-                                ),
-                                PopupMenuItem(
-                                  child: Text(ConstValue.kDelete,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: FontsSize.f16,
-                                          color: ColorManager.kBlackColor,
-                                          fontFamily:
-                                              FontsName.geDinerOneFont)),
-                                  onTap: () {
-                                    deleteFun(groupInfoModel);
-                                  },
-                                ),
-                              ],
-                              child: const Icon(
-                                Icons.more_vert,
-                                color: ColorManager.kWhiteColor,
+                                        fontFamily:
+                                            FontsName.geDinerOneFont)),
+                                onTap: () {
+                                  deleteFun(groupInfoModel);
+                                },
                               ),
-                            ),
-                          ],
-                        ),
-                        VerticalSpace(HeightManager.h12),
-                        Table(
-                          border: TableBorder.all(
+                            ],
+                            child: const Icon(
+                              Icons.more_vert,
                               color: ColorManager.kWhiteColor,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(RadiusValuesManager.br14))),
-                          children: [
-                            TableRow(
-                              decoration: BoxDecoration(
-                                  color: ColorManager.kPrimaryColor,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(
-                                        RadiusValuesManager.br14),
-                                    topRight: Radius.circular(
-                                        RadiusValuesManager.br14),
-                                  )),
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: PaddingManager.pw4,
-                                      vertical: PaddingManager.ph4),
-                                  child: const Center(
-                                    child: Text(
-                                      ConstValue.kDay,
-                                      style: TextStyle(
-                                          color: ColorManager.kWhiteColor),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: PaddingManager.pw4,
-                                      vertical: PaddingManager.ph4),
-                                  child: const Center(
-                                    child: Text(
-                                      ConstValue.kTime,
-                                      style: TextStyle(
-                                          color: ColorManager.kWhiteColor),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: PaddingManager.pw4,
-                                      vertical: PaddingManager.ph4),
-                                  child: const Center(
-                                    child: Text(
-                                      ConstValue.kMS,
-                                      style: TextStyle(
-                                          color: ColorManager.kWhiteColor),
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
-                            for (int i = 0;
-                                i < groupInfoModel.listAppointment.length;
-                                i++)
-                              TableRow(children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: PaddingManager.pw4,
-                                      vertical: PaddingManager.ph10),
-                                  child: Center(
-                                    child: Text(
-                                      groupInfoModel.listAppointment[i].day,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: FontsName.geDinerOneFont,
-                                          color: ColorManager.kWhiteColor),
-                                    ),
+                          ),
+                        ],
+                      ),
+                      VerticalSpace(HeightManager.h12),
+                      Table(
+                        border: TableBorder.all(
+                            color: ColorManager.kWhiteColor,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(RadiusValuesManager.br14))),
+                        children: [
+                          TableRow(
+                            decoration: BoxDecoration(
+                                color: ColorManager.kPrimaryColor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                      RadiusValuesManager.br14),
+                                  topRight: Radius.circular(
+                                      RadiusValuesManager.br14),
+                                )),
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: PaddingManager.pw4,
+                                    vertical: PaddingManager.ph4),
+                                child: const Center(
+                                  child: Text(
+                                    ConstValue.kDay,
+                                    style: TextStyle(
+                                        color: ColorManager.kWhiteColor),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: PaddingManager.pw4,
-                                      vertical: PaddingManager.ph10),
-                                  child: Center(
-                                    child: Text(
-                                      groupInfoModel.listAppointment[i].time,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: FontsName.geDinerOneFont,
-                                          color: ColorManager.kWhiteColor),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: PaddingManager.pw4,
-                                      vertical: PaddingManager.ph10),
-                                  child: Center(
-                                    child: Text(
-                                      groupInfoModel.listAppointment[i].ms,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: FontsName.geDinerOneFont,
-                                          color: ColorManager.kWhiteColor),
-                                    ),
-                                  ),
-                                ),
-                              ])
-                          ],
-                        ),
-                        VerticalSpace(HeightManager.h5),
-                        Row(
-                          children: [
-                            HorizontalSpace(WidthManager.w3),
-                            Expanded(
-                              child: Text(
-                                groupInfoModel.groupDetails.desc,
-                                style: TextStyle(
-                                    color: ColorManager.kWhiteColor
-                                        .withOpacity(.6),
-                                    fontFamily: FontsName.geDinerOneFont,
-                                    fontSize: FontsSize.f10),
                               ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: PaddingManager.pw4,
+                                    vertical: PaddingManager.ph4),
+                                child: const Center(
+                                  child: Text(
+                                    ConstValue.kTime,
+                                    style: TextStyle(
+                                        color: ColorManager.kWhiteColor),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: PaddingManager.pw4,
+                                    vertical: PaddingManager.ph4),
+                                child: const Center(
+                                  child: Text(
+                                    ConstValue.kMS,
+                                    style: TextStyle(
+                                        color: ColorManager.kWhiteColor),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          for (int i = 0;
+                              i < groupInfoModel.listAppointment.length;
+                              i++)
+                            TableRow(children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: PaddingManager.pw4,
+                                    vertical: PaddingManager.ph10),
+                                child: Center(
+                                  child: Text(
+                                    groupInfoModel.listAppointment[i].day,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: FontsName.geDinerOneFont,
+                                        color: ColorManager.kWhiteColor),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: PaddingManager.pw4,
+                                    vertical: PaddingManager.ph10),
+                                child: Center(
+                                  child: Text(
+                                    groupInfoModel.listAppointment[i].time,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: FontsName.geDinerOneFont,
+                                        color: ColorManager.kWhiteColor),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: PaddingManager.pw4,
+                                    vertical: PaddingManager.ph10),
+                                child: Center(
+                                  child: Text(
+                                    groupInfoModel.listAppointment[i].ms,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: FontsName.geDinerOneFont,
+                                        color: ColorManager.kWhiteColor),
+                                  ),
+                                ),
+                              ),
+                            ])
+                        ],
+                      ),
+                      VerticalSpace(HeightManager.h5),
+                      Row(
+                        children: [
+                          HorizontalSpace(WidthManager.w3),
+                          Expanded(
+                            child: Text(
+                              groupInfoModel.groupDetails.desc,
+                              style: TextStyle(
+                                  color: ColorManager.kWhiteColor
+                                      .withOpacity(.6),
+                                  fontFamily: FontsName.geDinerOneFont,
+                                  fontSize: FontsSize.f10),
                             ),
-                          ],
-                        ),
-                        // if (itemStageModel.createdAt != null)
-                        //   Text(
-                        //     itemStageModel.createdAt!,
-                        //     style: TextStyle(
-                        //         color: ColorManager.kWhiteColor.withOpacity(.6),
-                        //         fontFamily: FontsName.geDinerOneFont,
-                        //         fontSize: FontsSize.f9),
-                        //   )
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      // if (itemStageModel.createdAt != null)
+                      //   Text(
+                      //     itemStageModel.createdAt!,
+                      //     style: TextStyle(
+                      //         color: ColorManager.kWhiteColor.withOpacity(.6),
+                      //         fontFamily: FontsName.geDinerOneFont,
+                      //         fontSize: FontsSize.f9),
+                      //   )
+                    ],
                   ),
-                  HorizontalSpace(WidthManager.w7),
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.all(
-                  //       Radius.circular(RadiusValuesManager.br50)),
-                  //   child: Image.file(
-                  //     errorBuilder: (context, error, stackTrace) =>
-                  //         SvgPicture.asset(
-                  //       Assets.assetsImagesPlaceholderSvg,
-                  //       width: WidthManager.w50,
-                  //     ),
-                  //     File('itemStageModel.image'),
-                  //     height: HeightManager.h50,
-                  //     width: WidthManager.w50,
-                  //   ),
-                  // )
-                ],
-              ),
+                ),
+                HorizontalSpace(WidthManager.w7),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.all(
+                //       Radius.circular(RadiusValuesManager.br50)),
+                //   child: Image.file(
+                //     errorBuilder: (context, error, stackTrace) =>
+                //         SvgPicture.asset(
+                //       Assets.assetsImagesPlaceholderSvg,
+                //       width: WidthManager.w50,
+                //     ),
+                //     File('itemStageModel.image'),
+                //     height: HeightManager.h50,
+                //     width: WidthManager.w50,
+                //   ),
+                // )
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

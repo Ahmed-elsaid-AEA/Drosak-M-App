@@ -18,7 +18,7 @@ class GroupsOperation extends MySqFLiteDatabase {
         values: appointment.toJson(groupID));
   }
 
-  Future<List<GroupDetails>> getAllGroupsData() async {
+  Future<List<GroupDetails>> _getAllGroupsData() async {
     List<GroupDetails> listGroupsDetails = [];
     List<Map<String, Object?>> data =
         await select(tableName: MySqFLiteDatabase.groupTableName);
@@ -27,21 +27,21 @@ class GroupsOperation extends MySqFLiteDatabase {
     return listGroupsDetails;
   }
 
-  Future<List<AppointmentModel>> getAllAppointmentData() async {
+  Future<List<AppointmentModel>> _getAllAppointmentData() async {
     List<AppointmentModel> listAppointment = [];
     List<Map<String, Object?>> data =
         await select(tableName: MySqFLiteDatabase.appointmentsTableName);
-     listAppointment +=
+    listAppointment +=
         data.map((item) => AppointmentModel.fromJson(item)).toList();
     return listAppointment;
   }
 
   Future<List<GroupInfoModel>> getAllGroupsInfo() async {
     List<GroupInfoModel> listGroupInfo = [];
-    List<GroupDetails> listGroupDetails = await getAllGroupsData();
+    List<GroupDetails> listGroupDetails = await _getAllGroupsData();
     GroupsOperation groupsOperation = GroupsOperation();
     List<AppointmentModel> listAppointmentModel =
-        await groupsOperation.getAllAppointmentData();
+        await groupsOperation._getAllAppointmentData();
 
     for (var item in listGroupDetails) {
       List<AppointmentModel> listAppointment = listAppointmentModel
@@ -54,14 +54,11 @@ class GroupsOperation extends MySqFLiteDatabase {
     return listGroupInfo;
   }
 
-  Future<bool> softDelete(ItemStageModel itemStageModel) async {
-    return await update(
-        tableName: MySqFLiteDatabase.educationalStageTableName,
-        values: {
-          MySqFLiteDatabase.educationalStageStatus: 0,
-        },
+  Future<bool> startDelete(GroupInfoModel groupInfoModel) async {
+    return await delete(
+        tableName: MySqFLiteDatabase.groupTableName,
         where:
-            ' ${MySqFLiteDatabase.educationalStageID}==${itemStageModel.id}');
+            ' ${MySqFLiteDatabase.groupColumnID}==${groupInfoModel.groupDetails.id}');
   }
 
   Future<bool> editEducationStage(ItemStageModel itemStageModel) async {

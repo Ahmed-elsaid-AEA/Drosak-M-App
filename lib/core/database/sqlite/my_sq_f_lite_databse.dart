@@ -33,7 +33,7 @@ class MySqFLiteDatabase extends CRUD {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 2;
+    int versionDataBase = 3;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
@@ -59,7 +59,9 @@ class MySqFLiteDatabase extends CRUD {
             "  $appointmentsColumnDay TEXT , "
             "  $appointmentsColumnTime TEXT , "
             "  $appointmentsColumnMS TEXT, "
-            "  $appointmentsColumnIDGroups  INTEGER )");
+            "  $appointmentsColumnIDGroups  INTEGER ,"
+            "  CONSTRAINT group_and_appointment FOREIGN KEY ($appointmentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
+            ")");
       },
       version: versionDataBase,
     );
@@ -83,12 +85,14 @@ class MySqFLiteDatabase extends CRUD {
         "  $groupColumnNote TEXT , "
         "  $groupColumnIDEducation  INTEGER )");
     //?======================== create appointment table =========
-    await db.execute("CREATE TABLE IF NOT EXISTS $appointmentsTableName"
+    await db.execute("CREATE TABLE IF NOT EXISTS  $appointmentsTableName"
         " ( $appointmentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $appointmentsColumnDay TEXT , "
         "  $appointmentsColumnTime TEXT , "
         "  $appointmentsColumnMS TEXT, "
-        "  $appointmentsColumnIDGroups  INTEGER )");
+        "  $appointmentsColumnIDGroups  INTEGER ,"
+        "  CONSTRAINT group_and_appointment FOREIGN KEY ($appointmentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
+        ")");
 
     /* await db.execute(
       "CREATE TABLE IF NOT EXISTS $_productTable"

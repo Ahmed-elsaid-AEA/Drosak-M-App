@@ -1,4 +1,5 @@
 import 'package:drosak_m_app/controller/groups/groups_screen_controller.dart';
+import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/widgets/app_bar/custom_app_bar_title_add_search.dart';
 import 'package:drosak_m_app/view/groups/widgets/custom_list_view_item_groups.dart';
@@ -18,7 +19,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = GroupsScreenController();
+    _controller = GroupsScreenController(context);
   }
 
   @override
@@ -44,7 +45,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
               editFun: (groupInfoModel) {
                 // _controller.editItemStage(itemStageModel, context);
               },
-              deleteFun: (groupInfoModel) {},
+              deleteFun:_controller. deleteGroupInfo,
               onRefresh: () {
                 _controller.onRefresh();
               },

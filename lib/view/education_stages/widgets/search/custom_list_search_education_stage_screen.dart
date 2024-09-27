@@ -26,26 +26,29 @@ class CustomListSearchEducationStageScreen extends StatelessWidget {
                   child: CupertinoActivityIndicator(
                   color: ColorManager.kPrimaryColor,
                 ))
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    VerticalSpace(HeightManager.h24),
-                    Expanded(
-                      child: ListView.separated(
-                          itemBuilder: (context, index) =>
-                              index == snapshot.data!.length
-                                  ? VerticalSpace(HeightManager.h24)
-                                  : CustomItemStage(
-                                      itemStageModel: snapshot.data![index],
-                                      editFun: editFun,
-                                      deleteFun: deleteFun,
-                                    ),
-                          separatorBuilder: (context, index) =>
-                              VerticalSpace(HeightManager.h24),
-                          itemCount: snapshot.data!.length + 1),
-                    ),
-                  ],
-                );
+              : Directionality(
+            textDirection: TextDirection.rtl,
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      VerticalSpace(HeightManager.h24),
+                      Expanded(
+                        child: ListView.separated(
+                            itemBuilder: (context, index) =>
+                                index == snapshot.data!.length
+                                    ? VerticalSpace(HeightManager.h24)
+                                    : CustomItemStage(
+                                        itemStageModel: snapshot.data![index],
+                                        editFun: editFun,
+                                        deleteFun: deleteFun,
+                                      ),
+                            separatorBuilder: (context, index) =>
+                                VerticalSpace(HeightManager.h24),
+                            itemCount: snapshot.data!.length + 1),
+                      ),
+                    ],
+                  ),
+              );
         });
   }
 }

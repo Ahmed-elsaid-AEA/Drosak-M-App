@@ -99,7 +99,7 @@ class CustomAddNewEducationStage extends StatelessWidget {
                           ? const Center(
                               child: CupertinoActivityIndicator(),
                             )
-                          : snapshot.data != null
+                          : snapshot.data != null && snapshot.data!.trim() != ""
                               ? Column(
                                   children: [
                                     Stack(

@@ -87,27 +87,7 @@ class EducationStagesController {
         controllerNameEducationStage: controllerNameEducationStage,
         controllerDescEducationStage: controllerDescEducationStage,
         onPressedAdd: () async {
-          if (formKey.currentState!.validate() == true) {
-            bool edit = await editEducation(ItemStageModel(
-                id: itemStageModel.id,
-                stageName: controllerNameEducationStage.text,
-                desc: controllerDescEducationStage.text,
-                image: pathImage == null ? "" : pathImage!));
-            print(edit);
-            if (edit == true) {
-              Navigator.pop(context);
-
-              // listItemStageModel.add(ItemStageModel(
-              //     id: listItemStageModel.length + 1,
-              //     stageName: controllerNameEducationStage.text,
-              //     desc: controllerDescEducationStage.text,
-              //     image: pathImage == null ? "" : pathImage!));
-              inputDataListItemStageModel.add(listItemStageModel);
-              controllerNameEducationStage.clear();
-              controllerDescEducationStage.clear();
-              pathImage = null;
-            }
-          }
+          await onPressedAddOREditItemStageModel(itemStageModel, context);
         },
         onPressedDeleteImage: () {
           pathImage = null;
@@ -117,6 +97,37 @@ class EducationStagesController {
         formKey: formKey,
       ),
     );
+  }
+
+  Future<void> onPressedAddOREditItemStageModel(
+      ItemStageModel itemStageModel, BuildContext context) async {
+    if (formKey.currentState!.validate() == true) {
+      ItemStageModel newItem = ItemStageModel(
+          id: itemStageModel.id,
+          stageName: controllerNameEducationStage.text,
+          desc: controllerDescEducationStage.text,
+          image: pathImage == null ? "" : pathImage!);
+      bool edit = await editEducation(newItem);
+      print(edit);
+      if (edit == true) {
+        Navigator.pop(context);
+        int indexEditModel = listItemStageModel.indexOf(itemStageModel);
+        if (indexEditModel >= 0) {
+          listItemStageModel[indexEditModel] = newItem;
+        } else {
+          Navigator.pop(context);
+        }
+        // listItemStageModel.add(ItemStageModel(
+        //     id: listItemStageModel.length + 1,
+        //     stageName: controllerNameEducationStage.text,
+        //     desc: controllerDescEducationStage.text,
+        //     image: pathImage == null ? "" : pathImage!));
+        inputDataListItemStageModel.add(listItemStageModel);
+        controllerNameEducationStage.clear();
+        controllerDescEducationStage.clear();
+        pathImage = null;
+      }
+    }
   }
 
   void pickImage(ImageSource imageSource) async {
@@ -259,6 +270,19 @@ class EducationStagesController {
   void showCustomSearch(BuildContext context) {
     showSearch(
         context: context,
-        delegate: CustomSearchDelegatedEducationStageScreen());
+        delegate: CustomSearchDelegatedEducationStageScreen(
+          editFun: (itemStageModel) {
+            editItemStage(itemStageModel, context);
+          },
+          deleteFun: (itemStageModel) {
+            deleteItemStage(itemStageModel);
+          },
+        )).then((value) => getAllItemList());
+  }
+
+  Future<void> onRefresh() async {
+    listItemStageModel.clear();
+    inputDataListItemStageModel.add(listItemStageModel);
+    getAllItemList();
   }
 }

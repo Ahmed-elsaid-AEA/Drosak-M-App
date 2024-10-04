@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/routes_mananger.dart';
+import 'package:drosak_m_app/core/widgets/search/custom_search_delegate.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
-import 'package:flutter/material.dart';
+import 'package:drosak_m_app/view/education_stages/widgets/search/custom_list_search_education_stage_screen.dart';
+ import 'package:flutter/material.dart';
 
 class GroupsScreenController {
   late StreamController<List<GroupInfoModel>> controllerListItemGroupModel;
@@ -90,5 +93,24 @@ class GroupsScreenController {
       ConstValue.kStatus: ConstValue.kEditThisGroup,
       ConstValue.kGroupInfoModel: groupInfoModel
     }).then((value) => getAllData());
+  }
+
+  void onPressedSearch() {
+    showSearch(
+        context: context,
+        delegate: CustomSearchDelegated(
+          myBuildResult: (String query) {
+            EducationStageOperation educationStageOperation =
+                EducationStageOperation();
+            return query == ''
+                ? const SizedBox()
+                : CustomListSearchEducationStageScreen(
+                    getSearchItemStage: educationStageOperation.getSearchWord(
+                        searchWord: query),
+                    editFun: (itemStageModel) {},
+                    deleteFun: (itemStageModel) {},
+                  );
+          },
+        ));
   }
 }

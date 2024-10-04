@@ -32,7 +32,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
             CustomAppBarTitleAddSearch(
               title: ConstValue.kGroups,
               onPressedSearch: () {
-                // _controller.showCustomSearch(context);
+                _controller.onPressedSearch( );
               },
               onPressedAdd: () {
                 _controller.addNewGroups(context: context);

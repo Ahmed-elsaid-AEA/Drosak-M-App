@@ -2,16 +2,15 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
-import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
+import 'package:drosak_m_app/core/widgets/search/custom_search_delegate.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/body/custom_add_new_eudcation_stage.dart';
-import 'package:drosak_m_app/view/education_stages/widgets/body/custom_list_view_items_stages.dart';
-import 'package:drosak_m_app/view/education_stages/widgets/search/custom_search_delegeate_education_stage_screen.dart';
+import 'package:drosak_m_app/view/education_stages/widgets/search/custom_list_search_education_stage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -270,12 +269,22 @@ class EducationStagesController {
   void showCustomSearch(BuildContext context) {
     showSearch(
         context: context,
-        delegate: CustomSearchDelegatedEducationStageScreen(
-          editFun: (itemStageModel) {
-            editItemStage(itemStageModel, context);
-          },
-          deleteFun: (itemStageModel) {
-            deleteItemStage(itemStageModel);
+        delegate: CustomSearchDelegated(
+          myBuildResult: (query) {
+            EducationStageOperation educationStageOperation =
+                EducationStageOperation();
+            return query == ''
+                ? const SizedBox()
+                : CustomListSearchEducationStageScreen(
+                    getSearchItemStage: educationStageOperation.getSearchWord(
+                        searchWord: query),
+                    editFun: (itemStageModel) {
+                      editItemStage(itemStageModel, context);
+                    },
+                    deleteFun: (itemStageModel) {
+                      deleteItemStage(itemStageModel);
+                    },
+                  );
           },
         )).then((value) => getAllItemList());
   }

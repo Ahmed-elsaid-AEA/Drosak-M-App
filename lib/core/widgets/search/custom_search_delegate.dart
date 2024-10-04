@@ -6,12 +6,12 @@ import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/search/custom_list_search_education_stage_screen.dart';
 import 'package:flutter/material.dart';
 
-class CustomSearchDelegatedEducationStageScreen extends SearchDelegate<String> {
-  final void Function(ItemStageModel itemStageModel) deleteFun;
-  final void Function(ItemStageModel itemStageModel) editFun;
+class CustomSearchDelegated extends SearchDelegate<String> {
+  Widget Function(String query) myBuildResult;
 
-  CustomSearchDelegatedEducationStageScreen(
-      {required this.deleteFun, required this.editFun});
+  CustomSearchDelegated({
+    required this.myBuildResult,
+  });
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -54,15 +54,16 @@ class CustomSearchDelegatedEducationStageScreen extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    EducationStageOperation educationStageOperation = EducationStageOperation();
-    return query == ''
-        ? const SizedBox()
-        : CustomListSearchEducationStageScreen(
-            getSearchItemStage:
-                educationStageOperation.getSearchWord(searchWord: query),
-            editFun: editFun,
-            deleteFun: deleteFun,
-          );
+    // EducationStageOperation educationStageOperation = EducationStageOperation();
+    // return query == ''
+    //     ? const SizedBox()
+    //     : CustomListSearchEducationStageScreen(
+    //   getSearchItemStage:
+    //   educationStageOperation.getSearchWord(searchWord: query),
+    //   editFun: editFun,
+    //   deleteFun: deleteFun,
+    // );
+    return myBuildResult(query);
   }
 
   @override

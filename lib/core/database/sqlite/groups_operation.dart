@@ -20,8 +20,10 @@ class GroupsOperation extends MySqFLiteDatabase {
 
   Future<List<GroupDetails>> _getAllGroupsData() async {
     List<GroupDetails> listGroupsDetails = [];
-    List<Map<String, Object?>> data =
-        await select(tableName: MySqFLiteDatabase.groupTableName);
+    List<Map<String, Object?>> data = await selectUsingQuery(
+        query:
+            'SELECT ${MySqFLiteDatabase.groupTableName}.* FROM ${MySqFLiteDatabase.groupTableName},${MySqFLiteDatabase.educationalStageTableName} WHERE ${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageStatus} = 1 AND ${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID}==${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation};');
+
     listGroupsDetails +=
         data.map((item) => GroupDetails.fromJson(item)).toList();
     return listGroupsDetails;

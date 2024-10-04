@@ -18,11 +18,17 @@ abstract class CRUD {
     List<Object?>? whereArgs,
   });
 
+  Future<List<Map<String, Object?>>> selectUsingQuery({
+    required String query,
+  });
+
   Future<List<Map<String, Object?>>> searchUsingLike({
     required String tableName,
     required String searchWord,
     required String columnName,
-  });Future<List<Map<String, Object?>>> search({
+  });
+
+  Future<List<Map<String, Object?>>> search({
     required String tableName,
     required String searchedId,
     required String columnID,

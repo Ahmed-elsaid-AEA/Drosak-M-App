@@ -6,7 +6,8 @@ import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:drosak_m_app/core/widgets/search/custom_search_delegate.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/search/custom_list_search_education_stage_screen.dart';
- import 'package:flutter/material.dart';
+import 'package:drosak_m_app/view/groups/widgets/search/custom_list_search_group_screen.dart';
+import 'package:flutter/material.dart';
 
 class GroupsScreenController {
   late StreamController<List<GroupInfoModel>> controllerListItemGroupModel;
@@ -100,15 +101,14 @@ class GroupsScreenController {
         context: context,
         delegate: CustomSearchDelegated(
           myBuildResult: (String query) {
-            EducationStageOperation educationStageOperation =
-                EducationStageOperation();
+            GroupsOperation groupsOperation = GroupsOperation();
             return query == ''
                 ? const SizedBox()
-                : CustomListSearchEducationStageScreen(
-                    getSearchItemStage: educationStageOperation.getSearchWord(
-                        searchWord: query),
-                    editFun: (itemStageModel) {},
-                    deleteFun: (itemStageModel) {},
+                : CustomListSearchGroupScreen(
+                    getSearchItemGroups:
+                        groupsOperation.getSearchWord(groupName: query),
+                    editFun: editGroupInfo,
+                    deleteFun: deleteGroupInfo,
                   );
           },
         ));

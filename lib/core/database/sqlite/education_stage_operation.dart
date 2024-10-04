@@ -43,7 +43,8 @@ class EducationStageOperation extends MySqFLiteDatabase {
   Future<List<ItemStageModel>> getSearchWord(
       {required String searchWord}) async {
     List<ItemStageModel> listItemStageModel = [];
-    List<Map<String, Object?>> data = await search(
+    List<Map<String, Object?>> data = await searchUsingLike(
+        columnName: MySqFLiteDatabase.educationalStageName,
         tableName: MySqFLiteDatabase.educationalStageTableName,
         searchWord: searchWord);
     listItemStageModel +=

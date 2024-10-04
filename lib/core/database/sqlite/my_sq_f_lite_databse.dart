@@ -158,13 +158,32 @@ class MySqFLiteDatabase extends CRUD {
   }
 
   @override
-  Future<List<Map<String, Object?>>> search(
-      {required String tableName, required String searchWord}) async {
+  Future<List<Map<String, Object?>>> searchUsingLike({
+    required String tableName,
+    required String searchWord,
+    required String columnName,
+  }) async {
     await _initDatabase();
     List<Map<String, Object?>> data = await _db!.query(
       tableName,
-      where: '$educationalStageName LIKE ?',
+      where: '$columnName LIKE ?',
       whereArgs: ['%$searchWord%'],
+    );
+    await _db!.close();
+    return data;
+  }
+
+  @override
+  Future<List<Map<String, Object?>>> search({
+    required String tableName,
+    required String searchedId,
+    required String columnID,
+  }) async {
+    await _initDatabase();
+    List<Map<String, Object?>> data = await _db!.query(
+      tableName,
+      where: '$columnID == ?',
+      whereArgs: [searchedId],
     );
     await _db!.close();
     return data;

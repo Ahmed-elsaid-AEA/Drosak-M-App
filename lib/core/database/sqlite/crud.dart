@@ -6,9 +6,8 @@ abstract class CRUD {
 
   Future<bool> update(
       {required String tableName,
-        List<Object?>? whereArgs,
-
-        required Map<String, Object?> values,
+      List<Object?>? whereArgs,
+      required Map<String, Object?> values,
       required String where});
 
   Future<bool> delete({required String tableName, required String where});
@@ -19,6 +18,13 @@ abstract class CRUD {
     List<Object?>? whereArgs,
   });
 
-  Future<List<Map<String, Object?>>> search(
-      {required String tableName, required String searchWord});
+  Future<List<Map<String, Object?>>> searchUsingLike({
+    required String tableName,
+    required String searchWord,
+    required String columnName,
+  });Future<List<Map<String, Object?>>> search({
+    required String tableName,
+    required String searchedId,
+    required String columnID,
+  });
 }

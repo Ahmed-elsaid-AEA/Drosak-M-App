@@ -15,6 +15,7 @@ class GroupsScreenController {
   late Stream<List<GroupInfoModel>> outPutDataListItemGroupModel;
   List<GroupInfoModel> listGroupInfo = [];
   BuildContext context;
+  bool isSearchNow = false;
 
   GroupsScreenController(this.context) {
     start();
@@ -72,8 +73,13 @@ class GroupsScreenController {
               onPressed: () async {
                 GroupsOperation groupOperation = GroupsOperation();
                 bool deleted = await groupOperation.startDelete(groupInfoModel);
+
                 if (deleted) {
-                  Navigator.of(context).pop(false);
+                  if (isSearchNow == true) {
+                    Navigator.of(context).pop(true);
+                  } else {
+                    Navigator.of(context).pop(false);
+                  }
 
                   onRefresh();
                 }
@@ -87,16 +93,27 @@ class GroupsScreenController {
         ],
       ),
     );
+    if(confirmDelete==true){
+      Navigator.of(context).pop();
+    }
   }
 
   void editGroupInfo(GroupInfoModel groupInfoModel) {
     Navigator.of(context).pushNamed(RoutesName.kAddNewGroupScreen, arguments: {
       ConstValue.kStatus: ConstValue.kEditThisGroup,
       ConstValue.kGroupInfoModel: groupInfoModel
-    }).then((value) => getAllData());
+    }).then((value) {
+      getAllData();
+      if (isSearchNow == true) {
+        Navigator.of(context).pop();
+        isSearchNow = false;
+      }
+    });
   }
 
   void onPressedSearch() {
+    isSearchNow = true;
+
     showSearch(
         context: context,
         delegate: CustomSearchDelegated(
@@ -107,10 +124,14 @@ class GroupsScreenController {
                 : CustomListSearchGroupScreen(
                     getSearchItemGroups:
                         groupsOperation.getSearchWord(groupName: query),
-                    editFun: editGroupInfo,
-                    deleteFun: deleteGroupInfo,
+                    editFun: (groupInfoModel) {
+                      editGroupInfo(groupInfoModel);
+                    },
+                    deleteFun: (groupInfoModel) {
+                      deleteGroupInfo(groupInfoModel);
+                    },
                   );
           },
-        ));
+        )).then((value) => isSearchNow = false);
   }
 }

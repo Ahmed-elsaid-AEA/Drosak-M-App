@@ -5,6 +5,7 @@ import 'package:drosak_m_app/core/resources/padding_manager.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_add_time_and_day_of_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_group_details_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_select_education_stage_name_add_new_group_screen.dart';
+import 'package:drosak_m_app/view/add_new_student_screen/widgets/custom_student_details_add_new_student_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,17 +29,20 @@ class CustomBodyAddNewStudentsScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomGroupDetailsAddNewGroupScreen(
+            CustomGroupDetailsAddNewStudentScreen(
               controllerGroupDesc: controller.controllerGroupDesc,
-              controllerGroupName: controller.controllerGroupName,
-              formStateGroupDetails: controller.formStateGroupDetails,
+              controllerStudentName: controller.controllerGroupName,
+              formStateStudentDetails: controller.formStateGroupDetails,
+              outPathImage: controller.outPutPathImage,
+              onPressedDeleteImage: () {},
             ),
             CustomSelectEducationStageNameAddNewGroupScreen(
-                initialItem: controller.selectedEducationStage,
-                outPutDataListItemStageModel:
-                    controller.outPutDataListItemStageModel,
-                onChanged: controller.onChangedSelectEducationStageName,
-              outPutDataInitialItem: controller.outPutDataInitialItem,),
+              initialItem: controller.selectedEducationStage,
+              outPutDataListItemStageModel:
+                  controller.outPutDataListItemStageModel,
+              onChanged: controller.onChangedSelectEducationStageName,
+              outPutDataInitialItem: controller.outPutDataInitialItem,
+            ),
             CustomAddTimeAndDayOfAddNewGroupScreen(
               onChangedMSValue: controller.onChangedMSValue,
               onPressedSelectTime: () {

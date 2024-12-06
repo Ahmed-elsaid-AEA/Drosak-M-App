@@ -21,6 +21,7 @@ class ConstValue {
   static const String kAddSomeAppointment = 'اضف بعض المواعيد';
   static const String kNameEducationalStages = 'اسم المرحله التعليميه';
   static const String kNameGroup = 'اسم المجموعه ';
+  static const String kNameStudent = 'اسم الطالب ';
    static const String kAddNameOfGroup = 'اضف اسم المجموعه ';
   static const String kDescEducationalStage = 'وصف المرحله التعليميه';
   static const String kDescGroup = 'وصف المجموعة ';
@@ -54,6 +55,7 @@ class ConstValue {
   static const String kNoFoundThisEducationStageName =
       'لم يتم العصور علي اسم تلك المرحله التعليميه';
   static const String kDetailsGroup = 'تفاصيل المجموعه';
+  static const String kDetailsStudent = 'تفاصيل الطالب';
   static const String kSaturday = 'السبت';
   static const String kSunday = 'الأحد';
   static const String kMonday = 'الأثنين';

@@ -10,14 +10,20 @@ import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:flutter/material.dart';
 
 class AddNewStudentsScreenController {
-  String status = ConstValue.kAddNewGroup;
+  String status = ConstValue.kAddNewStudent;
+  late StreamController<String?> controllerPathImage;
+  late Sink<String?> inputPathImage;
+  late Stream<String?> outPutPathImage;
+
+  TextEditingController controllerGroupDesc = TextEditingController();
+  TextEditingController controllerGroupName = TextEditingController();
+  GlobalKey<FormState> formStateGroupDetails = GlobalKey<FormState>();
+  //////
+
   String? selectedDay;
   TimeOfDay? selectedTime;
   GroupInfoModel? _groupInfoModel;
   ItemStageModel? selectedEducationStage;
-  TextEditingController controllerGroupDesc = TextEditingController();
-  TextEditingController controllerGroupName = TextEditingController();
-  GlobalKey<FormState> formStateGroupDetails = GlobalKey<FormState>();
 
   ///steam of education stage screen
   late StreamController<List<ItemStageModel>> controllerListItemStageModel;
@@ -64,6 +70,12 @@ class AddNewStudentsScreenController {
   }
 
   Future<void> initControllers() async {
+    ///init stream of image students
+    controllerPathImage = StreamController();
+    inputPathImage = controllerPathImage.sink;
+    outPutPathImage =
+        controllerPathImage.stream.asBroadcastStream();
+
     ///init steam of education stage screen
     controllerListItemStageModel = StreamController();
     inputDataListItemStageModel = controllerListItemStageModel.sink;

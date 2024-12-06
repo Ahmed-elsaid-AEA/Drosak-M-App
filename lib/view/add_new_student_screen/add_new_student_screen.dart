@@ -36,7 +36,6 @@ class _AddNewStudentsScreenState extends State<AddNewStudentsScreen> {
               : ConstValue.kEdit,
           onPressed: () {
             _controller.onPressedAtEditORSave();
-
           },
           title: _controller.status),
       body: CustomBodyAddNewStudentsScreen(

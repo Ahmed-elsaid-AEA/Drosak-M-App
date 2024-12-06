@@ -14,12 +14,12 @@ import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
 import 'package:drosak_m_app/core/widgets/input_field/custom_text_form_field.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
+import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_app_bar_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_body_add_new_group_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'widgets/custom_app_bar_add_new_group_screen.dart';
 
 class AddNewGroupScreen extends StatefulWidget {
   const AddNewGroupScreen({super.key});

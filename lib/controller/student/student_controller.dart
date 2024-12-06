@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
@@ -65,5 +67,11 @@ class StudentController {
   Future<void> disposeControllers() async {
     controllerListItemStudentModel.close();
     inputDataListItemStudentModel.close();
+  }
+  void addNewStudents({required BuildContext context}) {
+    Navigator.of(context)
+        .pushNamed(RoutesName.kAddNewStudentsScreen,
+        arguments: ConstValue.kAddNewStudent)
+        .then((value) => getAllData());
   }
 }

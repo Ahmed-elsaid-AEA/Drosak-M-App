@@ -45,7 +45,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
                 // _controller.onPressedSearch( );
               },
               onPressedAdd: () {
-                // _controller.addNewGroups(context: context);
+                _controller.addNewStudents(context: context);
               },
               streamCount: _controller.outPutDataListItemStudentModel,
             ),

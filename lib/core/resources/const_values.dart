@@ -26,6 +26,8 @@ class ConstValue {
   static const String kDescGroup = 'وصف المجموعة ';
   static const String kGroups = 'المجموعات';
   static const String kAddNewGroup = 'إضافه مجموعة جديده';
+  static const String kAddNewStudent = 'إضافه طالب جديد';
+  static const String kEditThisStudent = 'تعديل بيانات الطالب';
   static const String kEditThisGroup = 'تعديل تلك المجموعة';
   static const String kStudents = 'الطلاب';
   static const String kTheAudience = 'الحضور';

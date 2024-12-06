@@ -11,7 +11,7 @@ import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
- import 'package:drosak_m_app/model/groups/groups_info_model.dart';
+import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -83,38 +83,10 @@ class CustomItemStudent extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          PopupMenuButton(
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                child: Text(
-                                  ConstValue.kEdit,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: FontsSize.f16,
-                                      color: ColorManager.kBlackColor,
-                                      fontFamily: FontsName.geDinerOneFont),
-                                ),
-                                onTap: () {
-                                  editFun(groupInfoModel);
-                                },
-                              ),
-                              PopupMenuItem(
-                                child: Text(ConstValue.kDelete,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: FontsSize.f16,
-                                        color: ColorManager.kBlackColor,
-                                        fontFamily: FontsName.geDinerOneFont)),
-                                onTap: () {
-                                  deleteFun(groupInfoModel);
-                                },
-                              ),
-                            ],
-                            child: const Icon(
-                              Icons.more_vert,
-                              color: ColorManager.kWhiteColor,
-                            ),
-                          ),
+                          CustomEditAndDeletePopupMenuButton(
+                              editFun: editFun,
+                              groupInfoModel: groupInfoModel,
+                              deleteFun: deleteFun),
                           Expanded(
                             child: Text(
                               groupInfoModel.groupDetails.name,
@@ -126,7 +98,6 @@ class CustomItemStudent extends StatelessWidget {
                             ),
                           ),
                           HorizontalSpace(WidthManager.w6),
-
                           ClipRRect(
                             borderRadius: BorderRadius.all(
                                 Radius.circular(RadiusValuesManager.br50)),
@@ -143,37 +114,68 @@ class CustomItemStudent extends StatelessWidget {
                               width: WidthManager.w50,
                             ),
                           ),
-
                         ],
                       ),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                          text: groupInfoModel.groupDetails.name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: FontsSize.f13,
+                              color: ColorManager.kWhiteColor,
+                              fontFamily: FontsName.geDinerOneFont),
+                        ),
+                        TextSpan(
+                          text: ' / ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: FontsSize.f14,
+                              decoration: TextDecoration.underline,
+                              color: ColorManager.kRedColor,
+                              fontFamily: FontsName.geDinerOneFont),
+                        ),
+                        TextSpan(
+                          text: groupInfoModel.groupDetails.name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: FontsSize.f13,
+                              color: ColorManager.kWhiteColor,
+                              fontFamily: FontsName.geDinerOneFont),
+                        ),
+                      ]))
                       // VerticalSpace(HeightManager.h12),
-                      Row(
-                        children: [
-                          Text(
-                            groupInfoModel.groupDetails.name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: FontsSize.f13,
-                                color: ColorManager.kWhiteColor,
-                                fontFamily: FontsName.geDinerOneFont),
-                          ), Text(
-                            ' / ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: FontsSize.f14,
-                                decoration: TextDecoration.underline,
-                                color: ColorManager.kRedColor,
-                                fontFamily: FontsName.geDinerOneFont),
-                          ),Text(
-                            groupInfoModel.groupDetails.name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: FontsSize.f13,
-                                color: ColorManager.kWhiteColor,
-                                fontFamily: FontsName.geDinerOneFont),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       groupInfoModel.groupDetails.name +
+                      //           "jkdsnoijdsoisjdosdijdpojkdoihjbdsoi ds dsds d  dj",
+                      //       style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: FontsSize.f13,
+                      //           color: ColorManager.kWhiteColor,
+                      //           fontFamily: FontsName.geDinerOneFont),
+                      //     ),
+                      //     Text(
+                      //       ' / ',
+                      //       style: TextStyle(
+                      //           fontWeight: FontWeight.w900,
+                      //           fontSize: FontsSize.f14,
+                      //           decoration: TextDecoration.underline,
+                      //           color: ColorManager.kRedColor,
+                      //           fontFamily: FontsName.geDinerOneFont),
+                      //     ),
+                      //     Text(
+                      //       groupInfoModel.groupDetails.name,
+                      //       style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: FontsSize.f13,
+                      //           color: ColorManager.kWhiteColor,
+                      //           fontFamily: FontsName.geDinerOneFont),
+                      //     ),
+                      //   ],
+                      // ),
+                      ,
                       VerticalSpace(HeightManager.h12),
                       Table(
                         border: TableBorder.all(
@@ -325,6 +327,55 @@ class CustomItemStudent extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class CustomEditAndDeletePopupMenuButton extends StatelessWidget {
+  const CustomEditAndDeletePopupMenuButton({
+    super.key,
+    required this.editFun,
+    required this.groupInfoModel,
+    required this.deleteFun,
+  });
+
+  final void Function(GroupInfoModel itemStageModel) editFun;
+  final GroupInfoModel groupInfoModel;
+  final void Function(GroupInfoModel itemStageModel) deleteFun;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          child: Text(
+            ConstValue.kEdit,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: FontsSize.f16,
+                color: ColorManager.kBlackColor,
+                fontFamily: FontsName.geDinerOneFont),
+          ),
+          onTap: () {
+            editFun(groupInfoModel);
+          },
+        ),
+        PopupMenuItem(
+          child: Text(ConstValue.kDelete,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: FontsSize.f16,
+                  color: ColorManager.kBlackColor,
+                  fontFamily: FontsName.geDinerOneFont)),
+          onTap: () {
+            deleteFun(groupInfoModel);
+          },
+        ),
+      ],
+      child: const Icon(
+        Icons.more_vert,
+        color: ColorManager.kWhiteColor,
+      ),
     );
   }
 }

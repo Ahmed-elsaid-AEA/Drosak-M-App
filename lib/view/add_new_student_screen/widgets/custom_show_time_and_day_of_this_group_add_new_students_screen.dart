@@ -15,9 +15,9 @@ import 'package:flutter/material.dart';
 
 import 'custom_radio_ms_add_new_student_screen.dart';
 
-
-class CustomAddTimeAndDayOfAddNewStudentsScreen extends StatelessWidget {
-  const CustomAddTimeAndDayOfAddNewStudentsScreen(
+class CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen
+    extends StatelessWidget {
+  const CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen(
       {super.key,
       required this.listDay,
       required this.outPutTime,
@@ -43,18 +43,6 @@ class CustomAddTimeAndDayOfAddNewStudentsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        customChooseDay(),
-        VerticalSpace(HeightManager.h12),
-        StreamOfMSValue(
-            outPutDataMsValue: outPutDataMsValue,
-            onPressedSelectTime: onPressedSelectTime,
-            onChangedMSValue: onChangedMSValue),
-        VerticalSpace(HeightManager.h12),
-        streamOfTimeSelected(),
-        VerticalSpace(HeightManager.h12),
-        CustomMaterialButton(
-            onPressed: onPressedAddTimeAndDayToTable,
-            text: ConstValue.kAddToTableAppointment),
         VerticalSpace(HeightManager.h12),
         StreamOfCountOfAppointment(
             outPutListTimeDayGroupModel: outPutListTimeDayGroupModel),
@@ -63,52 +51,6 @@ class CustomAddTimeAndDayOfAddNewStudentsScreen extends StatelessWidget {
         streamEmptyOrNot()
       ],
     );
-  }
-
-  Row customChooseDay() {
-    return Row(
-      children: [
-        const Text(
-          ConstValue.kDay,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontFamily: FontsName.geDinerOneFont,
-            color: ColorManager.kWhiteColor,
-          ),
-        ),
-        HorizontalSpace(WidthManager.w9),
-        Expanded(
-          child: CustomDropdown<String>.search(
-            hintText: ConstValue.kChooseDay,
-            items: listDay,
-            noResultFoundText: '',
-            // initialItem: "a",
-            onChanged: onChangedSelectDay,
-          ),
-        ),
-      ],
-    );
-  }
-
-  StreamBuilder<String?> streamOfTimeSelected() {
-    return StreamBuilder(
-        stream: outPutTime,
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? const SizedBox()
-                : snapshot.data == null
-                    ? const SizedBox()
-                    : Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text(
-                          snapshot.data!,
-                          style: TextStyle(
-                              fontFamily: FontsName.geDinerOneFont,
-                              fontWeight: FontWeight.bold,
-                              fontSize: FontsSize.f20,
-                              color: ColorManager.kWhiteColor),
-                        ),
-                      ));
   }
 
   StreamBuilder<List<AppointmentModel>> streamOfTable() {
@@ -166,11 +108,6 @@ class CustomAddTimeAndDayOfAddNewStudentsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      onPressedDeleteAppointment(i);
-                    },
-                    icon: const Icon(CupertinoIcons.delete))
               ])
         ],
       ),
@@ -182,7 +119,7 @@ class CustomAddTimeAndDayOfAddNewStudentsScreen extends StatelessWidget {
       stream: outPutListTimeDayGroupModel,
       builder: (context, snapshot) => snapshot.data == null
           ? const Text(
-              ConstValue.kNoTimeAndDayYetAdd,
+              ConstValue.kNoTimeAndDayBecauseYouDontChooseGroup,
               style: TextStyle(
                   fontFamily: FontsName.geDinerOneFont,
                   fontWeight: FontWeight.bold,
@@ -190,7 +127,7 @@ class CustomAddTimeAndDayOfAddNewStudentsScreen extends StatelessWidget {
             )
           : snapshot.data!.isEmpty
               ? const Text(
-                  ConstValue.kNoTimeAndDayYetAdd,
+                  ConstValue.kNoTimeAndDayBecauseYouDontChooseGroup,
                   style: TextStyle(
                       fontFamily: FontsName.geDinerOneFont,
                       fontWeight: FontWeight.bold,
@@ -246,49 +183,7 @@ class CustomAddTimeAndDayOfAddNewStudentsScreen extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: PaddingManager.pw4, vertical: PaddingManager.ph4),
-          child: const Center(
-            child: Text(
-              ConstValue.kDelete,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontFamily: FontsName.geDinerOneFont,
-                  color: ColorManager.kWhiteColor),
-            ),
-          ),
-        ),
       ],
-    );
-  }
-}
-
-class StreamOfMSValue extends StatelessWidget {
-  const StreamOfMSValue({
-    super.key,
-    required this.outPutDataMsValue,
-    required this.onPressedSelectTime,
-    required this.onChangedMSValue,
-  });
-
-  final Stream<String> outPutDataMsValue;
-  final VoidCallback onPressedSelectTime;
-  final ValueChanged<String?> onChangedMSValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<String>(
-      stream: outPutDataMsValue,
-      builder: (context, snapshot) =>
-          snapshot.connectionState == ConnectionState.waiting
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : CustomRadioMSAddNewGroupScreen(
-                  onPressedSelectTime: onPressedSelectTime,
-                  groupValueMS: snapshot.data!,
-                  onChangedMSValue: onChangedMSValue),
     );
   }
 }

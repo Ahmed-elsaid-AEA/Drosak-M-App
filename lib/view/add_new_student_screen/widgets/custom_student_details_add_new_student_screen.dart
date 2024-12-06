@@ -72,7 +72,7 @@ class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
         CustomTextFormField(
           maxLines: 3,
           controller: controllerGroupDesc,
-          hintText: ConstValue.kDescGroup,
+          hintText: ConstValue.kNote,
         ),
         StreamBuilder(
             stream: outPathImage,

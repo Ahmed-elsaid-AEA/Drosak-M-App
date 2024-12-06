@@ -18,6 +18,7 @@ class ConstValue {
       'يمكنك إضافة  ما إذا كان الطالب دفع هذا الشهر أم لا وإضافة تاريخ الدفع';
   static const String kEducationalStages = 'المراحل التعليمية';
   static const String kChooseEducationStage = 'اختر المرحله التعليمية';
+  static const String kChooseGroup = 'اختر المجموعة';
   static const String kAddSomeAppointment = 'اضف بعض المواعيد';
   static const String kNameEducationalStages = 'اسم المرحله التعليميه';
   static const String kNameGroup = 'اسم المجموعه ';
@@ -25,6 +26,7 @@ class ConstValue {
    static const String kAddNameOfGroup = 'اضف اسم المجموعه ';
   static const String kDescEducationalStage = 'وصف المرحله التعليميه';
   static const String kDescGroup = 'وصف المجموعة ';
+  static const String kNote = 'ملاحظة';
   static const String kGroups = 'المجموعات';
   static const String kAddNewGroup = 'إضافه مجموعة جديده';
   static const String kAddNewStudent = 'إضافه طالب جديد';
@@ -54,6 +56,8 @@ class ConstValue {
   static const String kCantEmpty = 'لا يمكن ان يكون الحقل فارغ';
   static const String kNoFoundThisEducationStageName =
       'لم يتم العصور علي اسم تلك المرحله التعليميه';
+  static const String kNoFoundThisGroupName =
+      'لم يتم العصور علي اسم تلك المجموعة';
   static const String kDetailsGroup = 'تفاصيل المجموعه';
   static const String kDetailsStudent = 'تفاصيل الطالب';
   static const String kSaturday = 'السبت';
@@ -64,6 +68,7 @@ class ConstValue {
   static const String kThursday = 'الخميس';
   static const String kFriday = 'الجمعة';
   static const String kNoTimeAndDayYetAdd = 'لم يتم إضافه يوم وميعاد بعد';
+  static const String kNoTimeAndDayBecauseYouDontChooseGroup = 'لا يوجد يوم أو وقت لانك لم تختار جروب بعد';
 
   static const String kPM="م";
   static const String kAM="ص";

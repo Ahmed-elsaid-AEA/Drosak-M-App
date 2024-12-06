@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/widgets/dialog/show_custom_dialog_choose_image_oprtion.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:flutter/material.dart';
@@ -129,5 +130,20 @@ class AddNewStudentsScreenController {
     } else {
       //TODO://save data
     }
+  }
+
+
+  void onPressedPickImage() {
+    showCustomDialogChooseImage(
+      context: context,
+      onPressedPickImageBYGallery: () {
+        // pickImage(ImageSource.gallery);
+        // Navigator.pop(context);
+      },
+      onPressedPickImageBYCamera: () {
+        // pickImage(ImageSource.camera);
+        // Navigator.pop(context);
+      },
+    );
   }
 }

@@ -78,6 +78,8 @@ class ConstValue {
 
   static const String kGroupInfoModel="kGroupInfoModel";
   static const String kStatus="kStatus";
+  static const String kPhotoLibrary="Photo Library";
+  static const String kTakePhoto="Take Photo";
 
 
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
@@ -10,8 +11,7 @@ import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
-import 'package:drosak_m_app/generated/assets.dart';
-import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
+ import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -181,7 +181,7 @@ class CustomItemStage extends StatelessWidget {
                     child: Image.file(
                       errorBuilder: (context, error, stackTrace) =>
                           SvgPicture.asset(
-                        Assets.assetsImagesPlaceholderSvg,
+                        AssetsValuesManager.assetsImagesPlaceholderSvg,
                         width: WidthManager.w50,
                       ),
                       File(itemStageModel.image),

@@ -5,6 +5,7 @@ import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
+import 'package:drosak_m_app/core/resources/padding_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/input_field/custom_text_form_field.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
@@ -20,7 +21,8 @@ class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
       required this.controllerStudentName,
       required this.controllerGroupDesc,
       required this.outPathImage,
-      required this.onPressedDeleteImage, required this.onPressedPickImage});
+      required this.onPressedDeleteImage,
+      required this.onPressedPickImage});
 
   final GlobalKey<FormState> formStateStudentDetails;
   final TextEditingController controllerStudentName;
@@ -63,7 +65,7 @@ class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
             ),
             HorizontalSpace(WidthManager.w6),
             IconButton.filled(
-                onPressed:onPressedPickImage,
+                onPressed: onPressedPickImage,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorManager.kPrimaryColor),
                 icon: SvgPicture.asset(AssetsValuesManager.kPlaceholderSvg)),
@@ -87,16 +89,21 @@ class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
                           children: [
                             Stack(
                               children: [
-                                Image.file(
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Text(
-                                      "not found",
-                                      style: TextStyle(color: Colors.white),
-                                    );
-                                  },
-                                  File(snapshot.data!),
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(top: PaddingManager.ph8),
+                                  child: Image.file(
+
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Text(
+                                        "not found",
+                                        style: TextStyle(color: Colors.white),
+                                      );
+                                    },
+                                    File(snapshot.data!),
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                                 IconButton.filled(
                                   onPressed: onPressedDeleteImage,

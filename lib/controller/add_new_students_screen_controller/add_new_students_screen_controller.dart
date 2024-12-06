@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
@@ -6,6 +7,8 @@ import 'package:drosak_m_app/core/widgets/dialog/show_custom_dialog_choose_image
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AddNewStudentsScreenController {
   String status = ConstValue.kAddNewStudent;
@@ -18,6 +21,7 @@ class AddNewStudentsScreenController {
   GlobalKey<FormState> formStateStudentDetails = GlobalKey<FormState>();
 
   ItemStageModel? selectedEducationStage;
+  String? pathImage;
 
   ///steam of education stage screen
   late StreamController<List<ItemStageModel>> controllerListItemStageModel;
@@ -73,7 +77,12 @@ class AddNewStudentsScreenController {
   }
 
   void initAllData() async {
+    await putImageIntoStream();
     await getAllItemStageModelList();
+  }
+
+  Future<void> putImageIntoStream() async {
+    inputPathImage.add(pathImage);
   }
 
   void disposeControllers() {
@@ -132,18 +141,40 @@ class AddNewStudentsScreenController {
     }
   }
 
-
   void onPressedPickImage() {
     showCustomDialogChooseImage(
       context: context,
       onPressedPickImageBYGallery: () {
-        // pickImage(ImageSource.gallery);
-        // Navigator.pop(context);
+        pickImage(ImageSource.gallery);
+        Navigator.pop(context);
       },
       onPressedPickImageBYCamera: () {
-        // pickImage(ImageSource.camera);
-        // Navigator.pop(context);
+        pickImage(ImageSource.camera);
+        Navigator.pop(context);
       },
     );
+  }
+
+  void onPressedDeleteImage() {
+    pathImage = null;
+    putImageIntoStream();
+  }
+
+  void pickImage(ImageSource imageSource) async {
+    final ImagePicker picker = ImagePicker();
+    var image = await picker.pickImage(source: imageSource);
+    if (image != null) {
+      pathImage = image.path;
+      saveImagesOfMyApp(image);
+    }
+    await putImageIntoStream();
+  }
+
+  void saveImagesOfMyApp(XFile image) async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    var directoryPath = directory.path;
+    var finalPath = "$directoryPath/${image.name}";
+    File fileImage = await File(image.path).copy(finalPath);
+    pathImage = fileImage.path;
   }
 }

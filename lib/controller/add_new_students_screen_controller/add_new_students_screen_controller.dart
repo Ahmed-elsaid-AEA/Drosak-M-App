@@ -4,12 +4,14 @@ import 'dart:io';
 
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
+import 'package:drosak_m_app/core/database/sqlite/students_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/widgets/dialog/show_custom_dialog_choose_image_oprtion.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
+import 'package:drosak_m_app/model/student_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -264,6 +266,7 @@ class AddNewStudentsScreenController {
     if (requiredData.trim().isEmpty) {
       //?now Insert To Data Base
       await insertNewStudent();
+      print("now insert");
     } else {
       //? show alert
       showAlertForRequiredData(requiredData);
@@ -286,5 +289,29 @@ class AddNewStudentsScreenController {
     )));
   }
 
-  Future<void> insertNewStudent() async {}
+  Future<void> insertNewStudent() async {
+    StudentOperation studentOperation = StudentOperation();
+    int studentId = await studentOperation.insertNewStudent(StudentModel(
+        name: controllerStudentName.text.trim(),
+        id: 0,
+        image: pathImage!,
+        createdAt: 'createdAt',
+        idGroup: selectedGroupDetails!.id,
+        note: controllerStudentNote.text.trim()));
+    print(studentId);
+    if (studentId > 1) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+        ConstValue.kAddedNewStudentSucces,
+        style: TextStyle(
+          fontSize: FontsSize.f14,
+          fontWeight: FontWeight.bold,
+          fontFamily: FontsName.geDinerOneFont,
+        ),
+      )));
+
+    }
+  }
 }

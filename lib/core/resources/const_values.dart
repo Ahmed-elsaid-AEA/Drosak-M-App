@@ -89,6 +89,8 @@ class ConstValue {
   static const String kTakePhoto="Take Photo";
   static const String kChooseFile="اختيار صورة";
 
+  static const String kAddedNewStudentSucces="تم اضافه طالب جديد بنجاح";
+
 
 }
 

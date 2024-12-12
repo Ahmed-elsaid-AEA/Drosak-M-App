@@ -33,15 +33,16 @@ class MySqFLiteDatabase extends CRUD {
   static const String studentsTableName = 'students';
   static const String studentsColumnID = 'id';
   static const String studentsColumnName = 'name';
-  static const String studentsColumnImage = 'image';
   static const String studentsColumnNote = 'note';
-  static const String studentsColumnIDGroups = 'idGroups';
+  static const String studentsColumnImage = 'image';
+  static const String studentsColumnIDGroups = 'groups_id';
+  static const String studentsColumnCreatedAt = 'created_at';
 
   Future<Database> _initDatabase() async {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 4;
+    int versionDataBase = 6;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
@@ -64,7 +65,7 @@ class MySqFLiteDatabase extends CRUD {
             "  $groupColumnName TEXT , "
             "  $groupColumnNote TEXT , "
             "  $groupColumnIDEducation  INTEGER, "
-            "  CONSTRAINT group_and_education_stage FOREIGN KEY ($groupColumnIDEducation) REFERENCES $groupTableName($groupColumnIDEducation) ON DELETE CASCADE ON UPDATE CASCADE"
+            "  CONSTRAINT group_and_education_stage FOREIGN KEY ($groupColumnIDEducation) REFERENCES $educationalStageTableName($educationalStageID) ON DELETE CASCADE ON UPDATE CASCADE"
             ")");
         await db.execute("CREATE TABLE IF NOT EXISTS  $appointmentsTableName"
             " ( $appointmentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
@@ -80,6 +81,7 @@ class MySqFLiteDatabase extends CRUD {
             "  $studentsColumnName TEXT , "
             "  $studentsColumnImage TEXT , "
             "  $studentsColumnNote TEXT, "
+            "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
             "  $studentsColumnIDGroups  INTEGER ,"
             "  CONSTRAINT group_and_students FOREIGN KEY ($studentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
             ")");
@@ -90,8 +92,6 @@ class MySqFLiteDatabase extends CRUD {
   }
 
   _onCreate(Database db, int version) async {
-    //?======================== create group education stage  table =========
-
     await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
         " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $educationalStageName TEXT , "
@@ -99,13 +99,13 @@ class MySqFLiteDatabase extends CRUD {
         "  $educationalStageStatus INTEGER DEFAULT 1 , "
         "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
         "  $educationalStageImage  TEXT )");
-    //?======================== create group table =========
     await db.execute("CREATE TABLE IF NOT EXISTS $groupTableName"
         " ( $groupColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $groupColumnName TEXT , "
         "  $groupColumnNote TEXT , "
-        "  $groupColumnIDEducation  INTEGER )");
-    //?======================== create appointment table =========
+        "  $groupColumnIDEducation  INTEGER, "
+        "  CONSTRAINT group_and_education_stage FOREIGN KEY ($groupColumnIDEducation) REFERENCES $educationalStageTableName($educationalStageID) ON DELETE CASCADE ON UPDATE CASCADE"
+        ")");
     await db.execute("CREATE TABLE IF NOT EXISTS  $appointmentsTableName"
         " ( $appointmentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $appointmentsColumnDay TEXT , "
@@ -120,26 +120,10 @@ class MySqFLiteDatabase extends CRUD {
         "  $studentsColumnName TEXT , "
         "  $studentsColumnImage TEXT , "
         "  $studentsColumnNote TEXT, "
+        "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
         "  $studentsColumnIDGroups  INTEGER ,"
         "  CONSTRAINT group_and_students FOREIGN KEY ($studentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
         ")");
-
-    /* await db.execute(
-      "CREATE TABLE IF NOT EXISTS $_productTable"
-      " ( $_productColumnId INTEGER PRIMARY KEY AUTOINCREMENT,"
-      " $_productColumnName TEXT ,"
-      " $_productColumnPrice REAL ,"
-      " $_productColumnCount INTEGER );",
-    );
-    await db.execute(
-      "CREATE TABLE IF NOT EXISTS $_salesTable"
-      " ( $_salesColumnId INTEGER PRIMARY KEY AUTOINCREMENT,"
-      " $_salesColumnProductID INTEGER ,"
-      " $_salesColumnUserID INTEGER  , "
-      " CONSTRAINT user_sales_relation FOREIGN KEY ($_salesColumnProductID) REFERENCES $_productTable ($_productColumnId) ON DELETE CASCADE ON UPDATE CASCADE ,"
-      " CONSTRAINT product_sales_relation FOREIGN KEY ($_salesColumnUserID) REFERENCES $_userTable ($_userColumnID) ON DELETE CASCADE ON UPDATE CASCADE "
-      " );",
-    );*/
   }
 
   @override

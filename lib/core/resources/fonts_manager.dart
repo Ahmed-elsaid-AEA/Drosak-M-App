@@ -10,6 +10,7 @@ class FontsSize {
   static double f15 = 15.sp;
   static double f16= 16.sp;
   static double f20 = 20.sp;
+  static double f30 = 30.sp;
 }
 
 class FontsName  {

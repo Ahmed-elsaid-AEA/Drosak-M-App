@@ -172,4 +172,12 @@ class GroupsOperation extends MySqFLiteDatabase {
 
     return listGroupInfo;
   }
+
+  Future<void> getGroupInnerJoinEducationStage(
+      {required int educationID}) async {
+    var a = await selectUsingQuery(
+        query:
+            "SELECT ${MySqFLiteDatabase.groupTableName}.* FROM ${MySqFLiteDatabase.groupTableName} INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} AND  ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${educationID}");
+    print(a);
+  }
 }

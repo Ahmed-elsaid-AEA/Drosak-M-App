@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
+import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/widgets/dialog/show_custom_dialog_choose_image_oprtion.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
@@ -117,6 +118,13 @@ class AddNewStudentsScreenController {
 
   onChangedSelectEducationStageName(ItemStageModel? p1) {
     selectedEducationStage = p1;
+    if (selectedEducationStage != null) getGroupsByEducationStageName();
+  }
+
+  void getGroupsByEducationStageName() {
+    GroupsOperation groupsOperation = GroupsOperation();
+    groupsOperation.getGroupInnerJoinEducationStage(
+        educationID: selectedEducationStage!.id);
   }
 
   void _closeKeyboard() {

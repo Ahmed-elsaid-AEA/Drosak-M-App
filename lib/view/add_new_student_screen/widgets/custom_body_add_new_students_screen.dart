@@ -5,7 +5,7 @@ import 'package:drosak_m_app/core/resources/padding_manager.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_add_time_and_day_of_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_group_details_add_new_group_screen.dart';
 import 'package:drosak_m_app/view/add_new_group_screen/widgets/custom_select_education_stage_name_add_new_group_screen.dart';
- import 'package:drosak_m_app/view/add_new_student_screen/widgets/custom_select_group_name_add_new_student_screen.dart';
+import 'package:drosak_m_app/view/add_new_student_screen/widgets/custom_select_group_name_add_new_student_screen.dart';
 import 'package:drosak_m_app/view/add_new_student_screen/widgets/custom_show_time_and_day_of_this_group_add_new_students_screen.dart';
 import 'package:drosak_m_app/view/add_new_student_screen/widgets/custom_student_details_add_new_student_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,22 +55,9 @@ class CustomBodyAddNewStudentsScreen extends StatelessWidget {
               onChanged: controller.onChangedSelectGroupsName,
               // outPutDataInitialItem: controller.outPutDataInitialItem,
             ),
-            // CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen(
-            //   onChangedMSValue: controller.onChangedMSValue,
-            //   onPressedSelectTime: () {
-            //     controller.onPressedSelectTime();
-            //   },
-            //   onChangedSelectDay: controller.onChangedSelectDay,
-            //   onPressedAddTimeAndDayToTable: () {
-            //     controller.onPressedAddTimeAndDayToTable(context);
-            //   },
-            //   outPutListTimeDayGroupModel:
-            //       controller.outPutDataListTimeDayGroupModel,
-            //   outPutTime: controller.outPutDataSelectedTime,
-            //   listDay: ConstListValues.listDays,
-            //   outPutDataMsValue: controller.outPutDataMsValue,
-            //   onPressedDeleteAppointment: controller.onPressedDeleteAppointment,
-            // ),
+            CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen(
+              outPutListTimeDayGroupModel: controller.outPutDataListAppointment,
+            ),
             // StreamBuilder(
             //     stream: outPathImage,
             //     builder: (context, snapshot) {

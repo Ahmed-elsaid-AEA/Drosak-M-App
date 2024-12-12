@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
@@ -37,9 +38,9 @@ class AddNewStudentsScreenController {
   late Stream<List<GroupDetails>> outPutDataListItemGroupsDetails;
 
   ///steam of list Time Day Group Model
-  late StreamController<List<AppointmentModel>> controllerListTimeDayGroupModel;
-  late Sink<List<AppointmentModel>> inputDataListTimeDayGroupModel;
-  late Stream<List<AppointmentModel>> outPutDataListTimeDayGroupModel;
+  late StreamController<List<AppointmentModel>> controllerListAppointment;
+  late Sink<List<AppointmentModel>> inputDataAppointment;
+  late Stream<List<AppointmentModel>> outPutDataListAppointment;
 
   ///steam of list Time Day Group Model
   late StreamController<ItemStageModel> controllerInitialItem;
@@ -73,10 +74,10 @@ class AddNewStudentsScreenController {
         controllerListItemStageModel.stream.asBroadcastStream();
 
     ///init steam of List Time Day Group Model
-    controllerListTimeDayGroupModel = StreamController();
-    inputDataListTimeDayGroupModel = controllerListTimeDayGroupModel.sink;
-    outPutDataListTimeDayGroupModel =
-        controllerListTimeDayGroupModel.stream.asBroadcastStream();
+    controllerListAppointment = StreamController();
+    inputDataAppointment = controllerListAppointment.sink;
+    outPutDataListAppointment =
+        controllerListAppointment.stream.asBroadcastStream();
 
     ///init steam of List Group Details
     controllerListItemGroupsDetails = StreamController();
@@ -105,8 +106,8 @@ class AddNewStudentsScreenController {
     inputDataListItemStageModel.close();
 
     ///dispose steam of List Time Day Group Model
-    controllerListTimeDayGroupModel.close();
-    inputDataListTimeDayGroupModel.close();
+    controllerListAppointment.close();
+    inputDataAppointment.close();
 
     ///dispose steam of List   Groups Details Model
     controllerListItemGroupsDetails.close();
@@ -140,15 +141,26 @@ class AddNewStudentsScreenController {
 
   onChangedSelectGroupsName(GroupDetails? p1) {
     selectedGroupDetails = p1;
-    // if (selectedGroupDetails != null) getGroupsByEducationStageName();
+    if (selectedGroupDetails != null) getAppointmentGroupsByGroupName();
   }
 
   Future<void> getGroupsByEducationStageName() async {
     GroupsOperation groupsOperation = GroupsOperation();
     List<GroupDetails> listGroup =
-    await groupsOperation.getGroupInnerJoinEducationStage(
-        educationID: selectedEducationStage!.id);
+        await groupsOperation.getGroupInnerJoinEducationStage(
+            educationID: selectedEducationStage!.id);
+    inputDataAppointment.add([]);
+    selectedGroupDetails = null;
     inputDataListItemGroupsDetails.add(listGroup);
+  }
+
+  Future<void> getAppointmentGroupsByGroupName() async {
+    GroupsOperation groupsOperation = GroupsOperation();
+    List<AppointmentModel> listAppointment =
+        await groupsOperation.getAppointmentsGroupInnerJoinGroupsTable(
+            groupId: selectedGroupDetails!.id);
+
+    inputDataAppointment.add(listAppointment);
   }
 
   void _closeKeyboard() {

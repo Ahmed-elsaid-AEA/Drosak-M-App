@@ -17,27 +17,12 @@ import 'custom_radio_ms_add_new_student_screen.dart';
 
 class CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen
     extends StatelessWidget {
-  const CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen(
-      {super.key,
-      required this.listDay,
-      required this.outPutTime,
-      this.onChangedSelectDay,
-      required this.onPressedSelectTime,
-      required this.onPressedAddTimeAndDayToTable,
-      required this.outPutListTimeDayGroupModel,
-      required this.onChangedMSValue,
-      required this.outPutDataMsValue,
-      required this.onPressedDeleteAppointment});
+  const CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen({
+    super.key,
+    required this.outPutListTimeDayGroupModel,
+  });
 
-  final ValueChanged<String?> onChangedMSValue;
-  final void Function(int index) onPressedDeleteAppointment;
-  final List<String> listDay;
-  final Stream<String?> outPutTime;
-  final Function(String?)? onChangedSelectDay;
-  final VoidCallback onPressedSelectTime;
-  final VoidCallback onPressedAddTimeAndDayToTable;
   final Stream<List<AppointmentModel>> outPutListTimeDayGroupModel;
-  final Stream<String> outPutDataMsValue;
 
   @override
   Widget build(BuildContext context) {
@@ -202,9 +187,7 @@ class StreamOfCountOfAppointment extends StatelessWidget {
       stream: outPutListTimeDayGroupModel,
       builder: (context, snapshot) =>
           snapshot.connectionState == ConnectionState.waiting
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? const SizedBox()
               : snapshot.data!.isEmpty
                   ? const SizedBox()
                   : Padding(

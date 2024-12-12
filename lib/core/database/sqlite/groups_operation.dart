@@ -183,4 +183,14 @@ class GroupsOperation extends MySqFLiteDatabase {
         data.map((item) => GroupDetails.fromJson(item)).toList();
     return listGroupsDetails;
   }
+  Future<List<AppointmentModel>> getAppointmentsGroupInnerJoinGroupsTable(
+      {required int groupId}) async {
+    List<AppointmentModel> listAppointmentModel = [];
+    List<Map<String, Object?>> data = await selectUsingQuery(
+        query:
+            "SELECT ${MySqFLiteDatabase.appointmentsTableName}.* FROM ${MySqFLiteDatabase.appointmentsTableName} INNER JOIN ${MySqFLiteDatabase.groupTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}=${MySqFLiteDatabase.appointmentsTableName}.${MySqFLiteDatabase.appointmentsColumnIDGroups} AND  ${MySqFLiteDatabase.appointmentsTableName}.${MySqFLiteDatabase.appointmentsColumnIDGroups}=$groupId");
+    listAppointmentModel +=
+        data.map((item) => AppointmentModel.fromJson(item)).toList();
+    return listAppointmentModel;
+  }
 }

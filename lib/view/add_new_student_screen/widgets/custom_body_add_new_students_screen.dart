@@ -46,56 +46,22 @@ class CustomBodyAddNewStudentsScreen extends StatelessWidget {
               outPutDataListItemStageModel:
                   controller.outPutDataListItemStageModel,
               onChanged: controller.onChangedSelectEducationStageName,
-              outPutDataInitialItem: controller.outPutDataInitialItem,
+              outPutDataInitialItem:
+                  controller.outPutDataInitialItemSelectedStage,
             ),
             CustomSelectGroupNameAddNewGroupScreen(
               initialItem: controller.selectedGroupDetails,
               outPutDataListItemGroupsDetails:
                   controller.outPutDataListItemGroupsDetails,
               onChanged: controller.onChangedSelectGroupsName,
+              outPutDataInitialSelectedGroup:
+                  controller.outPutDataInitialItemSelectedGroup,
               // outPutDataInitialItem: controller.outPutDataInitialItem,
             ),
             CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen(
               outPutListTimeDayGroupModel: controller.outPutDataListAppointment,
             ),
-            // StreamBuilder(
-            //     stream: outPathImage,
-            //     builder: (context, snapshot) {
-            //       return snapshot.connectionState == ConnectionState.waiting
-            //           ? const Center(
-            //         child: CupertinoActivityIndicator(),
-            //       )
-            //           : snapshot.data != null
-            //           ? Column(
-            //         children: [
-            //           Stack(
-            //             children: [
-            //               Image.file(
-            //                 errorBuilder:
-            //                     (context, error, stackTrace) {
-            //                   return const Text(
-            //                     "not found",
-            //                     style: TextStyle(
-            //                         color: Colors.white),
-            //                   );
-            //                 },
-            //                 File(snapshot.data!),
-            //                 width: double.infinity,
-            //                 fit: BoxFit.cover,
-            //               ),
-            //               IconButton.filled(
-            //                 onPressed: onPressedDeleteImage,
-            //                 icon: const Icon(Icons.delete),
-            //                 style: ElevatedButton.styleFrom(
-            //                     backgroundColor: Colors.red),
-            //               ),
-            //             ],
-            //           ),
-            //           VerticalSpace(HeightManager.h24),
-            //         ],
-            //       )
-            //           : const SizedBox();
-            //     }),
+
           ],
         ),
       ),

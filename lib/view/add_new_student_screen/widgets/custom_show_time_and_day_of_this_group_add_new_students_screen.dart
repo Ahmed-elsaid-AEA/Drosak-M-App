@@ -1,19 +1,13 @@
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/resources/padding_manager.dart';
 import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
-import 'package:drosak_m_app/core/resources/width_manager.dart';
-import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
-import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'custom_radio_ms_add_new_student_screen.dart';
 
 class CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen
     extends StatelessWidget {
@@ -28,7 +22,6 @@ class CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VerticalSpace(HeightManager.h12),
         StreamOfCountOfAppointment(
             outPutListTimeDayGroupModel: outPutListTimeDayGroupModel),
         streamOfTable(),
@@ -104,7 +97,7 @@ class CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen
       stream: outPutListTimeDayGroupModel,
       builder: (context, snapshot) => snapshot.data == null
           ? const Text(
-              ConstValue.kNoTimeAndDayBecauseYouDontChooseGroup,
+              ConstValue.kChooseAntherStageEducation,
               style: TextStyle(
                   fontFamily: FontsName.geDinerOneFont,
                   fontWeight: FontWeight.bold,
@@ -112,7 +105,7 @@ class CustomShowTimeAndDayOfThisGroupAddNewStudentsScreen
             )
           : snapshot.data!.isEmpty
               ? const Text(
-                  ConstValue.kNoTimeAndDayBecauseYouDontChooseGroup,
+                  ConstValue.kChooseAntherStageEducation,
                   style: TextStyle(
                       fontFamily: FontsName.geDinerOneFont,
                       fontWeight: FontWeight.bold,

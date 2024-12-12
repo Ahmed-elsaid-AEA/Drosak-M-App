@@ -43,9 +43,14 @@ class AddNewStudentsScreenController {
   late Stream<List<AppointmentModel>> outPutDataListAppointment;
 
   ///steam of list Time Day Group Model
-  late StreamController<ItemStageModel> controllerInitialItem;
-  late Sink<ItemStageModel> inputPutDataInitialItem;
-  late Stream<ItemStageModel> outPutDataInitialItem;
+  late StreamController<ItemStageModel> _controllerInitialItemSelectedStage;
+  late Sink<ItemStageModel> _inputPutDataInitialItemSelectedStage;
+  late Stream<ItemStageModel> outPutDataInitialItemSelectedStage;
+
+  ///steam of initial Selected Group
+  late StreamController<GroupDetails?> _controllerInitialItemSelectedGroup;
+  late Sink<GroupDetails?> _inputPutDataInitialItemSelectedGroup;
+  late Stream<GroupDetails?> outPutDataInitialItemSelectedGroup;
 
   List<ItemStageModel> listItemStageModel = [];
 
@@ -73,6 +78,13 @@ class AddNewStudentsScreenController {
     outPutDataListItemStageModel =
         controllerListItemStageModel.stream.asBroadcastStream();
 
+    ///init steam of initial selected group stage screen
+    _controllerInitialItemSelectedGroup = StreamController();
+    _inputPutDataInitialItemSelectedGroup =
+        _controllerInitialItemSelectedGroup.sink;
+    outPutDataInitialItemSelectedGroup =
+        _controllerInitialItemSelectedGroup.stream.asBroadcastStream();
+
     ///init steam of List Time Day Group Model
     controllerListAppointment = StreamController();
     inputDataAppointment = controllerListAppointment.sink;
@@ -86,9 +98,11 @@ class AddNewStudentsScreenController {
         controllerListItemGroupsDetails.stream.asBroadcastStream();
 
     ///init steam initial data
-    controllerInitialItem = StreamController();
-    inputPutDataInitialItem = controllerInitialItem.sink;
-    outPutDataInitialItem = controllerInitialItem.stream.asBroadcastStream();
+    _controllerInitialItemSelectedStage = StreamController();
+    _inputPutDataInitialItemSelectedStage =
+        _controllerInitialItemSelectedStage.sink;
+    outPutDataInitialItemSelectedStage =
+        _controllerInitialItemSelectedStage.stream.asBroadcastStream();
   }
 
   void initAllData() async {
@@ -104,6 +118,10 @@ class AddNewStudentsScreenController {
     ///dispose steam of education stage screen
     controllerListItemStageModel.close();
     inputDataListItemStageModel.close();
+
+    ///dispose steam of initial selected group
+    _controllerInitialItemSelectedGroup.close();
+    _inputPutDataInitialItemSelectedGroup.close();
 
     ///dispose steam of List Time Day Group Model
     controllerListAppointment.close();
@@ -151,7 +169,13 @@ class AddNewStudentsScreenController {
             educationID: selectedEducationStage!.id);
     inputDataAppointment.add([]);
     selectedGroupDetails = null;
+    _inputPutDataInitialItemSelectedGroup.add(selectedGroupDetails);
     inputDataListItemGroupsDetails.add(listGroup);
+    if(listGroup.isNotEmpty){
+      selectedGroupDetails = listGroup[0];
+      _inputPutDataInitialItemSelectedGroup.add(selectedGroupDetails);
+
+    }
   }
 
   Future<void> getAppointmentGroupsByGroupName() async {
@@ -159,6 +183,7 @@ class AddNewStudentsScreenController {
     List<AppointmentModel> listAppointment =
         await groupsOperation.getAppointmentsGroupInnerJoinGroupsTable(
             groupId: selectedGroupDetails!.id);
+    _inputPutDataInitialItemSelectedGroup.add(selectedGroupDetails);
 
     inputDataAppointment.add(listAppointment);
   }

@@ -19,6 +19,7 @@ class ConstValue {
   static const String kEducationalStages = 'المراحل التعليمية';
   static const String kChooseEducationStage = 'اختر المرحله التعليمية';
   static const String kChooseGroup = 'اختر المجموعة';
+  static const String kChooseAntherStageEducation = 'اختر مرحله تعليميه اخري لكي يظهر لك المجموعات';
   static const String kAddSomeAppointment = 'اضف بعض المواعيد';
   static const String kNameEducationalStages = 'اسم المرحله التعليميه';
   static const String kNameGroup = 'اسم المجموعه ';

@@ -18,12 +18,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CustomItemStudent extends StatelessWidget {
   const CustomItemStudent({
     super.key,
-    required this.groupInfoModel,
+    required this.studentModel,
     required this.deleteFun,
     required this.editFun,
   });
 
-  final GroupInfoModel groupInfoModel;
+  final GroupInfoModel studentModel;
   final void Function(GroupInfoModel itemStageModel) deleteFun;
   final void Function(GroupInfoModel itemStageModel) editFun;
 
@@ -39,7 +39,7 @@ class CustomItemStudent extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: ColorManager.kPrimaryColor,
               child: Text(
-                groupInfoModel.groupDetails.id.toString(),
+                studentModel.groupDetails.id.toString(),
                 style: TextStyle(
                   color: ColorManager.kWhiteColor,
                   fontWeight: FontWeight.bold,
@@ -85,11 +85,11 @@ class CustomItemStudent extends StatelessWidget {
                         children: [
                           CustomEditAndDeletePopupMenuButton(
                               editFun: editFun,
-                              groupInfoModel: groupInfoModel,
+                              groupInfoModel: studentModel,
                               deleteFun: deleteFun),
                           Expanded(
                             child: Text(
-                              groupInfoModel.groupDetails.name,
+                              studentModel.groupDetails.name,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: FontsSize.f16,
@@ -119,7 +119,7 @@ class CustomItemStudent extends StatelessWidget {
                       RichText(
                           text: TextSpan(children: [
                         TextSpan(
-                          text: groupInfoModel.groupDetails.name,
+                          text: studentModel.groupDetails.name,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: FontsSize.f13,
@@ -136,7 +136,7 @@ class CustomItemStudent extends StatelessWidget {
                               fontFamily: FontsName.geDinerOneFont),
                         ),
                         TextSpan(
-                          text: groupInfoModel.groupDetails.name,
+                          text: studentModel.groupDetails.name,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: FontsSize.f13,
@@ -232,7 +232,7 @@ class CustomItemStudent extends StatelessWidget {
                             ],
                           ),
                           for (int i = 0;
-                              i < groupInfoModel.listAppointment.length;
+                              i < studentModel.listAppointment.length;
                               i++)
                             TableRow(children: [
                               Padding(
@@ -241,7 +241,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                    groupInfoModel.listAppointment[i].day,
+                                    studentModel.listAppointment[i].day,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -255,7 +255,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                    groupInfoModel.listAppointment[i].time,
+                                    studentModel.listAppointment[i].time,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -269,7 +269,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                    groupInfoModel.listAppointment[i].ms,
+                                    studentModel.listAppointment[i].ms,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -286,7 +286,7 @@ class CustomItemStudent extends StatelessWidget {
                           HorizontalSpace(WidthManager.w3),
                           Expanded(
                             child: Text(
-                              groupInfoModel.groupDetails.desc,
+                              studentModel.groupDetails.desc,
                               style: TextStyle(
                                   color:
                                       ColorManager.kWhiteColor.withOpacity(.6),

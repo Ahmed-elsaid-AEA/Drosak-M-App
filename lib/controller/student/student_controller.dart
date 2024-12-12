@@ -6,12 +6,13 @@ import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
+import 'package:drosak_m_app/model/student_model.dart';
 import 'package:flutter/material.dart';
 
 class StudentController {
-  late StreamController<List<GroupInfoModel>> controllerListItemStudentModel;
-  late Sink<List<GroupInfoModel>> inputDataListItemStudentModel;
-  late Stream<List<GroupInfoModel>> outPutDataListItemStudentModel;
+  late StreamController<List<StudentModel>> controllerListItemStudentModel;
+  late Sink<List<StudentModel>> inputDataListItemStudentModel;
+  late Stream<List<StudentModel>> outPutDataListItemStudentModel;
   BuildContext context;
 
   StudentController(this.context) {
@@ -25,8 +26,9 @@ class StudentController {
 
   Future<void> getAllData() async {
     StudentOperation studentOperation = StudentOperation();
-    var a = await studentOperation.getStudentsInfo();
-    print(a);
+    List<StudentModel> data = await studentOperation.getStudentsInfo();
+    print(data);
+    inputDataListItemStudentModel.add(data);
 
     initAllData();
   }

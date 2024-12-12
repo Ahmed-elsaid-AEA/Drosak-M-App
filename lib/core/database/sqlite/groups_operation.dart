@@ -173,11 +173,14 @@ class GroupsOperation extends MySqFLiteDatabase {
     return listGroupInfo;
   }
 
-  Future<void> getGroupInnerJoinEducationStage(
+  Future<List<GroupDetails>> getGroupInnerJoinEducationStage(
       {required int educationID}) async {
-    var a = await selectUsingQuery(
+    List<GroupDetails> listGroupsDetails = [];
+    List<Map<String, Object?>> data = await selectUsingQuery(
         query:
-            "SELECT ${MySqFLiteDatabase.groupTableName}.* FROM ${MySqFLiteDatabase.groupTableName} INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} AND  ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${educationID}");
-    print(a);
+            "SELECT ${MySqFLiteDatabase.groupTableName}.* FROM ${MySqFLiteDatabase.groupTableName} INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} AND  ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=$educationID");
+    listGroupsDetails +=
+        data.map((item) => GroupDetails.fromJson(item)).toList();
+    return listGroupsDetails;
   }
 }

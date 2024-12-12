@@ -7,6 +7,7 @@ import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/widgets/dialog/show_custom_dialog_choose_image_oprtion.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
+import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,12 +23,18 @@ class AddNewStudentsScreenController {
   GlobalKey<FormState> formStateStudentDetails = GlobalKey<FormState>();
 
   ItemStageModel? selectedEducationStage;
+  GroupDetails? selectedGroupDetails;
   String? pathImage;
 
   ///steam of education stage screen
   late StreamController<List<ItemStageModel>> controllerListItemStageModel;
   late Sink<List<ItemStageModel>> inputDataListItemStageModel;
   late Stream<List<ItemStageModel>> outPutDataListItemStageModel;
+
+  ///steam of groups
+  late StreamController<List<GroupDetails>> controllerListItemGroupsDetails;
+  late Sink<List<GroupDetails>> inputDataListItemGroupsDetails;
+  late Stream<List<GroupDetails>> outPutDataListItemGroupsDetails;
 
   ///steam of list Time Day Group Model
   late StreamController<List<AppointmentModel>> controllerListTimeDayGroupModel;
@@ -71,6 +78,12 @@ class AddNewStudentsScreenController {
     outPutDataListTimeDayGroupModel =
         controllerListTimeDayGroupModel.stream.asBroadcastStream();
 
+    ///init steam of List Group Details
+    controllerListItemGroupsDetails = StreamController();
+    inputDataListItemGroupsDetails = controllerListItemGroupsDetails.sink;
+    outPutDataListItemGroupsDetails =
+        controllerListItemGroupsDetails.stream.asBroadcastStream();
+
     ///init steam initial data
     controllerInitialItem = StreamController();
     inputPutDataInitialItem = controllerInitialItem.sink;
@@ -94,6 +107,10 @@ class AddNewStudentsScreenController {
     ///dispose steam of List Time Day Group Model
     controllerListTimeDayGroupModel.close();
     inputDataListTimeDayGroupModel.close();
+
+    ///dispose steam of List   Groups Details Model
+    controllerListItemGroupsDetails.close();
+    inputDataListItemGroupsDetails.close();
   }
 
   Future<void> getAllItemStageModelList() async {
@@ -121,10 +138,17 @@ class AddNewStudentsScreenController {
     if (selectedEducationStage != null) getGroupsByEducationStageName();
   }
 
-  void getGroupsByEducationStageName() {
+  onChangedSelectGroupsName(GroupDetails? p1) {
+    selectedGroupDetails = p1;
+    // if (selectedGroupDetails != null) getGroupsByEducationStageName();
+  }
+
+  Future<void> getGroupsByEducationStageName() async {
     GroupsOperation groupsOperation = GroupsOperation();
-    groupsOperation.getGroupInnerJoinEducationStage(
+    List<GroupDetails> listGroup =
+    await groupsOperation.getGroupInnerJoinEducationStage(
         educationID: selectedEducationStage!.id);
+    inputDataListItemGroupsDetails.add(listGroup);
   }
 
   void _closeKeyboard() {

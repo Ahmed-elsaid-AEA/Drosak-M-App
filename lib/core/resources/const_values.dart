@@ -58,6 +58,8 @@ class ConstValue {
       'لم يتم العصور علي اسم تلك المرحله التعليميه';
   static const String kNoFoundThisGroupName =
       'لم يتم العصور علي اسم تلك المجموعة';
+  static const String kFirstSelectEducationStageName =
+      'قم باختيار مرحله تعلميه أولا';
   static const String kDetailsGroup = 'تفاصيل المجموعه';
   static const String kDetailsStudent = 'تفاصيل الطالب';
   static const String kSaturday = 'السبت';

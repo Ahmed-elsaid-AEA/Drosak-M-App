@@ -7,21 +7,23 @@ import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
+import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:flutter/material.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class CustomSelectGroupNameAddNewGroupScreen extends StatelessWidget {
   const CustomSelectGroupNameAddNewGroupScreen(
       {super.key,
-      required this.outPutDataListItemStageModel,
+      required this.outPutDataListItemGroupsDetails,
       required this.onChanged,
       this.initialItem,
-      required this.outPutDataInitialItem});
+      // required this.outPutDataInitialItem
+      });
 
-  final Function(ItemStageModel?)? onChanged;
-  final Stream<List<ItemStageModel>> outPutDataListItemStageModel;
-  final Stream<ItemStageModel> outPutDataInitialItem;
-  final ItemStageModel? initialItem;
+  final Function(GroupDetails?)? onChanged;
+  final Stream<List<GroupDetails>> outPutDataListItemGroupsDetails;
+  // final Stream<GroupDetails> outPutDataInitialItem;
+  final GroupDetails? initialItem;
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +31,21 @@ class CustomSelectGroupNameAddNewGroupScreen extends StatelessWidget {
       children: [
 
 
-        StreamBuilder2<List<ItemStageModel>, ItemStageModel>(
-          streams:
-              StreamTuple2(outPutDataListItemStageModel, outPutDataInitialItem),
-          builder: (context, snapshots) =>
-              snapshots.snapshot1.connectionState == ConnectionState.waiting
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : CustomDropdown<ItemStageModel>.search(
+        StreamBuilder<List<GroupDetails>>(
+          stream:
+             outPutDataListItemGroupsDetails,
+          builder: (context, snapshot) =>
+                CustomDropdown<GroupDetails>.search(
                       hintText: ConstValue.kChooseGroup,
-                      items: snapshots.snapshot1.data,
+                      items: snapshot.data,
                       noResultFoundText:
-                          ConstValue.kNoFoundThisGroupName,
-                      initialItem: snapshots.snapshot2.data,
+                          ConstValue.kFirstSelectEducationStageName,
+                      // initialItem: snapshot.data,
                       listItemBuilder:
                           (context, item, isSelected, onItemSelect) => ListTile(
                         contentPadding: EdgeInsets.zero,
                         title: Text(
-                          item.stageName,
+                          item.name,
                           style: TextStyle(
                               color: ColorManager.kBlackColor,
                               fontSize: FontsSize.f14),
@@ -79,7 +77,7 @@ class CustomSelectGroupNameAddNewGroupScreen extends StatelessWidget {
                           HorizontalSpace(WidthManager.w15),
                           Expanded(
                               child: Text(
-                            item.stageName,
+                            item.name,
                             style: TextStyle(
                                 color: ColorManager.kBlackColor,
                                 fontSize: FontsSize.f14),

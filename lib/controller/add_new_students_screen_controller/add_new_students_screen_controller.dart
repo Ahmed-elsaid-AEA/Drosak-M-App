@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/widgets/dialog/show_custom_dialog_choose_image_oprtion.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
@@ -171,10 +172,9 @@ class AddNewStudentsScreenController {
     selectedGroupDetails = null;
     _inputPutDataInitialItemSelectedGroup.add(selectedGroupDetails);
     inputDataListItemGroupsDetails.add(listGroup);
-    if(listGroup.isNotEmpty){
+    if (listGroup.isNotEmpty) {
       selectedGroupDetails = listGroup[0];
       _inputPutDataInitialItemSelectedGroup.add(selectedGroupDetails);
-
     }
   }
 
@@ -205,8 +205,8 @@ class AddNewStudentsScreenController {
             SnackBar(content: Text(ConstValue.kAddedGroupDetailsSucces)));
         backToMainScreen(context);
       }*/
-    } else {
-      //TODO://save data
+    } else if (status == ConstValue.kAddNewStudent) {
+      await saveAll();
     }
   }
 
@@ -246,4 +246,45 @@ class AddNewStudentsScreenController {
     File fileImage = await File(image.path).copy(finalPath);
     pathImage = fileImage.path;
   }
+
+  Future<void> saveAll() async {
+    String requiredData = "";
+    if (controllerStudentName.text.trim().isEmpty) {
+      requiredData += " , ${ConstValue.kEnterNameStudent}";
+    }
+    if (pathImage == null) {
+      requiredData += " , ${ConstValue.kSelectImageStudent}";
+    }
+    if (selectedEducationStage == null) {
+      requiredData += " , ${ConstValue.kSelectEducationStage}";
+    }
+    if (selectedGroupDetails == null) {
+      requiredData += " , ${ConstValue.kSelectGroups}";
+    }
+    if (requiredData.trim().isEmpty) {
+      //?now Insert To Data Base
+      await insertNewStudent();
+    } else {
+      //? show alert
+      showAlertForRequiredData(requiredData);
+    }
+  }
+
+  void showAlertForRequiredData(String requiredData) {
+    if (requiredData.trim().startsWith(",")) {
+      requiredData.replaceFirst(",", "");
+    }
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      requiredData,
+      style: TextStyle(
+        fontSize: FontsSize.f14,
+        fontWeight: FontWeight.bold,
+        fontFamily: FontsName.geDinerOneFont,
+      ),
+    )));
+  }
+
+  Future<void> insertNewStudent() async {}
 }

@@ -63,6 +63,10 @@ class ConstValue {
       'قم باختيار مرحله تعلميه أولا';
   static const String kDetailsGroup = 'تفاصيل المجموعه';
   static const String kDetailsStudent = 'تفاصيل الطالب';
+  static const String kEnterNameStudent = 'ادخل اسم الطالب';
+  static const String kSelectImageStudent = 'اختر صوره للطالب';
+  static const String kSelectEducationStage = 'اختر المرحله التعليميه';
+  static const String kSelectGroups = 'اختر المجموعه';
   static const String kSaturday = 'السبت';
   static const String kSunday = 'الأحد';
   static const String kMonday = 'الأثنين';

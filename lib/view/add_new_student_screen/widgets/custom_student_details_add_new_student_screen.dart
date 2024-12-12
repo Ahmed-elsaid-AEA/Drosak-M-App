@@ -1,20 +1,16 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:drosak_m_app/core/resources/assets_values_mananger.dart';
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/resources/padding_manager.dart';
 import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
-import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/input_field/custom_text_form_field.dart';
-import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
   const CustomGroupDetailsAddNewStudentScreen(
@@ -88,34 +84,38 @@ class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
                       child: CupertinoActivityIndicator(),
                     )
                   : snapshot.data != null && snapshot.data!.trim() != ""
-                      ? Column(
+                      ? Stack(
                           children: [
-                            Stack(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(top: PaddingManager.ph8),
-                                  child: Image.file(
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return const Text(
-                                        "not found",
-                                        style: TextStyle(color: Colors.white),
-                                      );
-                                    },
-                                    File(snapshot.data!),
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
+                            DottedBorder(
+                              dashPattern: const [10, 10],
+                              radius: Radius.circular(RadiusValuesManager.br12),
+                              borderType: BorderType.RRect,
+                              color: ColorManager.kPrimaryColor,
+                              padding: EdgeInsets.all(PaddingManager.ph4),
+                              strokeWidth: 1,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(RadiusValuesManager.br4)),
+                                child: Image.file(
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Text(
+                                      "not found",
+                                      style: TextStyle(color: Colors.white),
+                                    );
+                                  },
+                                  File(snapshot.data!),
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
                                 ),
-                                IconButton.filled(
-                                  onPressed: onPressedDeleteImage,
-                                  icon: const Icon(Icons.delete),
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.red),
-                                ),
-                              ],
+                              ),
                             ),
-                            VerticalSpace(HeightManager.h24),
+                            IconButton.filled(
+                              onPressed: onPressedDeleteImage,
+                              icon: const Icon(Icons.delete),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: ColorManager.kPrimaryColor
+                                      .withOpacity(.3)),
+                            ),
                           ],
                         )
                       : InkWell(
@@ -123,27 +123,34 @@ class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
                           child: Container(
                             height: HeightManager.h200,
                             width: double.infinity,
+                            color: ColorManager.kPrimaryColor.withOpacity(.1),
                             child: DottedBorder(
-                              dashPattern: const [10,10],
-                                radius: Radius.circular(RadiusValuesManager.br12),
+                              dashPattern: const [10, 10],
+                              radius: Radius.circular(RadiusValuesManager.br12),
                               borderType: BorderType.RRect,
                               color: ColorManager.kPrimaryColor,
                               padding: EdgeInsets.all(PaddingManager.ph8),
                               strokeWidth: 1,
-                               child: SizedBox(
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      Icons.upload,
+                                      Icons.upload_file_sharp,
                                       size: FontsSize.f30,
                                       color: ColorManager.kWhiteColor,
                                     ),
+                                    VerticalSpace(HeightManager.h5),
                                     Text(
                                       ConstValue.kChooseFile,
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: FontsName.geDinerOneFont,
+                                        fontSize: FontsSize.f14,
+                                        fontWeight: FontWeight.w900,
+                                      ),
                                     )
                                   ],
                                 ),

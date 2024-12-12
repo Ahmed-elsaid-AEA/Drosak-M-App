@@ -80,7 +80,7 @@ class ConstValue {
   static const String kStatus="kStatus";
   static const String kPhotoLibrary="Photo Library";
   static const String kTakePhoto="Take Photo";
-  static const String kChooseFile="Choose File";
+  static const String kChooseFile="اختيار صورة";
 
 
 }

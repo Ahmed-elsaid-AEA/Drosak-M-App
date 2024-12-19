@@ -140,7 +140,6 @@ class AddNewStudentsScreenController {
     EducationStageOperation educationStageOperation = EducationStageOperation();
     listItemStageModel = await educationStageOperation.getAllEducationData();
     inputDataListItemStageModel.add(listItemStageModel);
-    print(status);
     if (status == ConstValue.kEditThisStudent) {
       for (int i = 0; i < listItemStageModel.length; i++) {
         if (listItemStageModel[i].id == studentModel!.educationId) {
@@ -215,13 +214,7 @@ class AddNewStudentsScreenController {
 
   void onPressedAtEditORSave() async {
     if (status == ConstValue.kEditThisStudent) {
-      //TODO:// now edit
-      /*  bool updated = await editIntoGroupInfo();
-      if (updated == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(ConstValue.kAddedGroupDetailsSucces)));
-        backToMainScreen(context);
-      }*/
+      editAll();
     } else if (status == ConstValue.kAddNewStudent) {
       await saveAll();
     }
@@ -265,19 +258,7 @@ class AddNewStudentsScreenController {
   }
 
   Future<void> saveAll() async {
-    String requiredData = "";
-    if (controllerStudentName.text.trim().isEmpty) {
-      requiredData += " , ${ConstValue.kEnterNameStudent}";
-    }
-    if (pathImage == null) {
-      requiredData += " , ${ConstValue.kSelectImageStudent}";
-    }
-    if (selectedEducationStage == null) {
-      requiredData += " , ${ConstValue.kSelectEducationStage}";
-    }
-    if (selectedGroupDetails == null) {
-      requiredData += " , ${ConstValue.kSelectGroups}";
-    }
+    String requiredData = checkDataRequired();
     if (requiredData.trim().isEmpty) {
       //?now Insert To Data Base
       int studentID = await insertNewStudent();
@@ -287,6 +268,31 @@ class AddNewStudentsScreenController {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
           ConstValue.kAddedNewStudentSucces,
+          style: TextStyle(
+            fontSize: FontsSize.f14,
+            fontWeight: FontWeight.bold,
+            fontFamily: FontsName.geDinerOneFont,
+          ),
+        )));
+      }
+    } else {
+      //? show alert
+      showAlertForRequiredData(requiredData);
+    }
+  }
+
+  Future<void> editAll() async {
+    String requiredData = checkDataRequired();
+    if (requiredData.trim().isEmpty) {
+      print("now edit");
+      //?now update student Data
+      bool update = await editThisStudent();
+      if (update == true) {
+        backToMainScreen(context);
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          ConstValue.kEditStudentSucces,
           style: TextStyle(
             fontSize: FontsSize.f14,
             fontWeight: FontWeight.bold,
@@ -329,6 +335,17 @@ class AddNewStudentsScreenController {
     return studentId;
   }
 
+  Future<bool> editThisStudent() async {
+    StudentOperation studentOperation = StudentOperation();
+    return await studentOperation.updateStudent(StudentModel(
+        name: controllerStudentName.text.trim(),
+        id: studentModel!.id,
+        image: pathImage!,
+        createdAt: 'createdAt',
+        idGroup: selectedGroupDetails!.id,
+        note: controllerStudentNote.text.trim()));
+  }
+
   void fillDataOfStudent() {
     //?put name
     controllerStudentName.text = studentModel!.name;
@@ -338,5 +355,22 @@ class AddNewStudentsScreenController {
 
     //?put image
     pathImage = studentModel!.image;
+  }
+
+  String checkDataRequired() {
+    String requiredData = "";
+    if (controllerStudentName.text.trim().isEmpty) {
+      requiredData += " , ${ConstValue.kEnterNameStudent}";
+    }
+    if (pathImage == null) {
+      requiredData += " , ${ConstValue.kSelectImageStudent}";
+    }
+    if (selectedEducationStage == null) {
+      requiredData += " , ${ConstValue.kSelectEducationStage}";
+    }
+    if (selectedGroupDetails == null) {
+      requiredData += " , ${ConstValue.kSelectGroups}";
+    }
+    return requiredData;
   }
 }

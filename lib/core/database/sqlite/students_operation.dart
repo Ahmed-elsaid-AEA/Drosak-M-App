@@ -10,6 +10,15 @@ class StudentOperation extends MySqFLiteDatabase {
         values: studentModel.toJson());
   }
 
+  Future<bool> updateStudent(StudentModel studentModel) async {
+     bool updated= await update(
+        tableName: MySqFLiteDatabase.studentsTableName,
+        values: studentModel.toJson(),
+        where: ' ${MySqFLiteDatabase.studentsColumnID}=?',
+        whereArgs: ['${studentModel.id}']);
+     return updated;
+  }
+
   Future<List<StudentModel>> getStudentsInfo() async {
     List<StudentModel> listStudentModel = [];
     List<Map<String, Object?>> data = await selectUsingQuery(
@@ -22,13 +31,13 @@ class StudentOperation extends MySqFLiteDatabase {
             "as 'student_create_at',${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups}"
             " as 'student_group_id',${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnName} "
             " as 'group_name',"
-                "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageName}"
+            "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageName}"
             " as 'education_stage_name' ,"
-                "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID}"
+            "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID}"
             " as 'education_stage_id' ,"
-                ""
-                " ${MySqFLiteDatabase.appointmentsTableName}.* FROM ${MySqFLiteDatabase.studentsTableName} INNER JOIN ${MySqFLiteDatabase.groupTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}=${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} INNER JOIN ${MySqFLiteDatabase.appointmentsTableName} ON ${MySqFLiteDatabase.appointmentsTableName}.${MySqFLiteDatabase.appointmentsColumnIDGroups}=${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}");
-     Map<String, List<AppointmentModel>> mapOfListAppointment = {};
+            ""
+            " ${MySqFLiteDatabase.appointmentsTableName}.* FROM ${MySqFLiteDatabase.studentsTableName} INNER JOIN ${MySqFLiteDatabase.groupTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}=${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} INNER JOIN ${MySqFLiteDatabase.appointmentsTableName} ON ${MySqFLiteDatabase.appointmentsTableName}.${MySqFLiteDatabase.appointmentsColumnIDGroups}=${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}");
+    Map<String, List<AppointmentModel>> mapOfListAppointment = {};
     //{
     // "1" : [AppointmentModel{day: السبت, time: 10 : 1, ms: ص, groupId: 1, id: 1}],
     // "2" : [AppointmentModel{day: السبت, time: 10 : 1, ms: ص, groupId: 1, id: 1}],

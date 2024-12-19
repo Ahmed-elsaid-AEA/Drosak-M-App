@@ -92,6 +92,7 @@ class ConstValue {
   static const String kChooseFile="اختيار صورة";
 
   static const String kAddedNewStudentSucces="تم اضافه طالب جديد بنجاح";
+  static const String kEditStudentSucces="تم تعديل بيانات الطالب بنجاح";
 
 
 }

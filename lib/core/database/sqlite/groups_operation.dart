@@ -129,8 +129,7 @@ class GroupsOperation extends MySqFLiteDatabase {
   }
 
   Future<bool> _updateGroupTable(GroupDetails groupDetails) async {
-    print(groupDetails.id);
-    return await update(
+     return await update(
         tableName: MySqFLiteDatabase.groupTableName,
         values: groupDetails.toJson(),
         where: ' ${MySqFLiteDatabase.groupColumnID}=?',

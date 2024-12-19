@@ -43,7 +43,7 @@ class MySqFLiteDatabase extends CRUD {
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
     int versionDataBase = 20;
-    _db ??= await sqFLiteDatabase.openDatabase(
+     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
@@ -89,6 +89,7 @@ class MySqFLiteDatabase extends CRUD {
       },
       version: versionDataBase,
     );
+
     return _db!;
   }
 

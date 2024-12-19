@@ -17,10 +17,38 @@ class StudentOperation extends MySqFLiteDatabase {
     List<Map<String, Object?>> data = await selectUsingQuery(
         query:
             "SELECT ${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnName} as 'student_name',${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnID} as 'student_id',${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnImage} as 'student_image',${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnNote} as 'student_note',${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnCreatedAt} as 'student_create_at',${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} as 'student_group_id',${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnName}  as 'group_name',${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageName} as 'education_stage_name' , ${MySqFLiteDatabase.appointmentsTableName}.* FROM ${MySqFLiteDatabase.studentsTableName} INNER JOIN ${MySqFLiteDatabase.groupTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}=${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} INNER JOIN ${MySqFLiteDatabase.appointmentsTableName} ON ${MySqFLiteDatabase.appointmentsTableName}.${MySqFLiteDatabase.appointmentsColumnIDGroups}=${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}");
+    Map<String, List<AppointmentModel>> mapOfListAppointment = {};
+    //{
+    // "1" : [AppointmentModel{day: السبت, time: 10 : 1, ms: ص, groupId: 1, id: 1}],
+    // "2" : [AppointmentModel{day: السبت, time: 10 : 1, ms: ص, groupId: 1, id: 1}],
+    // }
+    for (int index = 0; index < data.length; index++) {
+      String groupId = data[index]['student_group_id'].toString();
+      if (mapOfListAppointment.containsKey(groupId)) {
+      } else {
+        StudentOperation studentOperation = StudentOperation();
+        List<AppointmentModel> listAppointmentModel =
+            await studentOperation._getGroupAppointment(groupId);
+        mapOfListAppointment[groupId] = listAppointmentModel;
+      }
+    }
 
-     listStudentModel +=
-        data.map((item) => StudentModel.fromJson(item)).toList();
-
+    listStudentModel += data
+        .map((item) => StudentModel.fromJson(
+            item, mapOfListAppointment[item['student_group_id'].toString()]!))
+        .toList();
     return listStudentModel;
+  }
+
+  Future<List<AppointmentModel>> _getGroupAppointment(String groupId) async {
+    List<AppointmentModel> listAppointmentModel = [];
+    List<Map<String, Object?>> data = await search(
+        tableName: MySqFLiteDatabase.appointmentsTableName,
+        columnID: MySqFLiteDatabase.appointmentsColumnIDGroups,
+        searchedId: groupId);
+    listAppointmentModel +=
+        data.map((item) => AppointmentModel.fromJson(item)).toList();
+
+    return listAppointmentModel;
   }
 }

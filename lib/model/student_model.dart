@@ -1,4 +1,5 @@
 import 'package:drosak_m_app/core/database/sqlite/my_sq_f_lite_databse.dart';
+import 'package:drosak_m_app/model/groups/appointment_model.dart';
 
 class StudentModel {
   final String name;
@@ -9,10 +10,12 @@ class StudentModel {
   final String createdAt;
   final String? groupName;
   final String? educationName;
+  final List<AppointmentModel>? listAppointmentModel;
+
 
   @override
   String toString() {
-    return 'StudentModel{name: $name\n, id: $id\n, image: $image\n, note: $note\n, idGroup: $idGroup\n, createdAt: $createdAt\n, groupName: $groupName\n, educationName: $educationName\n}';
+    return 'StudentModel{name: $name, id: $id, image: $image, note: $note, idGroup: $idGroup, createdAt: $createdAt, groupName: $groupName, educationName: $educationName, listAppointmentModel: $listAppointmentModel}';
   }
 
   StudentModel(
@@ -22,6 +25,7 @@ class StudentModel {
       required this.createdAt,
       this.educationName,
       this.groupName,
+      this.listAppointmentModel,
       required this.idGroup,
       required this.note});
 
@@ -34,7 +38,6 @@ class StudentModel {
     };
   }
 
-
 //{id: 1,
 // name: ahmed,
 // image: /data/user/0/com.example.drosak_m_app/app_flutter/1000019996.jpg,
@@ -43,7 +46,8 @@ class StudentModel {
 // groups_id: 1,
 // group_name: mq,
 // education_stage_name: a11}
-  factory StudentModel.fromJson(Map<String, dynamic> json) {
+  factory StudentModel.fromJson(
+      Map<String, dynamic> json, List<AppointmentModel> appointment) {
     //{student_name: vvg,
     // student_id: 1, student_image:
     // /data/user/0/com.example.drosak_m_app/app_flutter/1000019996.jpg
@@ -52,6 +56,7 @@ class StudentModel {
     // ah, id: 9, day: الأحد, time: 10 : 1, MS: ص, idGroups: 1}
     return StudentModel(
       name: json['student_name'],
+      listAppointmentModel: appointment,
       id: json['student_id'],
       image: json['student_image'],
       createdAt: json['student_create_at'],

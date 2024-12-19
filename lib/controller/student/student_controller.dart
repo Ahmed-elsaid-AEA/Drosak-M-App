@@ -27,7 +27,6 @@ class StudentController {
   Future<void> getAllData() async {
     StudentOperation studentOperation = StudentOperation();
     List<StudentModel> data = await studentOperation.getStudentsInfo();
-    print(data);
     inputDataListItemStudentModel.add(data);
 
     initAllData();

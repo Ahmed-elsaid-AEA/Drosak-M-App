@@ -84,10 +84,10 @@ class CustomItemStudent extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          // CustomEditAndDeletePopupMenuButton(
-                          //     editFun: editFun,
-                          //     groupInfoModel: studentModel,
-                          //     deleteFun: deleteFun),
+                          CustomEditAndDeletePopupMenuButton(
+                              editFun: editFun,
+                              studentModel: studentModel,
+                              deleteFun: deleteFun),
                           Expanded(
                             child: Text(
                               studentModel.name,
@@ -203,7 +203,7 @@ class CustomItemStudent extends StatelessWidget {
                             ],
                           ),
                           for (int i = 0;
-                              i < 3//studentModel.listAppointment.length
+                              i <  studentModel.listAppointmentModel!.length
                            ;
                               i++)
                             TableRow(children: [
@@ -213,7 +213,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                   ' studentModel.listAppointment[i].day',
+                                   studentModel.listAppointmentModel![i].day,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -227,7 +227,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                    'studentModel.listAppointment[i].time',
+                                    studentModel.listAppointmentModel![i].time,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -241,7 +241,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                    'studentModel.listAppointment[i].ms',
+                                   studentModel.listAppointmentModel![i].ms,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -307,13 +307,13 @@ class CustomEditAndDeletePopupMenuButton extends StatelessWidget {
   const CustomEditAndDeletePopupMenuButton({
     super.key,
     required this.editFun,
-    required this.groupInfoModel,
+    required this.studentModel,
     required this.deleteFun,
   });
 
-  final void Function(GroupInfoModel itemStageModel) editFun;
-  final GroupInfoModel groupInfoModel;
-  final void Function(GroupInfoModel itemStageModel) deleteFun;
+  final void Function(StudentModel studentModel) editFun;
+  final StudentModel studentModel;
+  final void Function(StudentModel studentModel) deleteFun;
 
   @override
   Widget build(BuildContext context) {
@@ -329,7 +329,7 @@ class CustomEditAndDeletePopupMenuButton extends StatelessWidget {
                 fontFamily: FontsName.geDinerOneFont),
           ),
           onTap: () {
-            editFun(groupInfoModel);
+            editFun(studentModel);
           },
         ),
         PopupMenuItem(
@@ -340,7 +340,7 @@ class CustomEditAndDeletePopupMenuButton extends StatelessWidget {
                   color: ColorManager.kBlackColor,
                   fontFamily: FontsName.geDinerOneFont)),
           onTap: () {
-            deleteFun(groupInfoModel);
+            deleteFun(studentModel);
           },
         ),
       ],

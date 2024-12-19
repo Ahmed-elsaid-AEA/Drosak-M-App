@@ -1,11 +1,7 @@
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
-import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
-import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:drosak_m_app/model/student_model.dart';
-import 'package:drosak_m_app/view/education_stages/widgets/body/custom_item_stage.dart';
-import 'package:drosak_m_app/view/groups/widgets/custom_item_group.dart';
 import 'package:drosak_m_app/view/students/widgets/custom_item_student.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -11,8 +11,7 @@ import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
 import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
-import 'package:drosak_m_app/model/groups/groups_info_model.dart';
-import 'package:drosak_m_app/model/student_model.dart';
+ import 'package:drosak_m_app/model/student_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

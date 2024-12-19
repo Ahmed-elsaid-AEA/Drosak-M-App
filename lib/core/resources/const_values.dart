@@ -39,6 +39,7 @@ class ConstValue {
   static const String kScreenIndex = 'currentIndex';
   static const String kAdd = 'إضافه';
   static const String kAddedGroupDetailsSucces = 'تم إضافه تفاصيل الجروب بنجاح';
+  static const String kDeletedStudentSucces = 'تم حذف الطالب بنجاح';
   static const String kSaveAll = 'حفظ الكل';
   static const String kAddToTableAppointment = 'إضافه إلي جدول المواعيد';
   static const String kDelete = 'حذف';

@@ -29,10 +29,8 @@ class StudentController {
     List<StudentModel> data = await studentOperation.getStudentsInfo();
     inputDataListItemStudentModel.add(data);
 
-    initAllData();
   }
 
-  void initAllData() {}
 
   Future<void> initControllers() async {
     controllerListItemStudentModel = StreamController();
@@ -51,5 +49,19 @@ class StudentController {
         .pushNamed(RoutesName.kAddNewStudentsScreen,
             arguments: ConstValue.kAddNewStudent)
         .then((value) => getAllData());
+  }
+
+  void onTapDelete(StudentModel studentModel) async {
+    StudentOperation studentOperation = StudentOperation();
+    bool deleted = await studentOperation.deleteStudent(studentModel.id);
+    if (deleted) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(ConstValue.kDeletedStudentSucces),
+        ),
+      );
+      getAllData();
+    }
   }
 }

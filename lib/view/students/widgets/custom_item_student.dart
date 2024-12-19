@@ -12,6 +12,7 @@ import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
+import 'package:drosak_m_app/model/student_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -23,9 +24,9 @@ class CustomItemStudent extends StatelessWidget {
     required this.editFun,
   });
 
-  final GroupInfoModel studentModel;
-  final void Function(GroupInfoModel itemStageModel) deleteFun;
-  final void Function(GroupInfoModel itemStageModel) editFun;
+  final StudentModel studentModel;
+  final void Function(StudentModel studentModel) deleteFun;
+  final void Function(StudentModel studentModel) editFun;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class CustomItemStudent extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: ColorManager.kPrimaryColor,
               child: Text(
-                studentModel.groupDetails.id.toString(),
+                studentModel.id.toString(),
                 style: TextStyle(
                   color: ColorManager.kWhiteColor,
                   fontWeight: FontWeight.bold,
@@ -83,13 +84,13 @@ class CustomItemStudent extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          CustomEditAndDeletePopupMenuButton(
-                              editFun: editFun,
-                              groupInfoModel: studentModel,
-                              deleteFun: deleteFun),
+                          // CustomEditAndDeletePopupMenuButton(
+                          //     editFun: editFun,
+                          //     groupInfoModel: studentModel,
+                          //     deleteFun: deleteFun),
                           Expanded(
                             child: Text(
-                              studentModel.groupDetails.name,
+                              studentModel.name,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: FontsSize.f16,
@@ -108,7 +109,7 @@ class CustomItemStudent extends StatelessWidget {
                                 width: WidthManager.w50,
                               ),
                               File(
-                                'true?itemStageModel.image',
+                                 studentModel.image,
                               ),
                               height: HeightManager.h50,
                               width: WidthManager.w50,
@@ -119,7 +120,7 @@ class CustomItemStudent extends StatelessWidget {
                       RichText(
                           text: TextSpan(children: [
                         TextSpan(
-                          text: studentModel.groupDetails.name,
+                          text: studentModel.groupName,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: FontsSize.f13,
@@ -136,7 +137,7 @@ class CustomItemStudent extends StatelessWidget {
                               fontFamily: FontsName.geDinerOneFont),
                         ),
                         TextSpan(
-                          text: studentModel.groupDetails.name,
+                          text: studentModel.educationName,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: FontsSize.f13,
@@ -144,37 +145,7 @@ class CustomItemStudent extends StatelessWidget {
                               fontFamily: FontsName.geDinerOneFont),
                         ),
                       ]))
-                      // VerticalSpace(HeightManager.h12),
-                      // Row(
-                      //   children: [
-                      //     Text(
-                      //       groupInfoModel.groupDetails.name +
-                      //           "jkdsnoijdsoisjdosdijdpojkdoihjbdsoi ds dsds d  dj",
-                      //       style: TextStyle(
-                      //           fontWeight: FontWeight.w500,
-                      //           fontSize: FontsSize.f13,
-                      //           color: ColorManager.kWhiteColor,
-                      //           fontFamily: FontsName.geDinerOneFont),
-                      //     ),
-                      //     Text(
-                      //       ' / ',
-                      //       style: TextStyle(
-                      //           fontWeight: FontWeight.w900,
-                      //           fontSize: FontsSize.f14,
-                      //           decoration: TextDecoration.underline,
-                      //           color: ColorManager.kRedColor,
-                      //           fontFamily: FontsName.geDinerOneFont),
-                      //     ),
-                      //     Text(
-                      //       groupInfoModel.groupDetails.name,
-                      //       style: TextStyle(
-                      //           fontWeight: FontWeight.w500,
-                      //           fontSize: FontsSize.f13,
-                      //           color: ColorManager.kWhiteColor,
-                      //           fontFamily: FontsName.geDinerOneFont),
-                      //     ),
-                      //   ],
-                      // ),
+
                       ,
                       VerticalSpace(HeightManager.h12),
                       Table(
@@ -232,7 +203,8 @@ class CustomItemStudent extends StatelessWidget {
                             ],
                           ),
                           for (int i = 0;
-                              i < studentModel.listAppointment.length;
+                              i < 3//studentModel.listAppointment.length
+                           ;
                               i++)
                             TableRow(children: [
                               Padding(
@@ -241,7 +213,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                    studentModel.listAppointment[i].day,
+                                   ' studentModel.listAppointment[i].day',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -255,7 +227,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                    studentModel.listAppointment[i].time,
+                                    'studentModel.listAppointment[i].time',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -269,7 +241,7 @@ class CustomItemStudent extends StatelessWidget {
                                     vertical: PaddingManager.ph10),
                                 child: Center(
                                   child: Text(
-                                    studentModel.listAppointment[i].ms,
+                                    'studentModel.listAppointment[i].ms',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: FontsName.geDinerOneFont,
@@ -286,7 +258,7 @@ class CustomItemStudent extends StatelessWidget {
                           HorizontalSpace(WidthManager.w3),
                           Expanded(
                             child: Text(
-                              studentModel.groupDetails.desc,
+                              studentModel.note,
                               style: TextStyle(
                                   color:
                                       ColorManager.kWhiteColor.withOpacity(.6),

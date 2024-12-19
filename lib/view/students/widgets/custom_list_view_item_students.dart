@@ -40,12 +40,12 @@ class CustomListViewItemsStudents extends StatelessWidget {
               index == snapshot.data!.length
                   ? VerticalSpace(HeightManager.h24)
                   :
-                  SizedBox()
-              // CustomItemStudent(
-              //   studentModel: snapshot.data![index],
-              //   deleteFun: deleteFun,
-              //   editFun: editFun,
-              // )
+
+              CustomItemStudent(
+                studentModel: snapshot.data![index],
+                deleteFun: deleteFun,
+                editFun: editFun,
+              )
               ,
               separatorBuilder: (context, index) =>
                   VerticalSpace(HeightManager.h24),

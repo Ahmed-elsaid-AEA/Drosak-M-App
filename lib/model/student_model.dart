@@ -10,6 +10,11 @@ class StudentModel {
   final String? groupName;
   final String? educationName;
 
+  @override
+  String toString() {
+    return 'StudentModel{name: $name\n, id: $id\n, image: $image\n, note: $note\n, idGroup: $idGroup\n, createdAt: $createdAt\n, groupName: $groupName\n, educationName: $educationName\n}';
+  }
+
   StudentModel(
       {required this.name,
       required this.id,
@@ -28,6 +33,7 @@ class StudentModel {
       MySqFLiteDatabase.studentsColumnIDGroups: idGroup,
     };
   }
+
 
 //{id: 1,
 // name: ahmed,

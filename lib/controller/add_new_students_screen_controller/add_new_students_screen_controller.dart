@@ -265,8 +265,20 @@ class AddNewStudentsScreenController {
     }
     if (requiredData.trim().isEmpty) {
       //?now Insert To Data Base
-      await insertNewStudent();
-      print("now insert");
+      int studentID = await insertNewStudent();
+      if (studentID > 1) {
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          ConstValue.kAddedNewStudentSucces,
+          style: TextStyle(
+            fontSize: FontsSize.f14,
+            fontWeight: FontWeight.bold,
+            fontFamily: FontsName.geDinerOneFont,
+          ),
+        )));
+      }
     } else {
       //? show alert
       showAlertForRequiredData(requiredData);
@@ -289,7 +301,7 @@ class AddNewStudentsScreenController {
     )));
   }
 
-  Future<void> insertNewStudent() async {
+  Future<int> insertNewStudent() async {
     StudentOperation studentOperation = StudentOperation();
     int studentId = await studentOperation.insertNewStudent(StudentModel(
         name: controllerStudentName.text.trim(),
@@ -298,20 +310,7 @@ class AddNewStudentsScreenController {
         createdAt: 'createdAt',
         idGroup: selectedGroupDetails!.id,
         note: controllerStudentNote.text.trim()));
-    print(studentId);
-    if (studentId > 1) {
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-        ConstValue.kAddedNewStudentSucces,
-        style: TextStyle(
-          fontSize: FontsSize.f14,
-          fontWeight: FontWeight.bold,
-          fontFamily: FontsName.geDinerOneFont,
-        ),
-      )));
 
-    }
+    return studentId;
   }
 }

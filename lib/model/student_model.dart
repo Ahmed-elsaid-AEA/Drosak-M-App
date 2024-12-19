@@ -10,8 +10,8 @@ class StudentModel {
   final String createdAt;
   final String? groupName;
   final String? educationName;
+  final int? educationId;
   final List<AppointmentModel>? listAppointmentModel;
-
 
   @override
   String toString() {
@@ -24,6 +24,7 @@ class StudentModel {
       required this.image,
       required this.createdAt,
       this.educationName,
+      this.educationId,
       this.groupName,
       this.listAppointmentModel,
       required this.idGroup,
@@ -59,6 +60,7 @@ class StudentModel {
       listAppointmentModel: appointment,
       id: json['student_id'],
       image: json['student_image'],
+      educationId: json['education_stage_id'],
       createdAt: json['student_create_at'],
       idGroup: json['student_group_id'],
       note: json['student_note'],

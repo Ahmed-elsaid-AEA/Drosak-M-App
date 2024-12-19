@@ -58,6 +58,7 @@ class AddNewStudentsScreenController {
   List<ItemStageModel> listItemStageModel = [];
 
 //! global variable  context
+  StudentModel? studentModel;
   BuildContext context;
 
   AddNewStudentsScreenController(this.context) {
@@ -139,18 +140,32 @@ class AddNewStudentsScreenController {
     EducationStageOperation educationStageOperation = EducationStageOperation();
     listItemStageModel = await educationStageOperation.getAllEducationData();
     inputDataListItemStageModel.add(listItemStageModel);
+    print(status);
+    if (status == ConstValue.kEditThisStudent) {
+      for (int i = 0; i < listItemStageModel.length; i++) {
+        if (listItemStageModel[i].id == studentModel!.educationId) {
+          selectedEducationStage = listItemStageModel[i];
+          _inputPutDataInitialItemSelectedStage.add(selectedEducationStage!);
+          getGroupsByEducationStageName();
+          break;
+        }
+      }
+    }
   }
 
   void getArgumentFromLastScreen(BuildContext context) {
     var arg = ModalRoute.of(context);
     if (arg != null) {
       var arguments = arg.settings.arguments;
+
       if (arguments is Map) {
         //? now in status edit
+        status = arguments[ConstValue.kStatus];
+        studentModel = arguments[ConstValue.kStudentModel];
+        fillDataOfStudent();
       } else {
         //? now in add new
-        String argument = arguments.toString();
-        status = argument;
+        status = arguments.toString();
       }
     }
   }
@@ -312,5 +327,16 @@ class AddNewStudentsScreenController {
         note: controllerStudentNote.text.trim()));
 
     return studentId;
+  }
+
+  void fillDataOfStudent() {
+    //?put name
+    controllerStudentName.text = studentModel!.name;
+
+    //?put note
+    controllerStudentNote.text = studentModel!.note;
+
+    //?put image
+    pathImage = studentModel!.image;
   }
 }

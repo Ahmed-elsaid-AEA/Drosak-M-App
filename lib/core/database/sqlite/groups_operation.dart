@@ -183,6 +183,7 @@ class GroupsOperation extends MySqFLiteDatabase {
         data.map((item) => GroupDetails.fromJson(item)).toList();
     return listGroupsDetails;
   }
+
   Future<List<AppointmentModel>> getAppointmentsGroupInnerJoinGroupsTable(
       {required int groupId}) async {
     List<AppointmentModel> listAppointmentModel = [];
@@ -192,5 +193,13 @@ class GroupsOperation extends MySqFLiteDatabase {
     listAppointmentModel +=
         data.map((item) => AppointmentModel.fromJson(item)).toList();
     return listAppointmentModel;
+  }
+
+  Future<GroupDetails> getItemGroupModelUsingID(int id) async {
+    List<Map<String, Object?>> data = await search(
+        tableName: MySqFLiteDatabase.groupTableName,
+        searchedId: '$id',
+        columnID: MySqFLiteDatabase.groupColumnID);
+    return GroupDetails.fromJson(data[0]);
   }
 }

@@ -34,6 +34,7 @@ class ConstValue {
   static const String kEditThisStudent = 'تعديل بيانات الطالب';
   static const String kEditThisGroup = 'تعديل تلك المجموعة';
   static const String kStudents = 'الطلاب';
+  static const String kStudentModel = 'kStudentModel';
   static const String kTheAudience = 'الحضور';
   static const String kPaying = 'الدفع';
   static const String kScreenIndex = 'currentIndex';

@@ -28,9 +28,7 @@ class StudentController {
     StudentOperation studentOperation = StudentOperation();
     List<StudentModel> data = await studentOperation.getStudentsInfo();
     inputDataListItemStudentModel.add(data);
-
   }
-
 
   Future<void> initControllers() async {
     controllerListItemStudentModel = StreamController();
@@ -63,5 +61,21 @@ class StudentController {
       );
       getAllData();
     }
+  }
+
+  void onTapEdit(StudentModel studentModel) {
+    Navigator.of(context).pushNamed(
+      RoutesName.kAddNewStudentsScreen,
+      arguments: {
+        ConstValue.kStatus: ConstValue.kEditThisStudent,
+        ConstValue.kStudentModel: studentModel
+      },
+    ).then((value) {
+      getAllData();
+      // if (isSearchNow == true) {
+      //   Navigator.of(context).pop();
+      //   isSearchNow = false;
+      // }
+    });
   }
 }

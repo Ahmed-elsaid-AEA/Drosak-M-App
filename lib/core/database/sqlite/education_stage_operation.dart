@@ -52,4 +52,12 @@ class EducationStageOperation extends MySqFLiteDatabase {
 
     return listItemStageModel;
   }
+
+  Future<ItemStageModel> getItemStageModelUsingID(int id) async {
+    List<Map<String, Object?>> data = await search(
+        tableName: MySqFLiteDatabase.educationalStageTableName,
+        searchedId: '$id',
+        columnID: MySqFLiteDatabase.educationalStageID);
+    return ItemStageModel.fromJson(data[0]);
+  }
 }

@@ -87,31 +87,30 @@ class StudentController {
   }
 
   void onPressedSearch() {
-    // isSearchNow = true;
-
-    // showSearch(
-    //     context: context,
-    //     delegate: CustomSearchDelegated(
-    //       myBuildResult: (String query) {
-    //         StudentOperation groupsOperation = StudentOperation();
-    //         return query == ''
-    //             ? const SizedBox()
-    //             : CustomListSearchStudentScreen(
-    //                 getSearchItemGroups:
-    //                     groupsOperation.getSearchWord(groupName: query),
-    //                 editFun: (groupInfoModel) {
-    //                   editGroupInfo(groupInfoModel);
-    //                 },
-    //                 deleteFun: (groupInfoModel) {
-    //                   deleteGroupInfo(groupInfoModel);
-    //                 },
-    //               );
-    //       },
-    //     )).then((value) => isSearchNow = false);
+    showSearch(
+        context: context,
+        delegate: CustomSearchDelegated(
+          myBuildResult: (String query) {
+            StudentOperation studentOperation = StudentOperation();
+            return query == ''
+                ? const SizedBox()
+                : CustomListSearchStudentScreen(
+                    getSearchItemGroups:
+                        studentOperation.getStudentsInfo(studentName: query),
+                    editFun: (groupInfoModel) {
+                      onTapEdit(groupInfoModel);
+                    },
+                    deleteFun: (groupInfoModel) {
+                      onTapDelete(groupInfoModel);
+                      Navigator.of(context).pop();
+                    },
+                  );
+          },
+        ));
   }
 
-  // Future<List<StudentModel>> getSearchWord(
-  //     {required String studentName}) async {
-  //   StudentOperation studentOperation = StudentOperation();
-  // }
+// Future<List<StudentModel>> getSearchWord(
+//     {required String studentName}) async {
+//   StudentOperation studentOperation = StudentOperation();
+// }
 }

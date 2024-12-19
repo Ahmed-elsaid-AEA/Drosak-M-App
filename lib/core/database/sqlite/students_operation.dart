@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:drosak_m_app/core/database/sqlite/my_sq_f_lite_databse.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 
@@ -19,7 +21,7 @@ class StudentOperation extends MySqFLiteDatabase {
     return updated;
   }
 
-  Future<List<StudentModel>> getStudentsInfo({int? studentId}) async {
+  Future<List<StudentModel>> getStudentsInfo({String? studentName}) async {
     List<StudentModel> listStudentModel = [];
 
     String qurey =
@@ -36,11 +38,15 @@ class StudentOperation extends MySqFLiteDatabase {
         "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID}"
         " as 'education_stage_id' ,"
         ""
-        " ${MySqFLiteDatabase.appointmentsTableName}.* FROM ${MySqFLiteDatabase.studentsTableName} INNER JOIN ${MySqFLiteDatabase.groupTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}=${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} INNER JOIN ${MySqFLiteDatabase.appointmentsTableName} ON ${MySqFLiteDatabase.appointmentsTableName}.${MySqFLiteDatabase.appointmentsColumnIDGroups}=${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}";
-    if (studentId != null) {
+        " ${MySqFLiteDatabase.appointmentsTableName}.* FROM ${MySqFLiteDatabase.studentsTableName} "
+        "INNER JOIN ${MySqFLiteDatabase.groupTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}=${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} "
+        "INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} "
+        "INNER JOIN ${MySqFLiteDatabase.appointmentsTableName} ON ${MySqFLiteDatabase.appointmentsTableName}.${MySqFLiteDatabase.appointmentsColumnIDGroups}=${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}";
+    if (studentName != null) {
       qurey +=
-          " AND ${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnID} = $studentId";
+          " AND ${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnName} Like '%$studentName%'";
     }
+    log(qurey);
     List<Map<String, Object?>> data = await selectUsingQuery(query: qurey);
     Map<String, List<AppointmentModel>> mapOfListAppointment = {};
     //{

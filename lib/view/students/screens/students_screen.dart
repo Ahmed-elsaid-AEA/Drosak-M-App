@@ -42,7 +42,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
             CustomAppBarTitleAddSearch(
               title: ConstValue.kStudents,
               onPressedSearch: () {
-                // _controller.onPressedSearch( );
+                _controller.onPressedSearch( );
               },
               onPressedAdd: () {
                 _controller.addNewStudents(context: context);

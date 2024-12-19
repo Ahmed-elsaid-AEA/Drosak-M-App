@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:drosak_m_app/core/database/sqlite/students_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/routes_mananger.dart';
+import 'package:drosak_m_app/core/widgets/search/custom_search_delegate.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:drosak_m_app/model/student_model.dart';
+import 'package:drosak_m_app/view/students/widgets/search/custom_list_search_group_screen.dart';
 import 'package:flutter/material.dart';
 
 class StudentController {
@@ -78,4 +80,38 @@ class StudentController {
       // }
     });
   }
+
+  void onRefresh() {
+    inputDataListItemStudentModel.add([]);
+    getAllData();
+  }
+
+  void onPressedSearch() {
+    // isSearchNow = true;
+
+    // showSearch(
+    //     context: context,
+    //     delegate: CustomSearchDelegated(
+    //       myBuildResult: (String query) {
+    //         StudentOperation groupsOperation = StudentOperation();
+    //         return query == ''
+    //             ? const SizedBox()
+    //             : CustomListSearchStudentScreen(
+    //                 getSearchItemGroups:
+    //                     groupsOperation.getSearchWord(groupName: query),
+    //                 editFun: (groupInfoModel) {
+    //                   editGroupInfo(groupInfoModel);
+    //                 },
+    //                 deleteFun: (groupInfoModel) {
+    //                   deleteGroupInfo(groupInfoModel);
+    //                 },
+    //               );
+    //       },
+    //     )).then((value) => isSearchNow = false);
+  }
+
+  // Future<List<StudentModel>> getSearchWord(
+  //     {required String studentName}) async {
+  //   StudentOperation studentOperation = StudentOperation();
+  // }
 }

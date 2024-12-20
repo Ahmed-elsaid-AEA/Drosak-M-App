@@ -298,8 +298,8 @@ class AddNewStudentsScreenController {
         createdAt: 'createdAt',
         idGroup: selectedGroupDetails!.id,
         note: controllerStudentNote.text.trim()));
-    print(studentId);
-    if (studentId > 1) {
+
+    if (studentId > 0) {
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -311,7 +311,6 @@ class AddNewStudentsScreenController {
           fontFamily: FontsName.geDinerOneFont,
         ),
       )));
-
     }
   }
 }

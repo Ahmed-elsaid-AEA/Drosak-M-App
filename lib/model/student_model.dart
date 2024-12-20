@@ -1,20 +1,28 @@
 import 'package:drosak_m_app/core/database/sqlite/my_sq_f_lite_databse.dart';
+import 'package:drosak_m_app/model/groups/appointment_model.dart';
 
 class StudentModel {
   final String name;
-  final int id;
+  final int? id;
   final String image;
   final String note;
   final int idGroup;
-  final String createdAt;
+  final String? createdAt;
   final String? groupName;
   final String? educationName;
+  final List<AppointmentModel>? listAppointmentModel;
+
+  @override
+  String toString() {
+    return 'StudentModel{name: $name, id: $id, image: $image, note: $note, idGroup: $idGroup, createdAt: $createdAt, groupName: $groupName, educationName: $educationName, listAppointmentModel: $listAppointmentModel}';
+  }
 
   StudentModel(
       {required this.name,
-      required this.id,
+      this.id,
       required this.image,
-      required this.createdAt,
+      this.createdAt,
+      this.listAppointmentModel,
       this.educationName,
       this.groupName,
       required this.idGroup,
@@ -37,7 +45,8 @@ class StudentModel {
 // groups_id: 1,
 // group_name: mq,
 // education_stage_name: a11}
-  factory StudentModel.fromJson(Map<String, dynamic> json) {
+  factory StudentModel.fromJson(
+      Map<String, dynamic> json, List<AppointmentModel> listAppointmentModel) {
     return StudentModel(
       name: json['name'],
       id: json['id'],
@@ -47,6 +56,7 @@ class StudentModel {
       note: json['note'],
       educationName: json['education_stage_name'],
       groupName: json['group_name'],
+      listAppointmentModel: listAppointmentModel,
     );
   }
 }

@@ -42,7 +42,7 @@ class MySqFLiteDatabase extends CRUD {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 6;
+    int versionDataBase = 1;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: (db) async {
@@ -53,6 +53,7 @@ class MySqFLiteDatabase extends CRUD {
         await (db.execute('DROP TABLE IF EXISTS $educationalStageTableName'));
         await (db.execute('DROP TABLE IF EXISTS $groupTableName'));
         await (db.execute('DROP TABLE IF EXISTS $studentsTableName'));
+        await (db.execute('DROP TABLE IF EXISTS $appointmentsTableName'));
         await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
             " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
             "  $educationalStageName TEXT , "

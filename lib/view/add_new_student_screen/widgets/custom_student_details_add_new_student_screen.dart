@@ -61,12 +61,6 @@ class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // HorizontalSpace(WidthManager.w6),
-            // IconButton.filled(
-            //     onPressed: onPressedPickImage,
-            //     style: ElevatedButton.styleFrom(
-            //         backgroundColor: ColorManager.kPrimaryColor),
-            //     icon: SvgPicture.asset(AssetsValuesManager.kPlaceholderSvg)),
           ],
         ),
         VerticalSpace(HeightManager.h12),
@@ -105,7 +99,8 @@ class CustomGroupDetailsAddNewStudentScreen extends StatelessWidget {
                                   },
                                   File(snapshot.data!),
                                   width: double.infinity,
-                                  fit: BoxFit.cover,
+                                  height: HeightManager.h200,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                             ),

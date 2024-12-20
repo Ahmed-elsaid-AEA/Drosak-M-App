@@ -53,7 +53,8 @@ class _StudentsScreenState extends State<StudentsScreen> {
               outPutDataListItemStudentModel:
                   _controller.outPutDataListItemStudentModel,
               deleteFun: _controller.onTapDelete,
-              editFun: (groupInfoModel) {},
+              editFun: _controller.onTapEdit
+              ,
               onRefresh: () {
                 _controller.onTapRefresh();
               },

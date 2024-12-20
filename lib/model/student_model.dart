@@ -7,6 +7,7 @@ class StudentModel {
   final String image;
   final String note;
   final int idGroup;
+  final int? idEducationStage;
   final String? createdAt;
   final String? groupName;
   final String? educationName;
@@ -23,6 +24,7 @@ class StudentModel {
       required this.image,
       this.createdAt,
       this.listAppointmentModel,
+      this.idEducationStage,
       this.educationName,
       this.groupName,
       required this.idGroup,
@@ -56,6 +58,7 @@ class StudentModel {
       note: json['note'],
       educationName: json['education_stage_name'],
       groupName: json['group_name'],
+      idEducationStage: json['education_stage_Id'],
       listAppointmentModel: listAppointmentModel,
     );
   }

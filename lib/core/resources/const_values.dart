@@ -85,6 +85,7 @@ class ConstValue {
   static const String kCountOfAppointmentAdded="عدد المواعيد المضافه";
 
   static const String kGroupInfoModel="kGroupInfoModel";
+  static const String kStudentModel="kStudentModel";
   static const String kStatus="kStatus";
   static const String kPhotoLibrary="Photo Library";
   static const String kTakePhoto="Take Photo";

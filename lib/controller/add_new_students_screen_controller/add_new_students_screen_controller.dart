@@ -29,6 +29,7 @@ class AddNewStudentsScreenController {
   ItemStageModel? selectedEducationStage;
   GroupDetails? selectedGroupDetails;
   String? pathImage;
+  StudentModel? studentModel;
 
   ///steam of education stage screen
   late StreamController<List<ItemStageModel>> controllerListItemStageModel;
@@ -111,6 +112,10 @@ class AddNewStudentsScreenController {
   void initAllData() async {
     await putImageIntoStream();
     await getAllItemStageModelList();
+    //?check in edit
+    if (studentModel != null) {
+      fillDataStudentModel();
+    }
   }
 
   Future<void> putImageIntoStream() async {
@@ -145,12 +150,14 @@ class AddNewStudentsScreenController {
     var arg = ModalRoute.of(context);
     if (arg != null) {
       var arguments = arg.settings.arguments;
+
       if (arguments is Map) {
         //? now in status edit
+        status = arguments[ConstValue.kStatus].toString();
+        studentModel = arguments[ConstValue.kStudentModel];
       } else {
         //? now in add new
-        String argument = arguments.toString();
-        status = argument;
+        status = arguments.toString();
       }
     }
   }
@@ -312,5 +319,25 @@ class AddNewStudentsScreenController {
         ),
       )));
     }
+  }
+
+  void fillDataStudentModel() {
+    //?put name
+    controllerStudentName.text = studentModel!.name;
+
+    //?put note
+    controllerStudentNote.text = studentModel!.note;
+
+    //?put image
+    pathImage = studentModel!.image;
+
+    //?fill selected education
+    selectedEducationStage = listItemStageModel
+        .where((element) => element.id == studentModel!.idEducationStage)
+        .toList()[0];
+    _inputPutDataInitialItemSelectedStage.add(selectedEducationStage!);
+
+    //?fill selected group
+    onChangedSelectEducationStageName(selectedEducationStage);
   }
 }

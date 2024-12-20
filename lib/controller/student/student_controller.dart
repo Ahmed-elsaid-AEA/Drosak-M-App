@@ -75,11 +75,7 @@ class StudentController {
         ConstValue.kStudentModel: studentModel
       },
     ).then((value) {
-      // getAllData();
-      // if (isSearchNow == true) {
-      //   Navigator.of(context).pop();
-      //   isSearchNow = false;
-      // }
+      onTapRefresh();
     });
   }
 }

@@ -207,13 +207,7 @@ class AddNewStudentsScreenController {
 
   void onPressedAtEditORSave() async {
     if (status == ConstValue.kEditThisStudent) {
-      //TODO:// now edit
-      /*  bool updated = await editIntoGroupInfo();
-      if (updated == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(ConstValue.kAddedGroupDetailsSucces)));
-        backToMainScreen(context);
-      }*/
+      await editAll();
     } else if (status == ConstValue.kAddNewStudent) {
       await saveAll();
     }
@@ -257,6 +251,18 @@ class AddNewStudentsScreenController {
   }
 
   Future<void> saveAll() async {
+    String requiredData = checkRequiredData();
+    if (requiredData.trim().isEmpty) {
+      //?now Insert To Data Base
+      await insertNewStudent();
+      print("now insert");
+    } else {
+      //? show alert
+      showAlertForRequiredData(requiredData);
+    }
+  }
+
+  String checkRequiredData() {
     String requiredData = "";
     if (controllerStudentName.text.trim().isEmpty) {
       requiredData += " , ${ConstValue.kEnterNameStudent}";
@@ -270,14 +276,7 @@ class AddNewStudentsScreenController {
     if (selectedGroupDetails == null) {
       requiredData += " , ${ConstValue.kSelectGroups}";
     }
-    if (requiredData.trim().isEmpty) {
-      //?now Insert To Data Base
-      await insertNewStudent();
-      print("now insert");
-    } else {
-      //? show alert
-      showAlertForRequiredData(requiredData);
-    }
+    return requiredData;
   }
 
   void showAlertForRequiredData(String requiredData) {
@@ -330,7 +329,7 @@ class AddNewStudentsScreenController {
 
     //?put image
     pathImage = studentModel!.image;
-
+    inputPathImage.add(pathImage);
     //?fill selected education
     selectedEducationStage = listItemStageModel
         .where((element) => element.id == studentModel!.idEducationStage)
@@ -339,5 +338,40 @@ class AddNewStudentsScreenController {
 
     //?fill selected group
     onChangedSelectEducationStageName(selectedEducationStage);
+  }
+
+  Future<void> editAll() async {
+    String requiredData = checkRequiredData();
+    if (requiredData.trim().isEmpty) {
+      //?now edit To Data Base
+      await editIntoStudentInfo();
+    } else {
+      //? show alert
+      showAlertForRequiredData(requiredData);
+    }
+  }
+
+  Future<void> editIntoStudentInfo() async {
+    StudentOperation studentOperation = StudentOperation();
+    bool updated = await studentOperation.editStudentData(StudentModel(
+        name: controllerStudentName.text.trim(),
+        id: studentModel!.id,
+        image: pathImage!,
+        idGroup: selectedGroupDetails!.id,
+        note: controllerStudentNote.text.trim()));
+
+    if (updated == true) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+        ConstValue.kUpdateThisStudentSucces,
+        style: TextStyle(
+          fontSize: FontsSize.f14,
+          fontWeight: FontWeight.bold,
+          fontFamily: FontsName.geDinerOneFont,
+        ),
+      )));
+    }
   }
 }

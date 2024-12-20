@@ -61,4 +61,11 @@ class StudentOperation extends MySqFLiteDatabase {
         tableName: MySqFLiteDatabase.studentsTableName,
         where: ' ${MySqFLiteDatabase.studentsColumnID}==$studentID');
   }
+
+  Future<bool> editStudentData(StudentModel studentModel) {
+    return update(
+        tableName: MySqFLiteDatabase.studentsTableName,
+        values: studentModel.toJson(),
+        where: ' ${MySqFLiteDatabase.studentsColumnID}==${studentModel.id}');
+  }
 }

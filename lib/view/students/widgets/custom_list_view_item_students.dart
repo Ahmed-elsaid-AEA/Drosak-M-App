@@ -3,6 +3,7 @@ import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
+import 'package:drosak_m_app/model/student_model.dart';
 import 'package:drosak_m_app/view/education_stages/widgets/body/custom_item_stage.dart';
 import 'package:drosak_m_app/view/groups/widgets/custom_item_group.dart';
 import 'package:drosak_m_app/view/students/widgets/custom_item_student.dart';
@@ -17,10 +18,10 @@ class CustomListViewItemsStudents extends StatelessWidget {
         required this.editFun,
         required this.onRefresh});
 
-  final Stream<List<GroupInfoModel>> outPutDataListItemStudentModel;
+  final Stream<List<StudentModel>> outPutDataListItemStudentModel;
 
-  final void Function(GroupInfoModel groupInfoModel) deleteFun;
-  final void Function(GroupInfoModel groupInfoModel) editFun;
+  final void Function(StudentModel studentModel) deleteFun;
+  final void Function(StudentModel studentModel) editFun;
   final void Function() onRefresh;
 
   @override
@@ -39,7 +40,7 @@ class CustomListViewItemsStudents extends StatelessWidget {
               index == snapshot.data!.length
                   ? VerticalSpace(HeightManager.h24)
                   : CustomItemStudent(
-                groupInfoModel: snapshot.data![index],
+                studentModel: snapshot.data![index],
                 deleteFun: deleteFun,
                 editFun: editFun,
               ),

@@ -33,7 +33,6 @@ class StudentOperation extends MySqFLiteDatabase {
         mapOfAppointment[groupId] = listAppointment;
       }
     }
-    print(mapOfAppointment);
     listStudentModel += data
         .map(
           (item) => StudentModel.fromJson(
@@ -55,5 +54,11 @@ class StudentOperation extends MySqFLiteDatabase {
     listAppointmentModel +=
         data.map((item) => AppointmentModel.fromJson(item)).toList();
     return listAppointmentModel;
+  }
+
+  Future<bool> deleteStudent(int studentID) async {
+    return delete(
+        tableName: MySqFLiteDatabase.studentsTableName,
+        where: ' ${MySqFLiteDatabase.studentsColumnID}==$studentID');
   }
 }

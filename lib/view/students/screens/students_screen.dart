@@ -50,17 +50,14 @@ class _StudentsScreenState extends State<StudentsScreen> {
               streamCount: _controller.outPutDataListItemStudentModel,
             ),
             CustomListViewItemsStudents(
-                outPutDataListItemStudentModel:
-                    _controller.outPutDataListItemStudentModel,
-                deleteFun: (groupInfoModel) {
-
-                },
-                editFun: (groupInfoModel) {
-
-                },
-                onRefresh: () {
-
-                },),
+              outPutDataListItemStudentModel:
+                  _controller.outPutDataListItemStudentModel,
+              deleteFun: _controller.onTapDelete,
+              editFun: (groupInfoModel) {},
+              onRefresh: () {
+                _controller.onTapRefresh();
+              },
+            ),
             // CustomItemStudent(
             //   groupInfoModel: GroupInfoModel(
             //       groupDetails: GroupDetails(

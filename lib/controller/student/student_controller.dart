@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:drosak_m_app/core/database/sqlite/students_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
@@ -6,12 +7,13 @@ import 'package:drosak_m_app/core/resources/routes_mananger.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
+import 'package:drosak_m_app/model/student_model.dart';
 import 'package:flutter/material.dart';
 
 class StudentController {
-  late StreamController<List<GroupInfoModel>> controllerListItemStudentModel;
-  late Sink<List<GroupInfoModel>> inputDataListItemStudentModel;
-  late Stream<List<GroupInfoModel>> outPutDataListItemStudentModel;
+  late StreamController<List<StudentModel>> controllerListItemStudentModel;
+  late Sink<List<StudentModel>> inputDataListItemStudentModel;
+  late Stream<List<StudentModel>> outPutDataListItemStudentModel;
   BuildContext context;
 
   StudentController(this.context) {
@@ -25,13 +27,10 @@ class StudentController {
 
   Future<void> getAllData() async {
     StudentOperation studentOperation = StudentOperation();
-    var a = await studentOperation.getStudentsInfo();
-    print(a);
-
-    initAllData();
+    List<StudentModel> listStudentModel =
+        await studentOperation.getStudentsInfo();
+    inputDataListItemStudentModel.add(listStudentModel);
   }
-
-  void initAllData() {}
 
   Future<void> initControllers() async {
     controllerListItemStudentModel = StreamController();
@@ -50,5 +49,21 @@ class StudentController {
         .pushNamed(RoutesName.kAddNewStudentsScreen,
             arguments: ConstValue.kAddNewStudent)
         .then((value) => getAllData());
+  }
+
+  void onTapDelete(StudentModel studentModel) async {
+    StudentOperation studentOperation = StudentOperation();
+    bool deleted = await studentOperation.deleteStudent(studentModel.id!);
+    if (deleted == true) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(ConstValue.kDeletedStudentSucces)));
+      onTapRefresh();
+    }
+  }
+
+  void onTapRefresh() {
+    inputDataListItemStudentModel.add([]);
+    getAllData();
   }
 }

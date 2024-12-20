@@ -4,10 +4,13 @@ import 'dart:developer';
 import 'package:drosak_m_app/core/database/sqlite/students_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/routes_mananger.dart';
+import 'package:drosak_m_app/core/widgets/search/custom_search_delegate.dart';
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
 import 'package:drosak_m_app/model/student_model.dart';
+import 'package:drosak_m_app/view/groups/widgets/search/custom_list_search_group_screen.dart';
+import 'package:drosak_m_app/view/students/widgets/search/custom_list_search_group_screen.dart';
 import 'package:flutter/material.dart';
 
 class StudentController {
@@ -15,6 +18,8 @@ class StudentController {
   late Sink<List<StudentModel>> inputDataListItemStudentModel;
   late Stream<List<StudentModel>> outPutDataListItemStudentModel;
   BuildContext context;
+
+  bool isSearchNow=false;
 
   StudentController(this.context) {
     start();
@@ -55,6 +60,9 @@ class StudentController {
     StudentOperation studentOperation = StudentOperation();
     bool deleted = await studentOperation.deleteStudent(studentModel.id!);
     if (deleted == true) {
+      if(isSearchNow==true){
+        Navigator.of(context).pop();
+      }
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text(ConstValue.kDeletedStudentSucces)));
@@ -75,7 +83,35 @@ class StudentController {
         ConstValue.kStudentModel: studentModel
       },
     ).then((value) {
+      if(isSearchNow==true){
+        Navigator.of(context).pop();
+      }
       onTapRefresh();
     });
+  }
+
+  void onPressedSearch() {
+    isSearchNow = true;
+    showSearch(
+        context: context,
+        delegate: CustomSearchDelegated(
+          myBuildResult: (String query) {
+            StudentOperation studentOperation = StudentOperation();
+            return query == ''
+                ? const SizedBox()
+                : CustomListSearchStudentScreen(
+                    getSearchItemStudent:
+                        studentOperation.getStudentsInfo(studentName: query),
+                    editFun: (groupInfoModel) {
+                      onTapEdit(groupInfoModel);
+                    },
+                    deleteFun: (groupInfoModel) {
+                      onTapDelete(groupInfoModel);
+                    },
+                  );
+          },
+        )).then((value) {
+          return isSearchNow = false;
+        });
   }
 }

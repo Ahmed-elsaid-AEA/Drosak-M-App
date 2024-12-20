@@ -42,7 +42,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
             CustomAppBarTitleAddSearch(
               title: ConstValue.kStudents,
               onPressedSearch: () {
-                // _controller.onPressedSearch( );
+                _controller.onPressedSearch();
               },
               onPressedAdd: () {
                 _controller.addNewStudents(context: context);
@@ -53,8 +53,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
               outPutDataListItemStudentModel:
                   _controller.outPutDataListItemStudentModel,
               deleteFun: _controller.onTapDelete,
-              editFun: _controller.onTapEdit
-              ,
+              editFun: _controller.onTapEdit,
               onRefresh: () {
                 _controller.onTapRefresh();
               },

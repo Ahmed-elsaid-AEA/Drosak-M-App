@@ -10,14 +10,21 @@ class StudentOperation extends MySqFLiteDatabase {
         values: studentModel.toJson());
   }
 
-  Future<List<StudentModel>> getStudentsInfo() async {
+  Future<List<StudentModel>> getStudentsInfo({String? studentName}) async {
     List<StudentModel> listStudentModel = [];
-    List<Map<String, Object?>> data = await selectUsingQuery(
-        query: "SELECT ${MySqFLiteDatabase.studentsTableName}.*,"
-            "${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnName}  as 'group_name',"
-            "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageName} as 'education_stage_name', "
-            "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} as 'education_stage_Id' "
-            "FROM ${MySqFLiteDatabase.studentsTableName} INNER JOIN ${MySqFLiteDatabase.groupTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}=${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID}");
+    String query = "SELECT ${MySqFLiteDatabase.studentsTableName}.*,"
+        "${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnName}  as 'group_name',"
+        "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageName} as 'education_stage_name', "
+        "${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} as 'education_stage_Id' "
+        "FROM ${MySqFLiteDatabase.studentsTableName} INNER JOIN ${MySqFLiteDatabase.groupTableName} "
+        "ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnID}=${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} "
+        "INNER JOIN ${MySqFLiteDatabase.educationalStageTableName} ON ${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnIDEducation}=${MySqFLiteDatabase.educationalStageTableName}.${MySqFLiteDatabase.educationalStageID} ";
+    if (studentName != null) {
+      //?now in search model
+      query +=
+          " AND ${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnName} LIke '%$studentName%'";
+    }
+    List<Map<String, Object?>> data = await selectUsingQuery(query: query);
     Map<String, List<AppointmentModel>> mapOfAppointment = {};
     //{
     // 1 : AppointmentModel{day: السبت, time: 15 : 5, ms: ص, groupId: 1, id: 1}

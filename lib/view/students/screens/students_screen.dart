@@ -4,6 +4,8 @@ import 'package:drosak_m_app/core/widgets/app_bar/custom_app_bar_title_add_searc
 import 'package:drosak_m_app/model/groups/appointment_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/groups/groups_info_model.dart';
+import 'package:drosak_m_app/model/student_model.dart';
+import 'package:drosak_m_app/view/audience/widgets/custom_item_audience_screen.dart';
 import 'package:drosak_m_app/view/groups/widgets/custom_list_view_item_groups.dart';
 import 'package:drosak_m_app/view/students/widgets/custom_item_student.dart';
 import 'package:drosak_m_app/view/students/widgets/custom_list_view_item_students.dart';
@@ -58,16 +60,7 @@ class _StudentsScreenState extends State<StudentsScreen> {
                 _controller.onTapRefresh();
               },
             ),
-            // CustomItemStudent(
-            //   groupInfoModel: GroupInfoModel(
-            //       groupDetails: GroupDetails(
-            //           desc: "desc", name: "name", educationStageID: 1),
-            //       listAppointment: [
-            //         AppointmentModel(ms: "ms", time: "time", day: "day")
-            //       ]),
-            //   deleteFun: (itemStageModel) {},
-            //   editFun: (itemStageModel) {},
-            // )
+
           ],
         ),
       ),

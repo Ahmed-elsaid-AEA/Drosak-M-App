@@ -1,9 +1,13 @@
 import 'package:drosak_m_app/controller/audience/audience_controller.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/widgets/app_bar/custom_app_bar_title_add_search.dart';
+import 'package:drosak_m_app/model/student_model.dart';
+import 'package:drosak_m_app/view/audience/widgets/custom_item_audience_screen.dart';
 import 'package:drosak_m_app/view/audience/widgets/custom_select_education_stage_name_audience_screen.dart';
 import 'package:drosak_m_app/view/audience/widgets/custom_select_group_name_audiencet_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AudienceScreen extends StatefulWidget {
   const AudienceScreen({super.key});
@@ -53,8 +57,33 @@ class _AudienceScreenState extends State<AudienceScreen> {
                     _controller.outPutDataListItemGroupsDetails,
                 onChanged: _controller.onChangedSelectGroupsName,
                 outPutDataInitialSelectedGroup:
-                    _controller.outPutDataInitialItemSelectedGroup)
+                    _controller.outPutDataInitialItemSelectedGroup),
+            CustomGridViewAudienceScreen(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomGridViewAudienceScreen extends StatelessWidget {
+  const CustomGridViewAudienceScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GridView.builder(
+        gridDelegate:   SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisExtent:HeightManager.h130,
+            mainAxisSpacing: 30,
+            crossAxisCount: 2),
+        itemBuilder: (context, index) => CustomItemAudienceScreen(
+          studentModel: StudentModel(id: 1,
+              name: "Ahmed elsaid abd elmoutyp oihpoknkok", image: "image", idGroup: 1, note: "note"),
+          deleteFun: (itemStageModel) {},
+          editFun: (itemStageModel) {},
         ),
       ),
     );

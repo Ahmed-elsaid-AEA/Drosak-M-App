@@ -3,9 +3,13 @@ import 'dart:async';
 import 'package:drosak_m_app/core/database/sqlite/audience_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
+import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/student_model.dart';
+import 'package:drosak_m_app/view/audience/widgets/custom_add_new_audience_screen.dart';
+import 'package:drosak_m_app/view/education_stages/widgets/body/custom_add_new_eudcation_stage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class AudienceController {
@@ -35,6 +39,7 @@ class AudienceController {
   late Stream<GroupDetails?> outPutDataInitialItemSelectedGroup;
 
   List<ItemStageModel> listItemStageModel = [];
+  List<StudentModel> listStudentModel = [];
 
   AudienceController(this.context) {
     start();
@@ -127,9 +132,28 @@ class AudienceController {
 
   Future<void> getStudentInfo() async {
     AudienceOperation audienceOperation = AudienceOperation();
-    List<StudentModel> student = await audienceOperation
+    listStudentModel = await audienceOperation
         .getStudentInfoByGroupID(selectedGroupDetails!.id);
+  }
 
-    print(student);
+  void onPressedAdd() async {
+    if (selectedEducationStage == null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(ConstValue.kSelectEducationStage)));
+    } else if (selectedGroupDetails == null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(ConstValue.kSelectGroups)));
+    } else {
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return CustomAddNewAudienceScreen(
+              onPressedAdd: () {}, listStudentModel: listStudentModel);
+        },
+      );
+    }
   }
 }

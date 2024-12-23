@@ -42,7 +42,7 @@ class _AudienceScreenState extends State<AudienceScreen> {
             CustomAppBarTitleAddSearch(
               title: ConstValue.kTheAudience,
               onPressedSearch: null,
-              onPressedAdd: () {},
+              onPressedAdd: _controller.onPressedAdd,
             ),
             CustomSelectEducationStageNameAudienceScreen(
                 outPutDataListItemStageModel:

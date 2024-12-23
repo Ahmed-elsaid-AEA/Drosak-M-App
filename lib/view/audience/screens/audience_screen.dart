@@ -1,6 +1,8 @@
 import 'package:drosak_m_app/controller/audience/audience_controller.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/widgets/app_bar/custom_app_bar_title_add_search.dart';
+import 'package:drosak_m_app/view/audience/widgets/custom_select_education_stage_name_audience_screen.dart';
+import 'package:drosak_m_app/view/audience/widgets/custom_select_group_name_audiencet_screen.dart';
 import 'package:flutter/material.dart';
 
 class AudienceScreen extends StatefulWidget {
@@ -40,25 +42,18 @@ class _AudienceScreenState extends State<AudienceScreen> {
               },
               onPressedAdd: () {},
             ),
-            // CustomListViewItemsStudents(
-            //   outPutDataListItemStudentModel:
-            //       _controller.outPutDataListItemStudentModel,
-            //   deleteFun: _controller.onTapDelete,
-            //   editFun: _controller.onTapEdit,
-            //   onRefresh: () {
-            //     _controller.onTapRefresh();
-            //   },
-            // ),
-            // CustomItemStudent(
-            //   groupInfoModel: GroupInfoModel(
-            //       groupDetails: GroupDetails(
-            //           desc: "desc", name: "name", educationStageID: 1),
-            //       listAppointment: [
-            //         AppointmentModel(ms: "ms", time: "time", day: "day")
-            //       ]),
-            //   deleteFun: (itemStageModel) {},
-            //   editFun: (itemStageModel) {},
-            // )
+            CustomSelectEducationStageNameAudienceScreen(
+                outPutDataListItemStageModel:
+                    _controller.outPutDataListItemStageModel,
+                onChanged: _controller.onChangedSelectEducationStageName,
+                outPutDataInitialItem:
+                    _controller.outPutDataInitialItemSelectedStage),
+            CustomSelectGroupNameAudienceScreen(
+                outPutDataListItemGroupsDetails:
+                    _controller.outPutDataListItemGroupsDetails,
+                onChanged: _controller.onChangedSelectGroupsName,
+                outPutDataInitialSelectedGroup:
+                    _controller.outPutDataInitialItemSelectedGroup)
           ],
         ),
       ),

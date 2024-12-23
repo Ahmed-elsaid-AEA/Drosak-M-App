@@ -46,7 +46,7 @@ class AddNewStudentsScreenController {
   late Sink<List<AppointmentModel>> inputDataAppointment;
   late Stream<List<AppointmentModel>> outPutDataListAppointment;
 
-  ///steam of list Time Day Group Model
+  ///steam of list initial selected item stage
   late StreamController<ItemStageModel> _controllerInitialItemSelectedStage;
   late Sink<ItemStageModel> _inputPutDataInitialItemSelectedStage;
   late Stream<ItemStageModel> outPutDataInitialItemSelectedStage;
@@ -138,6 +138,7 @@ class AddNewStudentsScreenController {
     ///dispose steam of List   Groups Details Model
     controllerListItemGroupsDetails.close();
     inputDataListItemGroupsDetails.close();
+
   }
 
   Future<void> getAllItemStageModelList() async {

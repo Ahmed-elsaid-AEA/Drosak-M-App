@@ -1,9 +1,100 @@
+import 'dart:async';
+
+import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
+import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class AudienceController {
   BuildContext context;
 
-  AudienceController(this.context);
+  ItemStageModel? selectedEducationStage;
+  GroupDetails? selectedGroupDetails;
 
-  void disposeControllers() {}
+  ///steam of list initial selected item education stage
+  late StreamController<ItemStageModel> _controllerInitialItemSelectedStage;
+  late Sink<ItemStageModel> _inputPutDataInitialItemSelectedStage;
+  late Stream<ItemStageModel> outPutDataInitialItemSelectedStage;
+
+  ///steam of item education stage screen
+  late StreamController<List<ItemStageModel>> _controllerListItemStageModel;
+  late Sink<List<ItemStageModel>> _inputDataListItemStageModel;
+  late Stream<List<ItemStageModel>> outPutDataListItemStageModel;
+
+  ///steam of groups
+  late StreamController<List<GroupDetails>> _controllerListItemGroupsDetails;
+  late Sink<List<GroupDetails>> _inputDataListItemGroupsDetails;
+  late Stream<List<GroupDetails>> outPutDataListItemGroupsDetails;
+
+  ///steam of initial Selected Group
+  late StreamController<GroupDetails?> _controllerInitialItemSelectedGroup;
+  late Sink<GroupDetails?> _inputPutDataInitialItemSelectedGroup;
+  late Stream<GroupDetails?> outPutDataInitialItemSelectedGroup;
+
+  AudienceController(this.context) {
+    start();
+  }
+
+  void start() async {
+    await initControllers();
+    await initAllData();
+  }
+
+  Future<void> initAllData() async {
+    _inputDataListItemStageModel.add([]);
+  }
+
+  Future<void> initControllers() async {
+    ///init steam of item education stage screen
+    _controllerListItemStageModel = StreamController();
+    _inputDataListItemStageModel = _controllerListItemStageModel.sink;
+    outPutDataListItemStageModel =
+        _controllerListItemStageModel.stream.asBroadcastStream();
+
+    ///init steam initial data item selected education stage
+    _controllerInitialItemSelectedStage = StreamController();
+    _inputPutDataInitialItemSelectedStage =
+        _controllerInitialItemSelectedStage.sink;
+    outPutDataInitialItemSelectedStage =
+        _controllerInitialItemSelectedStage.stream.asBroadcastStream();
+
+    ///init steam groups model
+    _controllerListItemGroupsDetails = StreamController();
+    _inputDataListItemGroupsDetails = _controllerListItemGroupsDetails.sink;
+    outPutDataListItemGroupsDetails =
+        _controllerListItemGroupsDetails.stream.asBroadcastStream();
+
+    ///init steam intial groups model
+    _controllerInitialItemSelectedGroup = StreamController();
+    _inputPutDataInitialItemSelectedGroup =
+        _controllerInitialItemSelectedGroup.sink;
+    outPutDataInitialItemSelectedGroup =
+        _controllerInitialItemSelectedGroup.stream.asBroadcastStream();
+  }
+
+  void disposeControllers() {
+    ///dispose stream of item education stage screen
+    _controllerListItemStageModel.close();
+    _inputDataListItemStageModel.close();
+
+    ///dispose steam of List  item education stage screen
+    _controllerInitialItemSelectedStage.close();
+    _inputPutDataInitialItemSelectedStage.close();
+
+    ///dispose steam of List  Groups Details Model
+    _controllerListItemGroupsDetails.close();
+    _inputDataListItemGroupsDetails.close();
+
+    ///dispose steam of List  Groups Details Model
+    _controllerInitialItemSelectedGroup.close();
+    _inputPutDataInitialItemSelectedGroup.close();
+  }
+
+  void onChangedSelectEducationStageName(ItemStageModel? p1) {
+    selectedEducationStage = p1;
+    // if (selectedEducationStage != null) getGroupsByEducationStageName();
+  }
+  onChangedSelectGroupsName(GroupDetails? p1) {
+    selectedGroupDetails = p1;
+    // if (selectedGroupDetails != null) getAppointmentGroupsByGroupName();
+  }
 }

@@ -56,7 +56,6 @@ class CustomAppBarTitleAddSearch extends StatelessWidget {
                             color: ColorManager.kWhiteColor),
                       ),
                     ),
-
               const Spacer(),
               IconButton(
                   onPressed: onPressedAdd,
@@ -65,13 +64,14 @@ class CustomAppBarTitleAddSearch extends StatelessWidget {
                     size: 30,
                     color: ColorManager.kWhiteColor,
                   )),
-              IconButton(
-                  onPressed: onPressedSearch,
-                  icon: const Icon(
-                    Icons.search,
-                    size: 30,
-                    color: ColorManager.kWhiteColor,
-                  ))
+              if (onPressedSearch != null)
+                IconButton(
+                    onPressed: onPressedSearch,
+                    icon: const Icon(
+                      Icons.search,
+                      size: 30,
+                      color: ColorManager.kWhiteColor,
+                    ))
             ],
           ),
         ],

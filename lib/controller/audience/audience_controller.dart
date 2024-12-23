@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
+import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -30,6 +32,8 @@ class AudienceController {
   late Sink<GroupDetails?> _inputPutDataInitialItemSelectedGroup;
   late Stream<GroupDetails?> outPutDataInitialItemSelectedGroup;
 
+  List<ItemStageModel> listItemStageModel=[];
+
   AudienceController(this.context) {
     start();
   }
@@ -40,7 +44,25 @@ class AudienceController {
   }
 
   Future<void> initAllData() async {
-    _inputDataListItemStageModel.add([]);
+    await getAllItemStageModelList();
+  }
+  Future<void> getAllItemStageModelList() async {
+    EducationStageOperation educationStageOperation = EducationStageOperation();
+    listItemStageModel = await educationStageOperation.getAllEducationData();
+    _inputDataListItemStageModel.add(listItemStageModel);
+  }
+  Future<void> getGroupsByEducationStageName() async {
+    GroupsOperation groupsOperation = GroupsOperation();
+    List<GroupDetails> listGroup =
+    await groupsOperation.getGroupInnerJoinEducationStage(
+        educationID: selectedEducationStage!.id);
+    selectedGroupDetails = null;
+    _inputPutDataInitialItemSelectedGroup.add(selectedGroupDetails);
+    _inputDataListItemGroupsDetails.add(listGroup);
+    if (listGroup.isNotEmpty) {
+      selectedGroupDetails = listGroup[0];
+      _inputPutDataInitialItemSelectedGroup.add(selectedGroupDetails);
+    }
   }
 
   Future<void> initControllers() async {
@@ -91,7 +113,7 @@ class AudienceController {
 
   void onChangedSelectEducationStageName(ItemStageModel? p1) {
     selectedEducationStage = p1;
-    // if (selectedEducationStage != null) getGroupsByEducationStageName();
+    if (selectedEducationStage != null) getGroupsByEducationStageName();
   }
   onChangedSelectGroupsName(GroupDetails? p1) {
     selectedGroupDetails = p1;

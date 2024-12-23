@@ -41,9 +41,7 @@ class _AudienceScreenState extends State<AudienceScreen> {
           children: [
             CustomAppBarTitleAddSearch(
               title: ConstValue.kTheAudience,
-              onPressedSearch: () {
-                // _controller.onPressedSearch();
-              },
+              onPressedSearch: null,
               onPressedAdd: () {},
             ),
             CustomSelectEducationStageNameAudienceScreen(

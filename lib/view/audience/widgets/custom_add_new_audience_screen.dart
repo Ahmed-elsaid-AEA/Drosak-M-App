@@ -15,11 +15,11 @@ class CustomAddNewAudienceScreen extends StatelessWidget {
     super.key,
     required this.onPressedAdd,
     required this.listStudentModel,
-    required this.mapSelectedStudent,
+    required this.outPutMapSelectedStudent,
     required this.onChangedSelectedStatus,
   });
 
-  final Map<String, bool?> mapSelectedStudent;
+  final Stream<Map<String, bool?>> outPutMapSelectedStudent;
 
   final VoidCallback onPressedAdd;
   final List<StudentModel> listStudentModel;
@@ -47,20 +47,43 @@ class CustomAddNewAudienceScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                StreamBuilder<Map<String, bool?>>(
+                  stream: outPutMapSelectedStudent,
+                  builder:
+                      (context, AsyncSnapshot<Map<String, bool?>> snapshot) {
+                    //?count of true
+                    int countSelected = 0;
+                    if (snapshot.data != null) {
+                      countSelected = snapshot.data!.values
+                          .where((element) => element == true)
+                          .toList()
+                          .length;
+                    } else {
+                      countSelected = 0;
+                    }
+                    return Text(
+                      countSelected.toString(),
+                      style: const TextStyle(color: ColorManager.kWhiteColor),
+                    );
+                  },
+                ),
                 ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => CustomItem(
-                          onChangedSelectedStatus: (value) {
-                            onChangedSelectedStatus(
-                              id: listStudentModel[index].id!,
-                              status: value!
-                            );
-                          },
-                          studentModel: listStudentModel[index],
-                          selected: mapSelectedStudent[
-                              listStudentModel[index].id.toString()],
-                        ),
+                    itemBuilder: (context, index) => StreamBuilder(
+                        stream: outPutMapSelectedStudent,
+                        builder: (context, snapshot) => CustomItem(
+                              onChangedSelectedStatus: (value) {
+                                onChangedSelectedStatus(
+                                    id: listStudentModel[index].id!,
+                                    status: value!);
+                              },
+                              studentModel: listStudentModel[index],
+                              selected: snapshot.data == null
+                                  ? false
+                                  : snapshot.data![
+                                      listStudentModel[index].id.toString()],
+                            )),
                     separatorBuilder: (context, index) =>
                         Divider(color: ColorManager.kGrey1.withOpacity(.5)),
                     itemCount: listStudentModel.length),

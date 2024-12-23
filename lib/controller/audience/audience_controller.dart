@@ -23,6 +23,12 @@ class AudienceController {
   late Sink<ItemStageModel> _inputPutDataInitialItemSelectedStage;
   late Stream<ItemStageModel> outPutDataInitialItemSelectedStage;
 
+  ///steam of list initial selected item education stage
+  late StreamController<Map<String, bool?>>
+      _controllerInitialMapSelectedStudent;
+  late Sink<Map<String, bool?>> _inputPutDataInitialMapSelectedStudent;
+  late Stream<Map<String, bool?>> _outPutDataInitialMapSelectedStudent;
+
   ///steam of item education stage screen
   late StreamController<List<ItemStageModel>> _controllerListItemStageModel;
   late Sink<List<ItemStageModel>> _inputDataListItemStageModel;
@@ -81,6 +87,13 @@ class AudienceController {
     outPutDataListItemStageModel =
         _controllerListItemStageModel.stream.asBroadcastStream();
 
+    ///init steam _controllerInitialMapSelectedStudent
+    _controllerInitialMapSelectedStudent = StreamController();
+    _inputPutDataInitialMapSelectedStudent =
+        _controllerInitialMapSelectedStudent.sink;
+    _outPutDataInitialMapSelectedStudent =
+        _controllerInitialMapSelectedStudent.stream.asBroadcastStream();
+
     ///init steam initial data item selected education stage
     _controllerInitialItemSelectedStage = StreamController();
     _inputPutDataInitialItemSelectedStage =
@@ -118,6 +131,10 @@ class AudienceController {
     ///dispose steam of List  Groups Details Model
     _controllerInitialItemSelectedGroup.close();
     _inputPutDataInitialItemSelectedGroup.close();
+
+    ///dispose _controllerInitialMapSelectedStudent
+    _controllerInitialMapSelectedStudent.close();
+    _inputPutDataInitialMapSelectedStudent.close();
   }
 
   void onChangedSelectEducationStageName(ItemStageModel? p1) {
@@ -146,7 +163,7 @@ class AudienceController {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text(ConstValue.kSelectGroups)));
     } else {
-      mapSelectedStudent={};
+      mapSelectedStudent = {};
       showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -154,16 +171,16 @@ class AudienceController {
           return CustomAddNewAudienceScreen(
             onPressedAdd: () {},
             listStudentModel: listStudentModel,
-            mapSelectedStudent: mapSelectedStudent,
-            onChangedSelectedStatus: ({required int id, required bool status}) {
-              print(mapSelectedStudent[id.toString()]);
-              mapSelectedStudent[id.toString()] = status;
-              print(status);
-              print(mapSelectedStudent[id.toString()]);
-            },
+            outPutMapSelectedStudent: _outPutDataInitialMapSelectedStudent,
+            onChangedSelectedStatus: changeSelectedStudentStatus,
           );
         },
       );
     }
+  }
+
+  void changeSelectedStudentStatus({required int id, required bool status}) {
+    mapSelectedStudent[id.toString()] = status;
+    _inputPutDataInitialMapSelectedStudent.add(mapSelectedStudent);
   }
 }

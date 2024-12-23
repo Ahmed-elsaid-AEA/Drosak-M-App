@@ -10,7 +10,8 @@ class StudentOperation extends MySqFLiteDatabase {
         values: studentModel.toJson());
   }
 
-  Future<List<StudentModel>> getStudentsInfo({String? studentName}) async {
+  Future<List<StudentModel>> getStudentsInfo(
+      {String? studentName, int? groupID}) async {
     List<StudentModel> listStudentModel = [];
     String query = "SELECT ${MySqFLiteDatabase.studentsTableName}.*,"
         "${MySqFLiteDatabase.groupTableName}.${MySqFLiteDatabase.groupColumnName}  as 'group_name',"
@@ -23,6 +24,10 @@ class StudentOperation extends MySqFLiteDatabase {
       //?now in search model
       query +=
           " AND ${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnName} LIke '%$studentName%'";
+    } else if (groupID != null) {
+      //?now in get student by  groupId
+      query +=
+          " AND ${MySqFLiteDatabase.studentsTableName}.${MySqFLiteDatabase.studentsColumnIDGroups} = $groupID ";
     }
     List<Map<String, Object?>> data = await selectUsingQuery(query: query);
     Map<String, List<AppointmentModel>> mapOfAppointment = {};

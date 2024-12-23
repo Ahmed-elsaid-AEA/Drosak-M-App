@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:drosak_m_app/core/database/sqlite/crud.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -5,6 +6,7 @@ import 'package:sqflite/sqflite.dart' as sqFLiteDatabase;
 import 'package:path/path.dart';
 
 class MySqFLiteDatabase extends CRUD {
+
   Database? _db;
   static const String educationalStageTableName = 'educationalStageTableName';
   static const String educationalStageID = 'id';
@@ -37,60 +39,81 @@ class MySqFLiteDatabase extends CRUD {
   static const String studentsColumnImage = 'image';
   static const String studentsColumnIDGroups = 'groups_id';
   static const String studentsColumnCreatedAt = 'created_at';
+//!======================= audience table =============
+  static const String audienceTableName = 'audience';
+  static const String audienceColumnID = 'id';
+  static const String audienceColumnStatus = 'status';
+  static const String audienceColumnIDGroups = 'groups_id';
+  static const String audienceColumnDetail = 'detail';
+  static const String audienceColumnCreatedAt = 'created_at';
 
   Future<Database> _initDatabase() async {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 2;
+    int versionDataBase = 3;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
-      onOpen: (db) async {
-        await db.execute('PRAGMA foreign_keys = ON');
-      },
+      onOpen: _onOpen,
       onCreate: _onCreate,
-      onUpgrade: (db, oldVersion, newVersion) async {
-        await (db.execute('DROP TABLE IF EXISTS $educationalStageTableName'));
-        await (db.execute('DROP TABLE IF EXISTS $groupTableName'));
-        await (db.execute('DROP TABLE IF EXISTS $studentsTableName'));
-        await (db.execute('DROP TABLE IF EXISTS $appointmentsTableName'));
-        await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
-            " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
-            "  $educationalStageName TEXT , "
-            "  $educationalStageDesc TEXT , "
-            "  $educationalStageStatus INTEGER DEFAULT 1 , "
-            "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
-            "  $educationalStageImage  TEXT )");
-        await db.execute("CREATE TABLE IF NOT EXISTS $groupTableName"
-            " ( $groupColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
-            "  $groupColumnName TEXT , "
-            "  $groupColumnNote TEXT , "
-            "  $groupColumnIDEducation  INTEGER, "
-            "  CONSTRAINT group_and_education_stage FOREIGN KEY ($groupColumnIDEducation) REFERENCES $educationalStageTableName($educationalStageID) ON DELETE CASCADE ON UPDATE CASCADE"
-            ")");
-        await db.execute("CREATE TABLE IF NOT EXISTS  $appointmentsTableName"
-            " ( $appointmentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
-            "  $appointmentsColumnDay TEXT , "
-            "  $appointmentsColumnTime TEXT , "
-            "  $appointmentsColumnMS TEXT, "
-            "  $appointmentsColumnIDGroups  INTEGER ,"
-            "  CONSTRAINT group_and_appointment FOREIGN KEY ($appointmentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
-            ")");
-        //?======================== create student table =========
-        await db.execute("CREATE TABLE IF NOT EXISTS  $studentsTableName"
-            " ( $studentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
-            "  $studentsColumnName TEXT , "
-            "  $studentsColumnImage TEXT , "
-            "  $studentsColumnNote TEXT, "
-            "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
-            "  $studentsColumnIDGroups  INTEGER ,"
-            "  CONSTRAINT group_and_students FOREIGN KEY ($studentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
-            ")");
-      },
+      onUpgrade: _onUpgrade,
       version: versionDataBase,
     );
     return _db!;
   }
+
+  FutureOr<void> _onOpen(db) async {
+      await db.execute('PRAGMA foreign_keys = ON');
+    }
+
+  FutureOr<void> _onUpgrade(db, oldVersion, newVersion) async {
+      await (db.execute('DROP TABLE IF EXISTS $educationalStageTableName'));
+      await (db.execute('DROP TABLE IF EXISTS $groupTableName'));
+      await (db.execute('DROP TABLE IF EXISTS $studentsTableName'));
+      await (db.execute('DROP TABLE IF EXISTS $appointmentsTableName'));
+      await (db.execute('DROP TABLE IF EXISTS $audienceTableName'));
+      await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
+          " ( $educationalStageID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+          "  $educationalStageName TEXT , "
+          "  $educationalStageDesc TEXT , "
+          "  $educationalStageStatus INTEGER DEFAULT 1 , "
+          "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
+          "  $educationalStageImage  TEXT )");
+      await db.execute("CREATE TABLE IF NOT EXISTS $groupTableName"
+          " ( $groupColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+          "  $groupColumnName TEXT , "
+          "  $groupColumnNote TEXT , "
+          "  $groupColumnIDEducation  INTEGER, "
+          "  CONSTRAINT group_and_education_stage FOREIGN KEY ($groupColumnIDEducation) REFERENCES $educationalStageTableName($educationalStageID) ON DELETE CASCADE ON UPDATE CASCADE"
+          ")");
+      await db.execute("CREATE TABLE IF NOT EXISTS  $appointmentsTableName"
+          " ( $appointmentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+          "  $appointmentsColumnDay TEXT , "
+          "  $appointmentsColumnTime TEXT , "
+          "  $appointmentsColumnMS TEXT, "
+          "  $appointmentsColumnIDGroups  INTEGER ,"
+          "  CONSTRAINT group_and_appointment FOREIGN KEY ($appointmentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
+          ")");
+      //?======================== create student table =========
+      await db.execute("CREATE TABLE IF NOT EXISTS  $studentsTableName"
+          " ( $studentsColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+          "  $studentsColumnName TEXT , "
+          "  $studentsColumnImage TEXT , "
+          "  $studentsColumnNote TEXT, "
+          "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
+          "  $studentsColumnIDGroups  INTEGER ,"
+          "  CONSTRAINT group_and_students FOREIGN KEY ($studentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
+          ")");
+      //?======================== create audience table =========
+      await db.execute("CREATE TABLE IF NOT EXISTS  $audienceTableName"
+          " ( $audienceColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+          "  $audienceColumnStatus TEXT , "
+          "  $audienceColumnIDGroups INT , "
+          "  $audienceColumnDetail TEXT, "
+          "  $audienceColumnCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
+          "  CONSTRAINT group_and_audience FOREIGN KEY ($audienceColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
+          ")");
+    }
 
   _onCreate(Database db, int version) async {
     await db.execute("CREATE TABLE IF NOT EXISTS $educationalStageTableName"
@@ -124,6 +147,15 @@ class MySqFLiteDatabase extends CRUD {
         "  $educationalStageCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
         "  $studentsColumnIDGroups  INTEGER ,"
         "  CONSTRAINT group_and_students FOREIGN KEY ($studentsColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
+        ")");
+    //?======================== create audience table =========
+    await db.execute("CREATE TABLE IF NOT EXISTS  $audienceTableName"
+        " ( $audienceColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
+        "  $audienceColumnStatus TEXT , "
+        "  $audienceColumnIDGroups INT , "
+        "  $audienceColumnDetail TEXT, "
+        "  $audienceColumnCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
+        "  CONSTRAINT group_and_audience FOREIGN KEY ($audienceColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
         ")");
   }
 

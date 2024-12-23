@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:drosak_m_app/core/database/sqlite/audience_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
+import 'package:drosak_m_app/model/student_model.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class AudienceController {
@@ -32,7 +34,7 @@ class AudienceController {
   late Sink<GroupDetails?> _inputPutDataInitialItemSelectedGroup;
   late Stream<GroupDetails?> outPutDataInitialItemSelectedGroup;
 
-  List<ItemStageModel> listItemStageModel=[];
+  List<ItemStageModel> listItemStageModel = [];
 
   AudienceController(this.context) {
     start();
@@ -46,16 +48,18 @@ class AudienceController {
   Future<void> initAllData() async {
     await getAllItemStageModelList();
   }
+
   Future<void> getAllItemStageModelList() async {
     EducationStageOperation educationStageOperation = EducationStageOperation();
     listItemStageModel = await educationStageOperation.getAllEducationData();
     _inputDataListItemStageModel.add(listItemStageModel);
   }
+
   Future<void> getGroupsByEducationStageName() async {
     GroupsOperation groupsOperation = GroupsOperation();
     List<GroupDetails> listGroup =
-    await groupsOperation.getGroupInnerJoinEducationStage(
-        educationID: selectedEducationStage!.id);
+        await groupsOperation.getGroupInnerJoinEducationStage(
+            educationID: selectedEducationStage!.id);
     selectedGroupDetails = null;
     _inputPutDataInitialItemSelectedGroup.add(selectedGroupDetails);
     _inputDataListItemGroupsDetails.add(listGroup);
@@ -115,8 +119,17 @@ class AudienceController {
     selectedEducationStage = p1;
     if (selectedEducationStage != null) getGroupsByEducationStageName();
   }
+
   onChangedSelectGroupsName(GroupDetails? p1) {
     selectedGroupDetails = p1;
-    // if (selectedGroupDetails != null) getAppointmentGroupsByGroupName();
+    if (selectedGroupDetails != null) getStudentInfo();
+  }
+
+  Future<void> getStudentInfo() async {
+    AudienceOperation audienceOperation = AudienceOperation();
+    List<StudentModel> student = await audienceOperation
+        .getStudentInfoByGroupID(selectedGroupDetails!.id);
+
+    print(student);
   }
 }

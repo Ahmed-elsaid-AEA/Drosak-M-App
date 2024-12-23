@@ -51,7 +51,7 @@ class MySqFLiteDatabase extends CRUD {
     String databasesPath = await sqFLiteDatabase.getDatabasesPath();
     String drosakDatabaseName = "drosak.db";
     String realDatabasePath = join(databasesPath, drosakDatabaseName);
-    int versionDataBase = 3;
+    int versionDataBase = 4;
     _db ??= await sqFLiteDatabase.openDatabase(
       realDatabasePath,
       onOpen: _onOpen,

@@ -4,6 +4,7 @@ import 'package:drosak_m_app/core/database/sqlite/audience_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/education_stage_operation.dart';
 import 'package:drosak_m_app/core/database/sqlite/groups_operation.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/model/audience/audience_model.dart';
 import 'package:drosak_m_app/model/education_stages/item_stage_model.dart';
 import 'package:drosak_m_app/model/groups/group_details.dart';
 import 'package:drosak_m_app/model/student_model.dart';
@@ -170,11 +171,7 @@ class AudienceController {
         context: context,
         builder: (context) {
           return CustomAddNewAudienceScreen(
-            onPressedAdd: () {
-              if (selectDate == null) {
-                selectDate = DateTime.now();
-              }
-            },
+            onPressedAdd: onPressedAddToDataBase,
             listStudentModel: listStudentModel,
             outPutMapSelectedStudent: _outPutDataInitialMapSelectedStudent,
             onChangedSelectedStatus: changeSelectedStudentStatus,
@@ -195,6 +192,24 @@ class AudienceController {
         context: context,
         lastDate: DateTime.now(),
         firstDate: DateTime.now().subtract(const Duration(days: 365)));
+  }
 
+  void onPressedAddToDataBase() async {
+    await insertIntoDatabase();
+    Navigator.of(context).pop();
+  }
+
+  Future<void> insertIntoDatabase() async {
+    List<MapEntry<String, bool?>> data = mapSelectedStudent.entries
+        .where((element) => element.value == true)
+        .toList();
+    selectDate ??= DateTime.now();
+    for (int i = 0; i < data.length; i++) {
+      AudienceOperation audienceOperation = AudienceOperation();
+      await audienceOperation.insertNewAudience(AudienceModel(
+          status: data[i].value.toString(),
+          studentID: int.parse(data[i].key),
+          selectedTimeData: selectDate.toString()));
+    }
   }
 }

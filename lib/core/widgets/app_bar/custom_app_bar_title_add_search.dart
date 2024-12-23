@@ -11,13 +11,13 @@ class CustomAppBarTitleAddSearch extends StatelessWidget {
     this.onPressedAdd,
     this.onPressedSearch,
     required this.title,
-    required this.streamCount,
+    this.streamCount,
   });
 
   final VoidCallback? onPressedAdd;
   final VoidCallback? onPressedSearch;
   final String title;
-  final Stream<List> streamCount;
+  final Stream<List>? streamCount;
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +36,27 @@ class CustomAppBarTitleAddSearch extends StatelessWidget {
           VerticalSpace(HeightManager.h12),
           Row(
             children: [
-              StreamBuilder<List>(
-                stream: streamCount,
-                builder: (context, snapshot) => Text(
-                  "$title ( ${snapshot.data == null ? "0" : snapshot.data!.length} )",
-                  style: TextStyle(
-                      fontSize: FontsSize.f15,
-                      fontFamily: FontsName.geDinerOneFont,
-                      fontWeight: FontWeight.bold,
-                      color: ColorManager.kWhiteColor),
-                ),
-              ),
+              streamCount == null
+                  ? Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: FontsSize.f15,
+                          fontFamily: FontsName.geDinerOneFont,
+                          fontWeight: FontWeight.bold,
+                          color: ColorManager.kWhiteColor),
+                    )
+                  : StreamBuilder<List>(
+                      stream: streamCount,
+                      builder: (context, snapshot) => Text(
+                        "$title ( ${snapshot.data == null ? "0" : snapshot.data!.length} )",
+                        style: TextStyle(
+                            fontSize: FontsSize.f15,
+                            fontFamily: FontsName.geDinerOneFont,
+                            fontWeight: FontWeight.bold,
+                            color: ColorManager.kWhiteColor),
+                      ),
+                    ),
+
               const Spacer(),
               IconButton(
                   onPressed: onPressedAdd,

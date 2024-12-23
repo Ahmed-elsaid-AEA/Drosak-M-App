@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
@@ -12,13 +14,17 @@ class CustomAddNewAudienceScreen extends StatelessWidget {
   const CustomAddNewAudienceScreen({
     super.key,
     required this.onPressedAdd,
-    this.edit = false,
     required this.listStudentModel,
+    required this.mapSelectedStudent,
+    required this.onChangedSelectedStatus,
   });
 
+  final Map<String, bool?> mapSelectedStudent;
+
   final VoidCallback onPressedAdd;
-  final bool edit;
   final List<StudentModel> listStudentModel;
+  final void Function({required int id, required bool status})
+      onChangedSelectedStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +51,22 @@ class CustomAddNewAudienceScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) => CustomItem(
+                          onChangedSelectedStatus: (value) {
+                            onChangedSelectedStatus(
+                              id: listStudentModel[index].id!,
+                              status: value!
+                            );
+                          },
                           studentModel: listStudentModel[index],
+                          selected: mapSelectedStudent[
+                              listStudentModel[index].id.toString()],
                         ),
-                    separatorBuilder: (context, index) => const Divider(),
+                    separatorBuilder: (context, index) =>
+                        Divider(color: ColorManager.kGrey1.withOpacity(.5)),
                     itemCount: listStudentModel.length),
-                VerticalSpace(HeightManager.h12),
                 VerticalSpace(HeightManager.h24),
                 CustomMaterialButton(
-                    onPressed: onPressedAdd,
-                    text: edit == true ? ConstValue.kEdit : ConstValue.kAdd)
+                    onPressed: onPressedAdd, text: ConstValue.kAdd)
               ],
             ),
           ),
@@ -67,9 +80,13 @@ class CustomItem extends StatelessWidget {
   const CustomItem({
     super.key,
     required this.studentModel,
+    required this.selected,
+    this.onChangedSelectedStatus,
   });
 
   final StudentModel studentModel;
+  final bool? selected;
+  final ValueChanged<bool?>? onChangedSelectedStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +95,31 @@ class CustomItem extends StatelessWidget {
         studentModel.name,
         style: const TextStyle(color: ColorManager.kWhiteColor),
       ),
-       value: true, onChanged: (bool? value) {  },
+      subtitle: Text(
+        studentModel.id!.toString(),
+        style: TextStyle(color: ColorManager.kWhiteColor.withOpacity(.5)),
+      ),
+      secondary: ClipRRect(
+        borderRadius:
+            BorderRadius.all(Radius.circular(RadiusValuesManager.br4)),
+        child: Image.file(
+          errorBuilder: (context, error, stackTrace) {
+            return const Text(
+              "not found",
+              style: TextStyle(color: Colors.white),
+            );
+          },
+          File(studentModel.image),
+          // width: double.infinity,
+          height: HeightManager.h200,
+          fit: BoxFit.contain,
+        ),
+      ),
+      value: selected ?? false,
+      onChanged: onChangedSelectedStatus,
     );
   }
 }
+//? {
+//  1 : true
+// }

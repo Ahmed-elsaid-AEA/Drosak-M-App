@@ -43,7 +43,7 @@ class MySqFLiteDatabase extends CRUD {
   static const String audienceTableName = 'audience';
   static const String audienceColumnID = 'id';
   static const String audienceColumnStatus = 'status';
-  static const String audienceColumnIDGroups = 'groups_id';
+  static const String audienceColumnIDStudent = 'student_id';
   static const String audienceColumnDetail = 'detail';
   static const String audienceColumnCreatedAt = 'created_at';
 
@@ -108,10 +108,10 @@ class MySqFLiteDatabase extends CRUD {
       await db.execute("CREATE TABLE IF NOT EXISTS  $audienceTableName"
           " ( $audienceColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
           "  $audienceColumnStatus TEXT , "
-          "  $audienceColumnIDGroups INT , "
+          "  $audienceColumnIDStudent INT , "
           "  $audienceColumnDetail TEXT, "
           "  $audienceColumnCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
-          "  CONSTRAINT group_and_audience FOREIGN KEY ($audienceColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
+          "  CONSTRAINT student_and_audience FOREIGN KEY ($audienceColumnIDStudent) REFERENCES $studentsTableName($studentsColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
           ")");
     }
 
@@ -152,10 +152,10 @@ class MySqFLiteDatabase extends CRUD {
     await db.execute("CREATE TABLE IF NOT EXISTS  $audienceTableName"
         " ( $audienceColumnID INTEGER PRIMARY KEY AUTOINCREMENT ,"
         "  $audienceColumnStatus TEXT , "
-        "  $audienceColumnIDGroups INT , "
+        "  $audienceColumnIDStudent INT , "
         "  $audienceColumnDetail TEXT, "
         "  $audienceColumnCreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP , "
-        "  CONSTRAINT group_and_audience FOREIGN KEY ($audienceColumnIDGroups) REFERENCES $groupTableName($groupColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
+        "  CONSTRAINT student_and_audience FOREIGN KEY ($audienceColumnIDStudent) REFERENCES $studentsTableName($studentsColumnID) ON DELETE CASCADE ON UPDATE CASCADE"
         ")");
   }
 

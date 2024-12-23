@@ -14,7 +14,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class AudienceController {
   BuildContext context;
-
+  Map<String, bool?> mapSelectedStudent = {};
   ItemStageModel? selectedEducationStage;
   GroupDetails? selectedGroupDetails;
 
@@ -146,12 +146,22 @@ class AudienceController {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text(ConstValue.kSelectGroups)));
     } else {
+      mapSelectedStudent={};
       showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (context) {
           return CustomAddNewAudienceScreen(
-              onPressedAdd: () {}, listStudentModel: listStudentModel);
+            onPressedAdd: () {},
+            listStudentModel: listStudentModel,
+            mapSelectedStudent: mapSelectedStudent,
+            onChangedSelectedStatus: ({required int id, required bool status}) {
+              print(mapSelectedStudent[id.toString()]);
+              mapSelectedStudent[id.toString()] = status;
+              print(status);
+              print(mapSelectedStudent[id.toString()]);
+            },
+          );
         },
       );
     }

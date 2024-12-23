@@ -38,6 +38,7 @@ class ConstValue {
   static const String kPaying = 'الدفع';
   static const String kScreenIndex = 'currentIndex';
   static const String kAdd = 'إضافه';
+  static const String kSelectDate = 'اختار ميعاد';
   static const String kAddedGroupDetailsSucces = 'تم إضافه تفاصيل الجروب بنجاح';
   static const String kDeletedStudentSucces = 'تم حذف الطالب بنجاح';
   static const String kSaveAll = 'حفظ الكل';

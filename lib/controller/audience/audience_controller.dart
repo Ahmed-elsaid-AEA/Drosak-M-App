@@ -17,6 +17,7 @@ class AudienceController {
   Map<String, bool?> mapSelectedStudent = {};
   ItemStageModel? selectedEducationStage;
   GroupDetails? selectedGroupDetails;
+  DateTime? selectDate;
 
   ///steam of list initial selected item education stage
   late StreamController<ItemStageModel> _controllerInitialItemSelectedStage;
@@ -169,10 +170,15 @@ class AudienceController {
         context: context,
         builder: (context) {
           return CustomAddNewAudienceScreen(
-            onPressedAdd: () {},
+            onPressedAdd: () {
+              if (selectDate == null) {
+                selectDate = DateTime.now();
+              }
+            },
             listStudentModel: listStudentModel,
             outPutMapSelectedStudent: _outPutDataInitialMapSelectedStudent,
             onChangedSelectedStatus: changeSelectedStudentStatus,
+            onPressedSelectedDateTime: onPressedSelectedDateTime,
           );
         },
       );
@@ -182,5 +188,13 @@ class AudienceController {
   void changeSelectedStudentStatus({required int id, required bool status}) {
     mapSelectedStudent[id.toString()] = status;
     _inputPutDataInitialMapSelectedStudent.add(mapSelectedStudent);
+  }
+
+  void onPressedSelectedDateTime() async {
+    selectDate = await showDatePicker(
+        context: context,
+        lastDate: DateTime.now(),
+        firstDate: DateTime.now().subtract(const Duration(days: 365)));
+
   }
 }

@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:drosak_m_app/core/resources/colors_manager.dart';
 import 'package:drosak_m_app/core/resources/const_values.dart';
+import 'package:drosak_m_app/core/resources/fonts_manager.dart';
 import 'package:drosak_m_app/core/resources/height_manager.dart';
 import 'package:drosak_m_app/core/resources/padding_manager.dart';
 import 'package:drosak_m_app/core/resources/radius_values_manager.dart';
+import 'package:drosak_m_app/core/resources/width_manager.dart';
 import 'package:drosak_m_app/core/widgets/buttons/custom_material_button.dart';
+import 'package:drosak_m_app/core/widgets/space/horizontal_space.dart';
 import 'package:drosak_m_app/core/widgets/space/vertical_space.dart';
 import 'package:drosak_m_app/model/student_model.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,7 @@ class CustomAddNewAudienceScreen extends StatelessWidget {
     required this.listStudentModel,
     required this.outPutMapSelectedStudent,
     required this.onChangedSelectedStatus,
+    required this.onPressedSelectedDateTime,
   });
 
   final Stream<Map<String, bool?>> outPutMapSelectedStudent;
@@ -25,6 +29,7 @@ class CustomAddNewAudienceScreen extends StatelessWidget {
   final List<StudentModel> listStudentModel;
   final void Function({required int id, required bool status})
       onChangedSelectedStatus;
+  final VoidCallback onPressedSelectedDateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +93,25 @@ class CustomAddNewAudienceScreen extends StatelessWidget {
                         Divider(color: ColorManager.kGrey1.withOpacity(.5)),
                     itemCount: listStudentModel.length),
                 VerticalSpace(HeightManager.h24),
-                CustomMaterialButton(
-                    onPressed: onPressedAdd, text: ConstValue.kAdd)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomMaterialButton(
+                        onPressed: onPressedAdd, text: ConstValue.kAdd),
+                    HorizontalSpace(WidthManager.w6),
+                    TextButton(
+                      onPressed: onPressedSelectedDateTime,
+                      style: TextButton.styleFrom(
+                        foregroundColor: ColorManager.kWhiteColor,
+                        textStyle: TextStyle(
+                            color: ColorManager.kWhiteColor,
+                            fontSize: FontsSize.f16,
+                            fontFamily: FontsName.geDinerOneFont),
+                      ),
+                      child: const Text(ConstValue.kSelectDate),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

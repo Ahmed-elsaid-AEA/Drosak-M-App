@@ -7,4 +7,9 @@ class AudienceOperation extends MySqFLiteDatabase {
     StudentOperation studentOperation = StudentOperation();
     return await studentOperation.getStudentsInfo(groupID: groupId);
   }
+  // Future<int> insertNewAudience(GroupDetails groupDetails) async {
+  //   return insertReturnedId(
+  //       tableName: MySqFLiteDatabase.groupTableName,
+  //       values: groupDetails.toJson());
+  // }
 }
